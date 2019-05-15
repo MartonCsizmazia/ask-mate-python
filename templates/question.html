@@ -3,49 +3,58 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <h1>
-        {{ question['title'] }}
-    </h1>
-    <p>
-        {{ question['message'}}
-    </p>
-    <table>
-        <tbody>
-            <tr>
+<h1>
+    Question
+</h1>
+<table>
+    <thead>
+       <tr>
+           {% for header in question_headers %}
+            <th>
+                {{header|replace("_", " ")|title}}
+            </th>
+           {% endfor %}
+       </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for header in question_headers %}
                 <td>
-                    {{ question[submission_time] }}
+                    {% if header == 'image'%}
+                    <img src="{{ question[image] }}" alt="A nice image" width="50" height="50">
+                    {% else %}
+                        {{question[header]}}
+                    {% endif %}
                 </td>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
+<h1>
+    Answers
+</h1>
+<table>
+    <thead>
+       <tr>
+           {% for header in answer_headers %}
+            <th>
+                {{header|replace("_", " ")|title}}
+            </th>
+           {% endfor %}
+       </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for header in answer_headers %}
                 <td>
-                    {{ question[view_number] }}
+                    {% if header == 'image'%}
+                    <img src="{{ question[image] }}" alt="A nice image" width="50" height="50">
+                    {% else %}
+                        {{question[header]}}
+                    {% endif %}
                 </td>
-                <td>
-                    {{ question[vote_number] }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p>
-        <img src="{{ question[image] }}" alt="A nice image" width="50" height="50">
-    </p>
-    <h1>
-        Answer
-    </h1>
-    <p>
-        {{ answer['message'}}
-    </p>
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    {{ answer[submission_time] }}
-                </td>
-                <td>
-                    {{ answer[vote_number] }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p>
-        <img src="{{ answer[image] }}" alt="Another nice image" width="50" height="50">
-    </p>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
 {% endblock %}
