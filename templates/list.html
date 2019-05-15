@@ -10,11 +10,15 @@
     {% endfor %}
     </tr></thead>
     <tbody>
-        {% for question in questions %}
+        {% for question in questions|sort(reverse=True, attribute="submission_time") %}
         <tr>
             {% for header in headers %}
                 <td>
-                    {{question[header]}}
+                    {% if header == 'title'%}
+                    <a href="/question/{{ question['id'] }}">{{question[header]}}</a>
+                    {% else %}
+                        {{question[header]}}
+                    {% endif %}
                 </td>
             {% endfor %}
         </tr>
