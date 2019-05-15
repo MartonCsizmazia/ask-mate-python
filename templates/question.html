@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Question{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <h1>
+        {{ question['title'] }}
+    </h1>
+    <p>
+        {{ question['message'}}
+    </p>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    {{ question[submission_time] }}
+                </td>
+                <td>
+                    {{ question[view_number] }}
+                </td>
+                <td>
+                    {{ question[vote_number] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <img src="{{ question[image] }}" alt="A nice image" width="50" height="50">
+    </p>
+{% endblock %}
