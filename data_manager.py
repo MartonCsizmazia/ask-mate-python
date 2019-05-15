@@ -5,10 +5,10 @@ ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 
 
 def get_questions(question_id=None):
-    questions = connection.get_data_from_csv()
+    questions = connection.get_data_from_csv('sample_data/question.csv')
     if question_id:
         for question in questions:
             if question['id'] == question_id:
                 return question
             raise ValueError("There is no question with the requested ID")
-    return
+    return questions
