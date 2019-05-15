@@ -23,7 +23,7 @@ def route_question(question_id):
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
-def edit_questin(question_id):
+def edit_question(question_id):
 
     questions = data_manager.get_questions()
     QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
