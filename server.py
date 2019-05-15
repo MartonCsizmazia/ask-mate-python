@@ -21,6 +21,7 @@ def route_question(question_id):
 
 
 @app.route('/list')
+@app.route("/")
 def list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_questions()
@@ -32,7 +33,16 @@ def list():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add():
-    return render_template('add.html')
+    if request.method == 'POST':
+        view_number = 0
+        vote_number = 0
+        image = ""
+
+
+        return redirect('/')
+
+    else:
+        return render_template('add.html')
 
 
 if __name__ == '__main__':
