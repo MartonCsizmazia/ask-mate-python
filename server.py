@@ -16,6 +16,14 @@ def route_question(question_id):
                            answer=answer)
 
 
+@app.route('/list', method='GET')
+def list():
+    headers = data_manager.QUESTION_HEADER
+    questions = data_manager,get_questions()
+
+    return render_template('list.html',
+                           headers=headers,
+                           questions=questions)
 
 
 if __name__ == '__main__':

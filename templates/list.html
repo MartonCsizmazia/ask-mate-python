@@ -1,9 +1,24 @@
 {% extends "layout.html" %}
-{% block title %}List{% endblock %}
+{% block title %}Questions{% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
-
-
-
+<table>
+    <thead><tr>
+    {% for header in headers %}
+        <th> {{header|replace("_", " ")|title}} </th>
+    {% endfor %}
+    </tr></thead>
+    <tbody>
+        {% for question in questions %}
+        <tr>
+            {% for header in headers %}
+                <td>
+                    {{question[header]}}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
