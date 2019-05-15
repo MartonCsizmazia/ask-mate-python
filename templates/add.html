@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ask a question</title>
-</head>
-<body>
-    <h1>Ask a question</h1>
-    <form action="/add-question" method=POST >
+    <head>
+        <meta charset="UTF-8">
+        <title>Ask a question</title>
+    </head>
+        <body>
+            <h1>Ask a question</h1>
+            <form action="/add-question" method=POST >
 
-    <label for="question-title">Question Title:</label><br>
-    <input type="text" id="question-title" name="title" required><br>
+                <label for="question-title">Question Title:</label><br>
+                <input type="text" id="question-title" name="title" required><br>
 
-    <label for="add-message">Message</label><br>
-    <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
+                <label for="add-message">Message</label><br>
+                <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
 
-    <button type="submit">Add Your New Question</button><br>
+                <button type="submit">Add Your New Question</button><br>
 
-</body>
+            </form>
+
+        </body>
 </html>
