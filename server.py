@@ -65,6 +65,14 @@ def route_add():
         return render_template('add.html')
 
 
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id):
+    fieldnames = data_manager.ANSWER_HEADER
+    connection.delete_data_from_csv(data_manager.ANSWER, answer_id, fieldnames)
+
+    return redirect('/list')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
