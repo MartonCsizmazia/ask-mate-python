@@ -26,6 +26,11 @@ def list():
                            questions=questions)
 
 
+@app.route('/add-question', methods=['GET', 'POST'])
+def route_add():
+    return render_template('add.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
