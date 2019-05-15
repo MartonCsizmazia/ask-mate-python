@@ -17,3 +17,15 @@ def export_data_to_csv(file, new_data, fieldnames):
             writer.writerow(row)
 
         writer.writerow(new_data)
+
+
+def delete_data_from_csv(file, id_to_delete, fieldnames):
+    existing_data = get_data_from_csv(file)
+
+    with open(file, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for row in existing_data:
+            if row['id'] != id_to_delete:
+                writer.writerow(row)
