@@ -2,13 +2,20 @@ import connection
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+QUESTION = 'sample_data/question.csv'
+ANSWER = 'sample_data/answer.csv'
 
-
-def get_questions(question_id=None):
-    questions = connection.get_data_from_csv('sample_data/question.csv')
+def get_data(filename, question_id=None):
+    data = connection.get_data_from_csv(filename)
     if question_id:
-        for question in questions:
-            if question['id'] == question_id:
-                return question
-            raise ValueError("There is no question with the requested ID")
-    return questions
+        for row in data:
+            if filename == 'sample_data/question.csv':
+                if row['id'] == question_id:
+                    return row
+                raise ValueError("There is no question with the requested ID")
+            if filename == 'sample_data/answers.csv':
+                if row['question_id'] == question_id:
+                    return row
+                raise ValueError("There is no question with the requested ID")
+    return data
+
