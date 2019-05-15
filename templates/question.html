@@ -30,8 +30,11 @@
         </tr>
     </tbody>
 </table>
-<br>
-<a href="/question/{{ question['id'] }}/edit">Edit question</a><br>
+<p>
+    <form action="/question/{{ question['id'] }}/edit">
+        <input type="submit" value="Edit question" />
+    </form>
+</p>
 {% if answers != [] %}
 <h1>
     Answers

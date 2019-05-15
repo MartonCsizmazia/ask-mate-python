@@ -3,7 +3,8 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-<p><h1>Questions</h1></p>
+<p><h1 align="center">Ask-m8 the Ultimate Question Handler</h1></p>
+<br>
 <table>
     <thead><tr>
     {% for header in headers %}
@@ -27,6 +28,8 @@
     </tbody>
 </table>
 <p>
-    <a href="/add-question">Ask a question</a>
+    <form action="/add-question">
+        <input type="submit" value="Ask a question" />
+    </form>
 </p>
 {% endblock %}
