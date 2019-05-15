@@ -21,7 +21,7 @@
             {% for header in question_headers %}
                 <td>
                     {% if header == 'image'%}
-                    <img src="{{ question[image] }}" alt="A nice image" width="50" height="50">
+                    <img src="{{ question[image] }}">
                     {% else %}
                         {{question[header]}}
                     {% endif %}
@@ -32,8 +32,6 @@
 </table>
 <br>
 <a href="/question/{{ question['id'] }}/edit">Edit question</a><br>
-
-
 {% if answers != [] %}
 <h1>
     Answers
@@ -54,7 +52,7 @@
             {% for header in answer_headers %}
                 <td>
                     {% if header == 'image'%}
-                    <img src="{{ answers[image] }}" alt="A nice image" width="50" height="50">
+                    <img src="{{ answers[image] }}">
                     {% else %}
                         {{ answer[header] }}
                     {% endif %}
