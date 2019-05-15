@@ -65,6 +65,27 @@ def route_add():
         return render_template('add.html')
 
 
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id):
+    fieldnames = data_manager.ANSWER_HEADER
+    connection.delete_data_from_csv(data_manager.ANSWER, answer_id, fieldnames)
+
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id):
+    connecting_answers = data_manager.get_answers(question_id)
+    answer_fieldnames = data_manager.ANSWER_HEADER
+    for answer in connecting_answers:
+        connection.delete_data_from_csv(data_manager.ANSWER, answer['id'], answer_fieldnames)
+
+    question_fieldnames = data_manager.QUESTION_HEADER
+    connection.delete_data_from_csv(data_manager.QUESTION, question_id, question_fieldnames)
+
+    return redirect('/list')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
