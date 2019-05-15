@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-import data_manager.py
+import data_manager
 
 app = Flask(__name__)
 
 
-@app.route('/question/<question_id>', method='GET')
+@app.route('/question/<question_id>')
 def route_question(question_id):
     question = data_manager.get_questions(question_id)
     answer = data_manager.get_answers_for_question(question_id)
@@ -16,10 +16,10 @@ def route_question(question_id):
                            answer=answer)
 
 
-@app.route('/list', method='GET')
+@app.route('/list')
 def list():
     headers = data_manager.QUESTION_HEADER
-    questions = data_manager,get_questions()
+    questions = data_manager.get_questions()
 
     return render_template('list.html',
                            headers=headers,
