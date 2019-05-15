@@ -15,7 +15,7 @@
             {% for header in headers %}
                 <td>
                     {% if header == 'title'%}
-                    <a href="/question/{{ question['id'] }}">{{question[header]}}</a>
+                        <a href="/question/{{ question['id'] }}">{{question[header]}}</a>
                     {% else %}
                         {{question[header]}}
                     {% endif %}
