@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import data_manager
+import connection
+import util
 
 app = Flask(__name__)
 
@@ -31,14 +33,32 @@ def list():
                            questions=questions)
 
 
+def generate_id(questions):
+    if len(questions) > 0:
+        return int((questions[-1]['id'])) + 1
+    else:
+        return 0
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add():
+    questions = data_manager.get_questions()
+    QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+    QUESTION = 'sample_data/question.csv'
     if request.method == 'POST':
-        view_number = 0
-        vote_number = 0
-        image = ""
+        new_id = generate_id(questions)
+        new_submission_time = util.unix_date_now()
+        my_new_data = {
+                    "id": new_id,
+                    "submission_time": new_submission_time,
+                    "view_number": 0,
+                    "vote_number": 0,
+                    "title": request.form.get("title"),
+                    "message": request.form.get("message"),
+                    "image": "",
+         }
 
-
+        connection.export_data_to_csv(QUESTION, my_new_data, QUESTION_HEADER)
         return redirect('/')
 
     else:
