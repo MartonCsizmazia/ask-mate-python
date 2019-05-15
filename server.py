@@ -9,13 +9,13 @@ app = Flask(__name__)
 def route_question(question_id):
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
     answer_headers = ['message', 'submission_time', 'vote_number', 'image']
-    question = data_manager.get_data(data_manager.QUESTION, question_id)
-    answer = data_manager.get_data(data_manager.ANSWER, question_id)
-
+    question = data_manager.get_questions(question_id)
+    answers = data_manager.get_answers(question_id)
+    print(answers)
     return render_template('question.html',
                            question=question,
                            question_title='Question',
-                           answer=answer,
+                           answers=answers,
                            question_headers=question_headers,
                            answer_headers=answer_headers)
 
@@ -23,7 +23,7 @@ def route_question(question_id):
 @app.route('/list')
 def list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
-    questions = data_manager.get_data(data_manager.QUESTION)
+    questions = data_manager.get_questions()
 
     return render_template('list.html',
                            headers=headers,
