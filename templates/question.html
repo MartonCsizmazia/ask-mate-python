@@ -62,6 +62,10 @@
                 <td>
                     {% if header == 'image'%}
                     <img src="{{ answers[image] }}">
+                    {% elif header == 'user_options'%}
+                    <form action="/answer/{{ answer['id'] }}/delete">
+                    <input type="submit" value="Delete answer" />
+                    </form>
                     {% else %}
                         {{ answer[header] }}
                     {% endif %}
