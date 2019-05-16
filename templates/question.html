@@ -62,7 +62,7 @@
        </tr>
     </thead>
     <tbody>
-        {% for answer in answers %}
+        {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
         <tr>
             {% for header in answer_headers %}
                 <td>
