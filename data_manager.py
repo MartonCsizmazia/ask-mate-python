@@ -7,8 +7,8 @@ QUESTION = 'sample_data/question.csv'
 ANSWER = 'sample_data/answer.csv'
 
 
-def get_questions(question_id=None):
-    questions = connection.get_data_from_csv('sample_data/question.csv')
+def get_questions(question_id=None, file='sample_data/question.csv'):
+    questions = connection.get_data_from_csv(file)
     for row in questions:
         row['submission_time'] = util.unix_date_filter(int(row['submission_time']))
     if question_id:
@@ -27,6 +27,7 @@ def get_answers(question_id=None):
         if answer['question_id'] == question_id:
             result.append(answer)
     return result
+
 
 def generate_id(questions):
     if len(questions) > 0:
