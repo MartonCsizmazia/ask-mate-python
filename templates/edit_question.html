@@ -14,24 +14,16 @@
                 <input type="hidden" value="{{ question['image'] }}" name='image'>
 
                 <label for="question-title">Question Title:</label><br>
+                <br>
                 <input type="text" id="question-title" name="title" value="{{ question['title'] }}" required><br>
+                <br>
 
 
                 <label for="add-message">Message</label><br>
+                <br>
                 <textarea id="add-message" name="message" rows="4" cols="80"  required>{{ question["message"] }}</textarea><br>
-                Submission time:<br>
-                {{ question['submission_time'] }}<br>
-
                 <br>
-                View number:<br>
-                {{ question['view_number'] }}<br>
 
-                <br>
-                Vote number:<br>
-                {{ question['vote_number'] }}<br>
-
-                <br>
-                {{ question['image'] }}
                 <button type="submit">Edit Question</button>
             </form>
 
