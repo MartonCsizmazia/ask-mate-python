@@ -72,7 +72,12 @@
                     <form action="/answer/{{ answer['id'] }}/delete">
                     <input type="submit" value="Delete answer" />
                     </form>
-
+                    <form action="/answer/{{ answer['id'] }}/vote-up">
+                        <input type="submit" value="Up" />
+                    </form>
+                    <form action="/answer/{{ answer['id'] }}/vote-down">
+                        <input type="submit" value="Down" />
+                    </form>
                     {% else %}
                         {{ answer[header] }}
                     {% endif %}
