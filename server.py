@@ -48,6 +48,23 @@ def edit_question(question_id):
         return render_template('edit_question.html')
 
 
+@app.route('/question/<question_id>/<vote>')
+def vote_up(question_id, vote):
+    fieldnames = data_manager.QUESTION_HEADER
+    file = data_manager.QUESTION
+
+    data_to_change = data_manager.get_questions(question_id)
+    data_to_change['vote_number'] = int(data_to_change['vote_number'])
+    if vote == 'vote-up':
+        data_to_change['vote_number'] += 1
+    else:
+        data_to_change['vote_number'] -= 1
+    data_to_change['vote_number'] = str(data_to_change['vote_number'])
+    data_to_change['submission_time'] = str(int(util.date_to_unix(data_to_change['submission_time'])))
+
+    connection.edit_row_in_csv(file, data_to_change, fieldnames)
+    return redirect('/')
+
 
 @app.route('/list')
 @app.route("/")
@@ -58,9 +75,6 @@ def list():
     return render_template('list.html',
                            headers=headers,
                            questions=questions)
-
-
-
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
