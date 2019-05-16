@@ -4,8 +4,9 @@
 {% endblock %}
 {% block content %}
 <h1>
-    Question
+    The problem:
 </h1>
+<br>
 <table>
     <thead>
        <tr>
@@ -41,16 +42,17 @@
         <input type="submit" value="Go back to Questions" />
     </form>
     <form action="/question/{{ question['id'] }}/vote-up">
-        <input type="submit" value="Up" />
+        <input type="submit" value="👍" />
     </form>
     <form action="/question/{{ question['id'] }}/vote-down">
-        <input type="submit" value="Down" />
+        <input type="submit" value="👎" />
     </form>
 </p>
 {% if answers != [] %}
 <h1>
-    Answers
+    Try this:
 </h1>
+<br>
 <table>
     <thead>
        <tr>
@@ -73,10 +75,10 @@
                     <input type="submit" value="Delete answer" />
                     </form>
                     <form action="/answer/{{ answer['id'] }}/vote-up">
-                        <input type="submit" value="Up" />
+                        <input type="submit" value="👍" />
                     </form>
                     <form action="/answer/{{ answer['id'] }}/vote-down">
-                        <input type="submit" value="Down" />
+                        <input type="submit" value="👎" />
                     </form>
                     {% else %}
                         {{ answer[header] }}

@@ -4,23 +4,25 @@
 {% endblock %}
 {% block content %}
     <p>
-    <h1>Ask a question</h1>
+    <h1>Ask a question!</h1>
     </p>
     <form action="/add-question" method=POST >
         <p>
         <label for="question-title">Question Title:</label><br>
-            <input type="text" id="question-title" name="title" required><br>
+            <br>
+            <input type="text" id="question-title" name="title"><br>
         </p>
         <p>
         <label for="add-message">Message:</label><br>
-        <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
+            <br>
+        <textarea id="add-message" name="message" rows="6" cols="50" required></textarea><br>
         </p>
         <input type="submit" value="Add your new question">
     </form>
     <br>
         <p>
         <form action="/" method="GET">
-            <input type="submit" value="Cancel">
+            <input type="submit" value="Go back">
         </form>
         </p>
 {% endblock %}

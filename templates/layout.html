@@ -2,28 +2,64 @@
 <html>
   <head>
     <style>
+        html{
+            background-color: steelblue;
+        }
        td{
           text-align: left;
        }
+       h1, label{
+           color: darkblue;
+           font-family: Ayuthaya;
+       }
+       h1{
+           font-family: Ayuthaya;
+       }
+       label{
+           font-weight: bold;
+       }
+       textarea{
+           width: 100%;
+           height: 100%;
+           overflow: hidden;
+           padding: 5px;
+           border-radius:5px;
+           border:4px solid darkblue;
+       }
+       #question-title{
+           overflow: hidden;
+           padding: 5px;
+           border-radius:5px;
+           border:4px solid darkblue;
+       }
        table{
           border-collapse: collapse;
+           width: 100%;
        }
        table, th, td{
            border: 1px solid black;
-           padding: 10px;
+           padding: 9px;
        }
        th{
            height: 25px;
+           background-color: deepskyblue;
+           color: white;
        }
        img{
-           background-image: url('https://www.deen.nl/dist/images/no-image-available.png?height=400&width=400&background=white');
+           background-image: url('/static/error.png');
            alt: "A nice image";
            object-fit: cover;
-           width: 190px;
-           height: 170px;
+           width: 100px;
+           height: 80px;
        }
         form{
             display: inline-block;
+        }
+        tr{
+            background-color: #f2f2f2;
+        }
+        tr:hover{
+            background-color: #ddd;
         }
    </style>
       <title>{% block title %}{% endblock %} | AskMate </title>
