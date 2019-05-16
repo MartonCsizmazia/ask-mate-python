@@ -13,13 +13,16 @@ def route_question(question_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_questions(question_id)
     answers = data_manager.get_answers(question_id)
+    print(question)
+    print(answers)
 
     return render_template('question.html',
                            question=question,
                            question_title='Question',
                            answers=answers,
                            question_headers=question_headers,
-                           answer_headers=answer_headers)
+                           answer_headers=answer_headers,
+                           )
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -139,6 +142,31 @@ def delete_question(question_id):
     connection.delete_data_from_csv(data_manager.QUESTION, question_id, question_fieldnames)
 
     return redirect('/list')
+
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def add_new_answer(question_id):
+    answers = data_manager.get_answers()
+    question = data_manager.get_questions(question_id)
+    if request.method == 'POST':
+        new_id = data_manager.generate_id(answers)
+        new_submission_time = util.unix_date_now()
+        new_answer = {
+                    "id": new_id,
+                    "submission_time": new_submission_time,
+                    "vote_number": 0,
+                    "question_id": request.form.get("question_id"),
+                    "message": request.form.get("answer-message"),
+                    "image": ""}
+        print(new_answer)
+
+        connection.export_data_to_csv(data_manager.ANSWER, new_answer, data_manager.ANSWER_HEADER)
+
+        return redirect('/question/' + new_answer['question_id'])
+
+    else:
+        return render_template('post_answer.html',
+                               question=question
+                               )
 
 
 if __name__ == '__main__':

@@ -23,10 +23,13 @@ def get_answers(question_id=None):
     for row in answers:
         row['submission_time'] = util.unix_date_filter(int(row['submission_time']))
     result = []
-    for answer in answers:
-        if answer['question_id'] == question_id:
-            result.append(answer)
-    return result
+    if question_id:
+        for answer in answers:
+            if answer['question_id'] == question_id:
+                result.append(answer)
+        return result
+    return answers
+
 
 
 def generate_id(questions):

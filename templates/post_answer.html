@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Post an answer{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <p>
+    <h1>Share your solution</h1>
+    </p>
+    <form action="/question/<question_id>/new-answer" method=POST >
+        <input type="hidden" value="{{ question.id }}" name="question_id">
+        <p>
+        <label for="answer-message">Message:</label><br>
+            <textarea id="answer-message" name="answer-message" rows="4" cols="80" required></textarea><br>
+        </p>
+        <input type="submit" value="Post your answer">
+    </form>
+    <br>
+        <p>
+        <form action="/question/{{ question.id }}" method="GET">
+            <input type="submit" value="Cancel">
+        </form>
+        </p>
+{% endblock %}

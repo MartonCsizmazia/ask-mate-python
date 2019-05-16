@@ -88,4 +88,9 @@
     </tbody>
 </table>
 {% endif %}
+<p>
+    <form action="/question/{{ question['id'] }}/new-answer">
+        <input type="submit" value="Post an answer" />
+    </form>
+</p>
 {% endblock %}
