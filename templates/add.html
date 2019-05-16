@@ -12,13 +12,15 @@
             <input type="text" id="question-title" name="title" required><br>
         </p>
         <p>
-        <label for="add-message">Message</label><br>
+        <label for="add-message">Message:</label><br>
         <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
         </p>
         <input type="submit" value="Add your new question">
     </form>
-        <form action="/">
+    <br>
+        <p>
+        <form action="/" method="GET">
             <input type="submit" value="Cancel">
         </form>
-        <br>
+        </p>
 {% endblock %}

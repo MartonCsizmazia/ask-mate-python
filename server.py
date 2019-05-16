@@ -107,11 +107,8 @@ def delete_question(question_id):
     connection.delete_data_from_csv(data_manager.QUESTION, question_id, question_fieldnames)
 
     return redirect('/list')
-"""
-@app.route()
-def cancel():
-    return redirect('/list')
-"""
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
