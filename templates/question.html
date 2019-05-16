@@ -40,6 +40,12 @@
     <form action="/">
         <input type="submit" value="Go back to Questions" />
     </form>
+    <form action="/question/{{ question['id'] }}/vote-up">
+        <input type="submit" value="Up" />
+    </form>
+    <form action="/question/{{ question['id'] }}/vote-down">
+        <input type="submit" value="Down" />
+    </form>
 </p>
 {% if answers != [] %}
 <h1>
@@ -66,6 +72,12 @@
                     <form action="/answer/{{ answer['id'] }}/delete">
                     <input type="submit" value="Delete answer" />
                     </form>
+                    <form action="/answer/{{ answer['id'] }}/vote-up">
+                        <input type="submit" value="Up" />
+                    </form>
+                    <form action="/answer/{{ answer['id'] }}/vote-down">
+                        <input type="submit" value="Down" />
+                    </form>
                     {% else %}
                         {{ answer[header] }}
                     {% endif %}
@@ -76,4 +88,9 @@
     </tbody>
 </table>
 {% endif %}
+<p>
+    <form action="/question/{{ question['id'] }}/new-answer">
+        <input type="submit" value="Post an answer" />
+    </form>
+</p>
 {% endblock %}
