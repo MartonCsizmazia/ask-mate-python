@@ -28,6 +28,12 @@ def get_answers(question_id=None):
             result.append(answer)
     return result
 
+def generate_id(questions):
+    if len(questions) > 0:
+        return int((questions[-1]['id'])) + 1
+    else:
+        return 0
+
 
 
 

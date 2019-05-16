@@ -60,11 +60,7 @@ def list():
                            questions=questions)
 
 
-def generate_id(questions):
-    if len(questions) > 0:
-        return int((questions[-1]['id'])) + 1
-    else:
-        return 0
+
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -73,7 +69,7 @@ def route_add():
     QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     QUESTION = 'sample_data/question.csv'
     if request.method == 'POST':
-        new_id = generate_id(questions)
+        new_id = data_manager.generate_id(questions)
         new_submission_time = util.unix_date_now()
         my_new_data = {
                     "id": new_id,
@@ -111,8 +107,11 @@ def delete_question(question_id):
     connection.delete_data_from_csv(data_manager.QUESTION, question_id, question_fieldnames)
 
     return redirect('/list')
-
-
+"""
+@app.route()
+def cancel():
+    return redirect('/list')
+"""
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
