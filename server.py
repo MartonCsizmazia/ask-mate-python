@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/question/<question_id>')
 def route_question(question_id):
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
-    answer_headers = ['message', 'submission_time', 'vote_number', 'image']
+    answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_questions(question_id)
     answers = data_manager.get_answers(question_id)
 
