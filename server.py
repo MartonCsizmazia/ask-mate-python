@@ -49,7 +49,7 @@ def edit_question(question_id):
 
 
 @app.route('/question/<question_id>/vote-<vote>')
-def vote_up(question_id, vote):
+def vote_up_down(question_id, vote):
     fieldnames = data_manager.QUESTION_HEADER
     file = data_manager.QUESTION
 
@@ -63,7 +63,7 @@ def vote_up(question_id, vote):
     data_to_change['submission_time'] = str(int(util.date_to_unix(data_to_change['submission_time'])))
 
     connection.edit_row_in_csv(file, data_to_change, fieldnames)
-    return redirect('/')
+    return redirect('/question/' + question_id)
 
 
 @app.route('/list')
