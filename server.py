@@ -13,8 +13,6 @@ def route_question(question_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_questions(question_id)
     answers = data_manager.get_answers(question_id)
-    print(question)
-    print(answers)
 
     return render_template('question.html',
                            question=question,
@@ -27,11 +25,9 @@ def route_question(question_id):
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
-
     question = data_manager.get_questions(question_id)
     QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     QUESTION = 'sample_data/question.csv'
-
 
     if request.method == 'POST':
 
@@ -145,6 +141,7 @@ def delete_question(question_id):
 
     return redirect('/list')
 
+
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_new_answer(question_id):
     answers = data_manager.get_answers()
@@ -159,7 +156,6 @@ def add_new_answer(question_id):
                     "question_id": request.form.get("question_id"),
                     "message": request.form.get("answer-message"),
                     "image": ""}
-        print(new_answer)
 
         connection.export_data_to_csv(data_manager.ANSWER, new_answer, data_manager.ANSWER_HEADER)
 
