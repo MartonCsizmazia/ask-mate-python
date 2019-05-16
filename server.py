@@ -48,14 +48,14 @@ def edit_question(question_id):
         return render_template('edit_question.html')
 
 
-@app.route('/question/<question_id>/<vote>')
+@app.route('/question/<question_id>/vote-<vote>')
 def vote_up(question_id, vote):
     fieldnames = data_manager.QUESTION_HEADER
     file = data_manager.QUESTION
 
     data_to_change = data_manager.get_questions(question_id)
     data_to_change['vote_number'] = int(data_to_change['vote_number'])
-    if vote == 'vote-up':
+    if vote == 'up':
         data_to_change['vote_number'] += 1
     else:
         data_to_change['vote_number'] -= 1
