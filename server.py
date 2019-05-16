@@ -25,27 +25,29 @@ def route_question(question_id):
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
 
-    questions = data_manager.get_questions()
+    question = data_manager.get_questions(question_id)
     QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     QUESTION = 'sample_data/question.csv'
+
+
     if request.method == 'POST':
 
         new_submission_time = util.unix_date_now()
+
         my_new_data = {
-            "id": question_id,
+            "id": request.form["question_id"],
             "submission_time": new_submission_time,
-            "view_number": 0,
-            "vote_number": 0,
+            "view_number": request.form["view_number"],
+            "vote_number": request.form["vote_number"],
             "title": request.form.get("title"),
             "message": request.form.get("message"),
-            "image": "",
+            "image": request.form["image"],
         }
 
-        connection.export_data_to_csv(QUESTION, my_new_data, QUESTION_HEADER)
+        connection.edit_row_in_csv(QUESTION, my_new_data, QUESTION_HEADER)
         return redirect('/')
-
     else:
-        return render_template('edit_question.html')
+        return render_template('edit_question.html', question=question,)
 
 
 @app.route('/question/<question_id>/vote-<vote>')

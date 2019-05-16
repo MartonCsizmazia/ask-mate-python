@@ -7,16 +7,38 @@
         <body>
             <h1>Edit question</h1>
             <form action="/question/<question_id>/edit" method=POST >
+                <input type="hidden" value="{{ question.id }}" name="question_id">
+
+                <input type="hidden" value="{{ question['view_number'] }}" name="view_number">
+                <input type="hidden" value="{{ question['vote_number'] }}" name='vote_number'>
+                <input type="hidden" value="{{ question['image'] }}" name='image'>
 
                 <label for="question-title">Question Title:</label><br>
-                <input type="text" id="question-title" name="title" required><br>
+                <input type="text" id="question-title" name="title" value="{{ question['title'] }}" required><br>
+
 
                 <label for="add-message">Message</label><br>
-                <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
+                <textarea id="add-message" name="message" rows="4" cols="80"  required>{{ question["message"] }}</textarea><br>
+                Submission time:<br>
+                {{ question['submission_time'] }}<br>
 
-                <button type="submit">Edit Question</button><br>
+                <br>
+                View number:<br>
+                {{ question['view_number'] }}<br>
 
+                <br>
+                Vote number:<br>
+                {{ question['vote_number'] }}<br>
+
+                <br>
+                {{ question['image'] }}
+                <button type="submit">Edit Question</button>
             </form>
 
+            <p>
+            <form action="/" method="GET">
+                <input type="submit" value="Cancel">
+            </form>
+            </p>
         </body>
 </html>
