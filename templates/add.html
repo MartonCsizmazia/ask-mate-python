@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Ask a question</title>
-    </head>
-        <body>
-            <h1>Ask a question</h1>
-            <form action="/add-question" method=POST >
-
-                <label for="question-title">Question Title:</label><br>
-                <input type="text" id="question-title" name="title" required><br>
-
-                <label for="add-message">Message</label><br>
-                <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
-
-                <button type="submit">Add Your New Question</button>
-
-
-            </form>
-            &emsp;
-            <form action="/">
-            <input type="submit" value="Cancel" />
-            </form>
-            <br>
-
-        </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Ask a questions{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <p>
+    <h1>Ask a question</h1>
+    </p>
+    <form action="/add-question" method=POST >
+        <p>
+        <label for="question-title">Question Title:</label><br>
+            <input type="text" id="question-title" name="title" required><br>
+        </p>
+        <p>
+        <label for="add-message">Message</label><br>
+        <textarea id="add-message" name="message" rows="4" cols="80" required></textarea><br>
+        </p>
+        <input type="submit" value="Add your new question">
+    </form>
+        <form action="/">
+            <input type="submit" value="Cancel">
+        </form>
+        <br>
+{% endblock %}
