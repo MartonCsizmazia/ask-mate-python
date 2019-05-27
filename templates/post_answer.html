@@ -6,7 +6,7 @@
     <p>
     <h1>Share your solution!</h1>
     </p>
-    <form action="/question/<question_id>/new-answer" method=POST >
+    <form action="/question/{{ question.id }}/new-answer" method=POST >
         <input type="hidden" value="{{ question.id }}" name="question_id">
         <p>
         <label for="answer-message">Message:</label><br>

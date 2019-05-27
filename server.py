@@ -137,20 +137,20 @@ def delete_question(question_id):
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_new_answer(question_id):
-    answers = data_manager.get_answers()
-    question = data_manager.get_questions(question_id)
+
+    question = data_manager.get_question_by_id(question_id)
     if request.method == 'POST':
-        new_id = data_manager.generate_id(answers)
-        new_submission_time = util.unix_date_now()
+
+        new_submission_time = util.date_now()
         new_answer = {
-                    "id": new_id,
                     "submission_time": new_submission_time,
                     "vote_number": 0,
                     "question_id": request.form.get("question_id"),
                     "message": request.form.get("answer-message"),
                     "image": ""}
 
-        connection.export_data_to_csv(data_manager.ANSWER, new_answer, data_manager.ANSWER_HEADER)
+        #func = request.environ.get('werkzeug.server.shutdown')
+        data_manager.add_answer(new_answer)
 
         return redirect('/question/' + new_answer['question_id'])
 
