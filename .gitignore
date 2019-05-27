@@ -102,3 +102,7 @@ ENV/
 
 # pycharm files
 .idea/
+
+# Database
+.csv
+.sql
