@@ -34,7 +34,6 @@ def edit_question(question_id):
             "title": request.form.get("title"),
             "message": request.form.get("message"),
         }
-        print(my_new_data)
 
         data_manager.edit_question(my_new_data)
 

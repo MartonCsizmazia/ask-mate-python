@@ -3,8 +3,6 @@ import util
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION = 'sample_data/question.csv'
-ANSWER = 'sample_data/answer.csv'
 
 
 @connection.connection_handler
@@ -42,13 +40,12 @@ def get_answer_by_question_id(cursor, question_id):
 def edit_question(cursor, data):
     cursor.execute("""
                    UPDATE question SET title = %(title)s, message = %(message)s
-                   WHERE question_id = %(question_id)s;
+                   WHERE id = %(id)s;
                    """,
-                   {"question_id": data['question_id'],
+                   {"id": data["id"],
                     "title": data["title"],
                     "message": data["message"]})
-    question = cursor.fetchall()
-    return question
+
 
 
 

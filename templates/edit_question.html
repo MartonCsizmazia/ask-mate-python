@@ -3,31 +3,25 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-            <h1>Edit this question!</h1>
-            <form action="/question/<question_id>/edit" method=POST >
-                <input type="hidden" value="{{ question.id }}" name="question_id">
+    <h1>Edit this question!</h1>
+    <form action="/question/{{ question.id }}/edit" method=POST>
+        <input type="hidden" value="{{ question['id'] }}" name="question_id">
 
-                <input type="hidden" value="{{ question['view_number'] }}" name="view_number">
-                <input type="hidden" value="{{ question['vote_number'] }}" name='vote_number'>
-                <input type="hidden" value="{{ question['image'] }}" name='image'>
+        <label for="question-title">Question Title:</label><br>
+        <br>
+        <textarea id="question-title" name="title" rows="1" cols="20" required>{{ question['title'] }}</textarea><br>
+        <br>
 
-                <label for="question-title">Question Title:</label><br>
-                <br>
-                <textarea id="question-title" name="title" rows="1" cols="20"  required>{{ question['title'] }}</textarea><br>
-                <br>
+        <label for="add-message">Message:</label><br>
+        <br>
+        <textarea id="add-message" name="message" rows="6" cols="40" required>{{ question["message"] }}</textarea><br>
+        <br>
 
-                <label for="add-message">Message:</label><br>
-                <br>
-                <textarea id="add-message" name="message" rows="6" cols="40"  required >{{ question["message"] }}</textarea><br>
-                <br>
+        <button type="submit">Done</button>
+    </form>
 
-                <button type="submit">Done</button>
-            </form>
-
-            <p>
-            <form action="/" method="GET">
-                <input type="submit" value="Go back">
-            </form>
-            </p>
-        </body>
+    <p></p>
+    <form action="/" method="GET">
+        <input type="submit" value="Go back">
+    </form>
 {% endblock %}
