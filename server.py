@@ -44,38 +44,21 @@ def edit_question(question_id):
 
 @app.route('/question/<question_id>/vote-<vote>')
 def question_vote(question_id, vote):
-    fieldnames = data_manager.QUESTION_HEADER
-    file = data_manager.QUESTION
-
-    data_to_change = data_manager.get_questions(question_id)
-    data_to_change['vote_number'] = int(data_to_change['vote_number'])
     if vote == 'up':
-        data_to_change['vote_number'] += 1
+        data_manager.question_vote_up(question_id)
     else:
-        data_to_change['vote_number'] -= 1
-    data_to_change['vote_number'] = str(data_to_change['vote_number'])
-    data_to_change['submission_time'] = str(int(util.date_to_unix(data_to_change['submission_time'])))
-
-    connection.edit_row_in_csv(file, data_to_change, fieldnames)
+        data_manager.question_vote_down(question_id)
     return redirect('/question/' + question_id)
 
 
 @app.route('/answer/<answer_id>/vote-<vote>')
 def answer_vote(answer_id, vote):
-    fieldnames = data_manager.ANSWER_HEADER
-    file = data_manager.ANSWER
-
-    data_to_change = data_manager.get_questions(answer_id, file)
-    data_to_change['vote_number'] = int(data_to_change['vote_number'])
     if vote == 'up':
-        data_to_change['vote_number'] += 1
+        data_manager.answer_vote_up(answer_id)
     else:
-        data_to_change['vote_number'] -= 1
-    data_to_change['vote_number'] = str(data_to_change['vote_number'])
-    data_to_change['submission_time'] = str(int(util.date_to_unix(data_to_change['submission_time'])))
-
-    connection.edit_row_in_csv(file, data_to_change, fieldnames)
-    return redirect('/question/' + data_to_change['question_id'])
+        data_manager.answer_vote_down(answer_id)
+    changed_answer = data_manager.get_answer_by_id(answer_id)
+    return redirect('/question/' + str(changed_answer['question_id']))
 
 
 @app.route('/list')

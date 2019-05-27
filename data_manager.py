@@ -37,6 +37,16 @@ def get_answer_by_question_id(cursor, question_id):
 
 
 @connection.connection_handler
+def get_answer_by_id(cursor, id):
+    cursor.execute("""
+                   SELECT * FROM answer WHERE id = %(id)s;
+                   """,
+                   {'id': id})
+    question = cursor.fetchone()
+    return question
+
+
+@connection.connection_handler
 def edit_question(cursor, data):
     cursor.execute("""
                    UPDATE question SET title = %(title)s, message = %(message)s
@@ -45,6 +55,7 @@ def edit_question(cursor, data):
                    {"id": data["id"],
                     "title": data["title"],
                     "message": data["message"]})
+
 
 @connection.connection_handler
 def add_answer(cursor, data):
@@ -59,5 +70,37 @@ def add_answer(cursor, data):
                     "image": data["image"]})
 
 
+@connection.connection_handler
+def question_vote_up(cursor, question_id):
+    cursor.execute("""
+                   UPDATE question SET vote_number = vote_number + 1
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": question_id})
 
 
+@connection.connection_handler
+def question_vote_down(cursor, question_id):
+    cursor.execute("""
+                   UPDATE question SET vote_number = vote_number - 1
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": question_id})
+
+
+@connection.connection_handler
+def answer_vote_up(cursor, answer_id):
+    cursor.execute("""
+                   UPDATE answer SET vote_number = vote_number + 1
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": answer_id})
+
+
+@connection.connection_handler
+def answer_vote_down(cursor, answer_id):
+    cursor.execute("""
+                   UPDATE answer SET vote_number = vote_number - 1
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": answer_id})
