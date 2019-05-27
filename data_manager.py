@@ -27,26 +27,15 @@ def get_question_by_id(cursor, id):
     return question
 
 
-def get_answers(question_id=None):
-    answers = connection.get_data_from_csv('sample_data/answer.csv')
-    for row in answers:
-        row['submission_time'] = util.unix_date_filter(int(row['submission_time']))
-    result = []
-    if question_id:
-        for answer in answers:
-            if answer['question_id'] == question_id:
-                result.append(answer)
-        return result
+@connection.connection_handler
+def get_answer_by_question_id(cursor, question_id):
+    cursor.execute("""
+                   SELECT submission_time, message, vote_number, image FROM answer
+                   WHERE question_id = %(question_id)s;
+                   """,
+                   {'question_id': question_id})
+    answers = cursor.fetchall()
     return answers
-
-
-
-def generate_id(questions):
-    if len(questions) > 0:
-        return int((questions[-1]['id'])) + 1
-    else:
-        return 0
-
 
 
 
