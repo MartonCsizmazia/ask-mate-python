@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Edit this question!</h1>
     <form action="/question/{{ question.id }}/edit" method=POST>
-        <input type="hidden" value="{{ question['id'] }}" name="question_id">
+        <input type="hidden" value="{{ question.id }}" name="question_id">
 
         <label for="question-title">Question Title:</label><br>
         <br>

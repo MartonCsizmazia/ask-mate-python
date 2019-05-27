@@ -99,10 +99,10 @@ def route_add():
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
-    fieldnames = data_manager.ANSWER_HEADER
-    connection.delete_data_from_csv(data_manager.ANSWER, answer_id, fieldnames)
+    answer = data_manager.get_answer_by_id(answer_id)
+    data_manager.delete_answer(answer_id)
 
-    return redirect('/list')
+    return redirect('/question/' + str(answer['question_id']))
 
 
 @app.route('/question/<question_id>/delete')

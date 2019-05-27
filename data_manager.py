@@ -104,3 +104,12 @@ def answer_vote_down(cursor, answer_id):
                    WHERE id = %(id)s;
                    """,
                    {"id": answer_id})
+
+
+@connection.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("""
+                   DELETE FROM answer
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": answer_id})

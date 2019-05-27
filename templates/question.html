@@ -3,96 +3,96 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-<h1>
-    The problem:
-</h1>
-<br>
-<table>
-    <thead>
-       <tr>
-           {% for header in question_headers %}
-            <th>
-                {{header|replace("_", " ")|title}}
-            </th>
-           {% endfor %}
-       </tr>
-    </thead>
-    <tbody>
+    <h1>
+        The problem:
+    </h1>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            {% for header in question_headers %}
+                <th>
+                    {{ header|replace("_", " ")|title }}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
         <tr>
             {% for header in question_headers %}
                 <td>
-                    {% if header == 'image'%}
-                    <img src="{{ question[image] }}">
+                    {% if header == 'image' %}
+                        <img src="{{ question[image] }}">
                     {% else %}
-                        {{question[header]}}
+                        {{ question[header] }}
                     {% endif %}
                 </td>
             {% endfor %}
         </tr>
-    </tbody>
-</table>
-<p>
+        </tbody>
+    </table>
+    <p>
     <form action="/question/{{ question['id'] }}/edit">
-        <input type="submit" value="Edit question" />
+        <input type="submit" value="Edit question"/>
     </form>
     <form action="/question/{{ question['id'] }}/delete">
-        <input type="submit" value="Delete question" />
+        <input type="submit" value="Delete question"/>
     </form>
     <form action="/">
-        <input type="submit" value="Go back to Questions" />
+        <input type="submit" value="Go back to Questions"/>
     </form>
     <form action="/question/{{ question['id'] }}/vote-up">
-        <input type="submit" value="👍" />
+        <input type="submit" value="👍"/>
     </form>
     <form action="/question/{{ question['id'] }}/vote-down">
-        <input type="submit" value="👎" />
+        <input type="submit" value="👎"/>
     </form>
-</p>
-{% if answers != [] %}
-<h1>
-    Try this:
-</h1>
-<br>
-<table>
-    <thead>
-       <tr>
-           {% for header in answer_headers %}
-            <th>
-                {{header|replace("_", " ")|title}}
-            </th>
-           {% endfor %}
-       </tr>
-    </thead>
-    <tbody>
-        {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
-        <tr>
-            {% for header in answer_headers %}
-                <td>
-                    {% if header == 'image'%}
-                    <img src="{{ answers[image] }}">
-                    {% elif header == 'user_options'%}
-                    <form action="/answer/{{ answer['id'] }}/delete">
-                    <input type="submit" value="Delete answer" />
-                    </form>
-                    <form action="/answer/{{ answer['id'] }}/vote-up">
-                        <input type="submit" value="👍" />
-                    </form>
-                    <form action="/answer/{{ answer['id'] }}/vote-down">
-                        <input type="submit" value="👎" />
-                    </form>
-                    {% else %}
-                        {{ answer[header] }}
-                    {% endif %}
-                </td>
+    </p>
+    {% if answers != [] %}
+        <h1>
+            Try this:
+        </h1>
+        <br>
+        <table>
+            <thead>
+            <tr>
+                {% for header in answer_headers %}
+                    <th>
+                        {{ header|replace("_", " ")|title }}
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
+                <tr>
+                    {% for header in answer_headers %}
+                        <td>
+                            {% if header == 'image' %}
+                                <img src="{{ answers[image] }}">
+                            {% elif header == 'user_options' %}
+                                <form action="/answer/{{ answer['id'] }}/delete">
+                                    <input type="submit" value="Delete answer"/>
+                                </form>
+                                <form action="/answer/{{ answer['id'] }}/vote-up">
+                                    <input type="submit" value="👍"/>
+                                </form>
+                                <form action="/answer/{{ answer['id'] }}/vote-down">
+                                    <input type="submit" value="👎"/>
+                                </form>
+                            {% else %}
+                                {{ answer[header] }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
-<p>
+            </tbody>
+        </table>
+    {% endif %}
+    <p>
     <form action="/question/{{ question['id'] }}/new-answer">
-        <input type="submit" value="Post an answer" />
+        <input type="submit" value="Post an answer"/>
     </form>
-</p>
+    </p>
 {% endblock %}
