@@ -7,15 +7,24 @@ QUESTION = 'sample_data/question.csv'
 ANSWER = 'sample_data/answer.csv'
 
 
-def get_questions(question_id=None, file='sample_data/question.csv'):
-    questions = connection.get_data_from_csv(file)
-    for row in questions:
-        row['submission_time'] = util.unix_date_filter(int(row['submission_time']))
-    if question_id:
-        for question in questions:
-            if question['id'] == question_id:
-                return question
+@connection.connection_handler
+def get_all_questions(cursor):
+    cursor.execute("""
+                   SELECT title, submission_time, view_number, vote_number FROM question
+                   ORDER BY submission_time;
+                   """)
+    questions = cursor.fetchall()
     return questions
+
+
+@connection.connection_handler
+def get_question_by_id(cursor, id):
+    cursor.execute("""
+                   SELECT * FROM question WHERE id = %(id)s;
+                   """,
+                   {'id': id})
+    question = cursor.fetchone()
+    return question
 
 
 def get_answers(question_id=None):

@@ -89,7 +89,7 @@ def answer_vote(answer_id, vote):
 @app.route("/")
 def list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
-    questions = data_manager.get_questions()
+    questions = data_manager.get_all_questions()
 
     return render_template('list.html',
                            headers=headers,
