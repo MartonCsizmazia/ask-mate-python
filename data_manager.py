@@ -38,4 +38,17 @@ def get_answer_by_question_id(cursor, question_id):
     return answers
 
 
+@connection.connection_handler
+def edit_question(cursor, data):
+    cursor.execute("""
+                   UPDATE question SET title = %(title)s, message = %(message)s
+                   WHERE question_id = %(question_id)s;
+                   """,
+                   {"question_id": data['question_id'],
+                    "title": data["title"],
+                    "message": data["message"]})
+    question = cursor.fetchall()
+    return question
+
+
 
