@@ -10,7 +10,7 @@ ANSWER = 'sample_data/answer.csv'
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute("""
-                   SELECT title, submission_time, view_number, vote_number FROM question
+                   SELECT * FROM question
                    ORDER BY submission_time;
                    """)
     questions = cursor.fetchall()
@@ -30,7 +30,7 @@ def get_question_by_id(cursor, id):
 @connection.connection_handler
 def get_answer_by_question_id(cursor, question_id):
     cursor.execute("""
-                   SELECT submission_time, message, vote_number, image FROM answer
+                   SELECT * FROM answer
                    WHERE question_id = %(question_id)s;
                    """,
                    {'question_id': question_id})
