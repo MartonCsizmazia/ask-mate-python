@@ -3,33 +3,35 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-<p><h1 align="center">Ask-m8 the Ultimate Question Handler</h1></p>
-<br>
-<table>
-    <thead><tr>
-    {% for header in headers %}
-        <th> {{header|replace("_", " ")|title}} </th>
-    {% endfor %}
-    </tr></thead>
-    <tbody>
-        {% for question in questions|sort(reverse=True, attribute="submission_time") %}
+    <p><h1 align="center">Ask-m8 the Ultimate Question Handler</h1></p>
+    <br>
+    <table>
+        <thead>
         <tr>
             {% for header in headers %}
-                <td>
-                    {% if header == 'title'%}
-                        <a href="/question/{{ question['id'] }}">{{question[header]}}</a>
-                    {% else %}
-                        {{question[header]}}
-                    {% endif %}
-                </td>
+                <th> {{ header|replace("_", " ")|title }} </th>
             {% endfor %}
         </tr>
+        </thead>
+        <tbody>
+        {% for question in questions|sort(reverse=True, attribute="submission_time") %}
+            <tr>
+                {% for header in headers %}
+                    <td>
+                        {% if header == 'title' %}
+                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a>
+                        {% else %}
+                            {{ question[header] }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
-<p>
+        </tbody>
+    </table>
+    <p>
     <form action="/add-question">
-        <input type="submit" value="Ask a question" />
+        <input type="submit" value="Ask a question"/>
     </form>
-</p>
+    </p>
 {% endblock %}

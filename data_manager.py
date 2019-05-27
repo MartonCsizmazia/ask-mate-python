@@ -107,9 +107,36 @@ def answer_vote_down(cursor, answer_id):
 
 
 @connection.connection_handler
-def delete_answer(cursor, answer_id):
+def delete_answer_by_id(cursor, answer_id):
     cursor.execute("""
                    DELETE FROM answer
                    WHERE id = %(id)s;
                    """,
                    {"id": answer_id})
+
+
+@connection.connection_handler
+def delete_answer_by_question_id(cursor, question_id):
+    cursor.execute("""
+                   DELETE FROM answer
+                   WHERE question_id = %(id)s;
+                   """,
+                   {"id": question_id})
+
+
+@connection.connection_handler
+def delete_question(cursor, id):
+    cursor.execute("""
+                   DELETE FROM question
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": id})
+
+
+@connection.connection_handler
+def delete_question_tag(cursor, question_id):
+    cursor.execute("""
+                   DELETE FROM question_tag
+                   WHERE question_id = %(id)s;
+                   """,
+                   {"id": question_id})
