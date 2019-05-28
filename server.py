@@ -60,10 +60,19 @@ def answer_vote(answer_id, vote):
 
 
 @app.route('/list')
-@app.route("/")
-def list():
+def route_list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_all_questions()
+
+    return render_template('list.html',
+                           headers=headers,
+                           questions=questions)
+
+
+@app.route("/")
+def index():
+    headers = ['title', 'submission_time', 'view_number', 'vote_number']
+    questions = data_manager.get_last_5_questions()
 
     return render_template('list.html',
                            headers=headers,
