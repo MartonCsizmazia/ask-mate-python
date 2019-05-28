@@ -9,7 +9,17 @@ ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def get_all_questions(cursor):
     cursor.execute("""
                    SELECT * FROM question
-                   ORDER BY submission_time;
+                   ORDER BY submission_time DESC;
+                   """)
+    questions = cursor.fetchall()
+    return questions
+
+
+@connection.connection_handler
+def get_last_5_questions(cursor):
+    cursor.execute("""
+                   SELECT * FROM question
+                   ORDER BY submission_time DESC LIMIT 5;
                    """)
     questions = cursor.fetchall()
     return questions
