@@ -140,3 +140,16 @@ def delete_question_tag(cursor, question_id):
                    WHERE question_id = %(id)s;
                    """,
                    {"id": question_id})
+
+@connection.connection_handler
+def add_question(cursor, data):
+    cursor.execute("""
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image )
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s );
+                   """,
+                   {"submission_time": data["submission_time"],
+                    "view_number": data["view_number"],
+                    "vote_number": data["vote_number"],
+                    "title": data["title"],
+                    "message": data["message"],
+                    "image": data["image"]})

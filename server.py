@@ -73,27 +73,25 @@ def list():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add():
-    questions = data_manager.get_questions()
-    QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-    QUESTION = 'sample_data/question.csv'
+    questions = data_manager.get_all_questions()
+
     if request.method == 'POST':
-        new_id = data_manager.generate_id(questions)
-        new_submission_time = util.unix_date_now()
+        new_submission_time = util.date_now()
         my_new_data = {
-            "id": new_id,
+
             "submission_time": new_submission_time,
             "view_number": 0,
             "vote_number": 0,
             "title": request.form.get("title"),
             "message": request.form.get("message"),
-            "image": "",
+            "image": ""
         }
 
-        connection.export_data_to_csv(QUESTION, my_new_data, QUESTION_HEADER)
+        data_manager.add_question(my_new_data)
         return redirect('/')
 
     else:
-        return render_template('add.html')
+        return render_template('add.html', questions=questions)
 
 
 @app.route('/answer/<answer_id>/delete')
