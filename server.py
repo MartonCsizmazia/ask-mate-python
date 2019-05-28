@@ -150,15 +150,15 @@ def edit_answer(answer_id):
     if request.method == 'POST':
         my_new_data = {
             "id": request.form.get("answer_id"),
-
+            "question_id": request.form.get("question_id"),
             "message": request.form.get("message"),
         }
 
         data_manager.edit_answer(my_new_data)
 
-        return redirect('/question/' + str(my_new_data['id']))
+        return redirect('/question/' + str(my_new_data['question_id']))
 
-    return render_template('edit_answer.html', answer=answer, )
+    return render_template('edit_answer.html', answer=answer)
 
 if __name__ == '__main__':
     app.run(
