@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for question in questions|sort(reverse=True, attribute="submission_time") %}
+        {% for question in questions %}
             <tr>
                 {% for header in headers %}
                     <td>
