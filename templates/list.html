@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for question in questions|sort(reverse=True, attribute="submission_time") %}
+        {% for question in questions %}
             <tr>
                 {% for header in headers %}
                     <td>
@@ -29,9 +29,14 @@
         {% endfor %}
         </tbody>
     </table>
-    <p>
-    <form action="/add-question">
+    <br>
+    <form action="{{ url_for('route_add') }}">
         <input type="submit" value="Ask a question"/>
     </form>
-    </p>
+    {%  if type == 'limit_5'%}
+    <form action="{{ url_for('route_list') }}">
+        <input type="submit" value="Show all questions"/>
+    </form>
+    {% endif %}
+
 {% endblock %}

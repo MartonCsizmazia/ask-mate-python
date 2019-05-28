@@ -60,14 +60,25 @@ def answer_vote(answer_id, vote):
 
 
 @app.route('/list')
-@app.route("/")
-def list():
+def route_list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_all_questions()
 
     return render_template('list.html',
                            headers=headers,
-                           questions=questions)
+                           questions=questions,
+                           type='list_all')
+
+
+@app.route("/")
+def index():
+    headers = ['title', 'submission_time', 'view_number', 'vote_number']
+    questions = data_manager.get_last_5_questions()
+
+    return render_template('list.html',
+                           headers=headers,
+                           questions=questions,
+                           type='limit_5')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
