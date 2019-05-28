@@ -29,9 +29,14 @@
         {% endfor %}
         </tbody>
     </table>
-    <p>
+    <br>
     <form action="/add-question">
         <input type="submit" value="Ask a question"/>
     </form>
-    </p>
+    {%  if type == 'limit_5'%}
+    <form action="/list">
+        <input type="submit" value="Show all questions"/>
+    </form>
+    {% endif %}
+
 {% endblock %}

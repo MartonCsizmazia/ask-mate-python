@@ -66,7 +66,8 @@ def route_list():
 
     return render_template('list.html',
                            headers=headers,
-                           questions=questions)
+                           questions=questions,
+                           type='list_all')
 
 
 @app.route("/")
@@ -76,7 +77,8 @@ def index():
 
     return render_template('list.html',
                            headers=headers,
-                           questions=questions)
+                           questions=questions,
+                           type='limit_5')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
