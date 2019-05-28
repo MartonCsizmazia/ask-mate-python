@@ -71,6 +71,9 @@
                             {% if header == 'image' %}
                                 <img src="{{ answers[image] }}">
                             {% elif header == 'user_options' %}
+                                <form action="/answer/{{ answer['id'] }}/edit">
+                                    <input type="submit" value="Edit answer"/>
+                                </form>
                                 <form action="/answer/{{ answer['id'] }}/delete">
                                     <input type="submit" value="Delete answer"/>
                                 </form>
@@ -80,6 +83,7 @@
                                 <form action="/answer/{{ answer['id'] }}/vote-down">
                                     <input type="submit" value="👎"/>
                                 </form>
+
                             {% else %}
                                 {{ answer[header] }}
                             {% endif %}

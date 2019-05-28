@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Edit answer{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <h1>Edit this answer!</h1>
+    <form action="/answer/{{ answer.id }}/edit" method=POST>
+        <input type="hidden" value="{{ answer.id }}" name="answer_id">
+
+        <label for="add-message">Message:</label><br>
+        <br>
+        <textarea id="add-message" name="message" rows="6" cols="40" required>{{ answer["message"] }}</textarea><br>
+        <br>
+
+        <button type="submit">Done</button>
+    </form>
+
+    <p></p>
+    <form action="/answer/{{ answer.id }}" method="GET">
+        <input type="submit" value="Go back">
+    </form>
+{% endblock %}

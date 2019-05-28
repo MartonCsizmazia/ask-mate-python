@@ -132,6 +132,22 @@ def add_new_answer(question_id):
                                question=question
                                )
 
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    answer = data_manager.get_answer_by_id_for_edit(answer_id)
+
+    if request.method == 'POST':
+        my_new_data = {
+            "id": request.form.get("answer_id"),
+
+            "message": request.form.get("message"),
+        }
+
+        data_manager.edit_answer(my_new_data)
+
+        return redirect('/question/' + str(my_new_data['id']))
+
+    return render_template('edit_answer.html', answer=answer, )
 
 if __name__ == '__main__':
     app.run(

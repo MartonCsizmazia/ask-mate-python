@@ -153,3 +153,21 @@ def add_question(cursor, data):
                     "title": data["title"],
                     "message": data["message"],
                     "image": data["image"]})
+
+@connection.connection_handler
+def get_answer_by_id_for_edit(cursor, id):
+    cursor.execute("""
+                   SELECT * FROM answer WHERE id = %(id)s;
+                   """,
+                   {'id': id})
+    answer = cursor.fetchone()
+    return answer
+
+@connection.connection_handler
+def edit_answer(cursor, data):
+    cursor.execute("""
+                   UPDATE answer SET message = %(message)s
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": data["id"],
+                    "message": data["message"]})
