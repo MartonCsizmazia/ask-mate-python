@@ -140,8 +140,8 @@ def add_new_answer(question_id):
 
     else:
         return render_template('post_answer.html',
-                               question=question
-                               )
+                               question=question)
+
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
@@ -159,6 +159,24 @@ def edit_answer(answer_id):
         return redirect('/question/' + str(my_new_data['question_id']))
 
     return render_template('edit_answer.html', answer=answer)
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_question(question_id):
+    question = data_manager.get_question_by_id(question_id)
+    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
+
+    if request.method == 'POST':
+        new_comment = {
+            "submission_time": util.date_now(),
+            "question_id": request.form.get("question_id"),
+            "message": request.form.get("comment-message")}
+        data_manager.add_comment_to_question(new_comment)
+
+        return redirect('/question/' + new_comment['question_id'])
+
+    return render_template('add_comment_to_question.html', question_headers=question_headers, question=question)
+
 
 if __name__ == '__main__':
     app.run(
