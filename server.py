@@ -14,6 +14,7 @@ def route_question(question_id):
     answers = data_manager.get_answer_by_question_id(question_id)
     answer_ids = tuple([answer['id'] for answer in answers])
     answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
+
     tags = data_manager.get_tags_by_question_id(question_id)
     question_comments = data_manager.get_comments_by_question_id(question_id)
 
@@ -240,6 +241,23 @@ def add_tag_to_question(question_id):
         return redirect('/question/' + new_tag['question_id'])
 
     return render_template('add_comment_to_question.html',  question=question)
+
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    comment = data_manager.get_comment_by_id(comment_id)
+
+    if request.method == 'POST':
+        my_new_data = {
+            "id": request.form.get("answer_id"),
+            "question_id": request.form.get("question_id"),
+            "message": request.form.get("message"),
+        }
+
+        data_manager.edit_comment(my_new_data)
+
+        return redirect('/question/' + str(my_new_data['question_id']))
+
+    return render_template('edit_comment.html', comment=comment)
 
 if __name__ == '__main__':
     app.run(
