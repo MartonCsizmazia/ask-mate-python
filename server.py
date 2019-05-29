@@ -130,6 +130,18 @@ def delete_question(question_id):
     return redirect('/list')
 
 
+@app.route('/comment/<comment_id>/delete')
+def delete_comment(comment_id):
+    comment = data_manager.get_comment_by_id(comment_id)
+    question_id = comment['question_id']
+    if question_id is None:
+        question_id = data_manager.get_answer_by_id(comment.answer_id).question_id
+
+    data_manager.delete_comment_by_id(comment_id)
+
+    return redirect('/question/' + str(question_id))
+
+
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_new_answer(question_id):
     question = data_manager.get_question_by_id(question_id)
@@ -240,6 +252,7 @@ def add_tag_to_question(question_id):
         return redirect('/question/' + new_tag['question_id'])
 
     return render_template('add_comment_to_question.html',  question=question)
+
 
 if __name__ == '__main__':
     app.run(
