@@ -12,6 +12,7 @@ def route_question(question_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answer_by_question_id(question_id)
+    question_comments = data_manager.get_comments_by_question_id(question_id)
 
     return render_template('question.html',
                            question=question,
@@ -19,6 +20,7 @@ def route_question(question_id):
                            answers=answers,
                            question_headers=question_headers,
                            answer_headers=answer_headers,
+                           question_comments=question_comments
                            )
 
 
