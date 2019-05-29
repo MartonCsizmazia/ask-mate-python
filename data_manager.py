@@ -266,6 +266,47 @@ def get_tags_by_question_id(cursor, id):
 
 
 @connection.connection_handler
+def get_all_tags(cursor):
+    cursor.execute("""
+                   SELECT name FROM tag 
+                   """)
+    tags = cursor.fetchall()
+    return tags
+
+
+@connection.connection_handler
+def add_new_tag_to_tags(cursor, new_tag):
+    cursor.execute("""
+                   INSERT INTO tag (name)
+                   VALUES (%(name)s);
+                   """,
+                   {'name': new_tag})
+
+
+@connection.connection_handler
+def get_tag_id(cursor, name):
+    cursor.execute("""
+                   SELECT id 
+                   FROM tag
+                   WHERE name = %(name)s;
+                   """,
+                   {'name': name})
+    id = cursor.fetchone()
+    return id
+
+
+@connection.connection_handler
+def add_new_tag_to_question(cursor, question_id, tag_id):
+    cursor.execute("""
+                   INSERT INTO question_tag (question_id, tag_id)
+                   VALUES (%(question_id)s, %(tag_id)s);
+                   """,
+                   {'question_id': question_id,
+                    'tag_id': tag_id})
+
+
+
+@connection.connection_handler
 def get_comments_by_answer_idlist(cursor, answer_ids):
     cursor.execute("""
                    SELECT * FROM comment WHERE answer_id IN %(answer_ids)s ORDER BY submission_time;

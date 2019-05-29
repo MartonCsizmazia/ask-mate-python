@@ -242,17 +242,25 @@ def add_comment_to_answer(answer_id):
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
 def add_tag_to_question(question_id):
     question = data_manager.get_question_by_id(question_id)
+    tags = data_manager.get_all_tags()
 
     if request.method == 'POST':
-        new_tag = {
-            "submission_time": util.date_now(),
-            "question_id": request.form.get("question_id"),
-            "message": request.form.get("comment-message")}
-        data_manager.add_tag_to_question(new_tag)
+        if request.form.get("selector") == "custom":
+            question_id = request.form.get("question_id")
+            name = request.form.get("tag_message")
+            data_manager.add_new_tag_to_tags(name)
+            id = data_manager.get_tag_id(name)
+            data_manager.add_new_tag_to_question(request.form.get("question_id"), id['id'])
+        else:
+            question_id = request.form.get("question_id")
+            name = request.form.get("selector")
+            id = data_manager.get_tag_id(name)
+            data_manager.add_new_tag_to_question(request.form.get("question_id"), id['id'])
 
-        return redirect('/question/' + new_tag['question_id'])
+        return redirect('/question/' + str(question_id))
 
-    return render_template('add_comment_to_question.html',  question=question)
+    return render_template('add_tag_to_question.html',  question=question, tags=tags)
+
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
 def edit_comment(comment_id):

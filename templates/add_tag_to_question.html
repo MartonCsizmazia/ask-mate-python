@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Comment to question{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            {% for header in question_headers %}
+                <th>
+                    {{ header|replace("_", " ")|title }}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for header in question_headers %}
+                <td>
+                    {% if header == 'image' %}
+                        <img src="{{ question[image] }}">
+                    {% else %}
+                        {{ question[header] }}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    <form action="/question/{{ question.id }}/new-tag" method=POST >
+        <input type="hidden" value="{{ question.id }}" name="question_id">
+        <p>
+        <label for="tag-message">Tag:</label><br>
+            <br>
+            <select name="selector">
+                {% for tag in tags %}
+                <option name="default" value="{{ tag['name'] }}">{{ tag['name'] }}</option>
+                {% endfor %}
+                <option name="custom">custom</option>
+            </select>
+            <textarea id="tag-message" name="tag_message" rows="6" cols="50" ></textarea><br>
+        </p>
+        <input type="submit" value="Add your Tag">
+    </form>
+    <br>
+        <p>
+        <form action="/question/{{ question.id }}" method="GET">
+            <input type="submit" value="Go back">
+        </form>
+        </p>
+{% endblock %}
