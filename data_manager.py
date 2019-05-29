@@ -248,9 +248,19 @@ def add_comment_to_question(cursor, data):
 def delete_comment_by_id(cursor, comment_id):
     cursor.execute("""
                     DELETE FROM comment 
-                    VALUES id = %(comment_id)s);
+                    WHERE id = %(comment_id)s;
                    """,
                    {'comment_id': comment_id})
+
+
+@connection.connection_handler
+def get_comment_by_id(cursor, comment_id):
+    cursor.execute("""
+                   SELECT * FROM comment WHERE id = %(comment_id)s;
+                   """,
+                   {'comment_id': comment_id})
+    comment = cursor.fetchone()
+    return comment
 
 
 @connection.connection_handler
