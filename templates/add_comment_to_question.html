@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}Comment to question{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            {% for header in question_headers %}
+                <th>
+                    {{ header|replace("_", " ")|title }}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for header in question_headers %}
+                <td>
+                    {% if header == 'image' %}
+                        <img src="{{ question[image] }}">
+                    {% else %}
+                        {{ question[header] }}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    <form action="/question/{{ question.id }}/new-comment" method=POST >
+        <input type="hidden" value="{{ question.id }}" name="question_id">
+        <p>
+        <label for="comment-message">Comment:</label><br>
+            <br>
+            <textarea id="comment-message" name="comment-message" rows="6" cols="50" required></textarea><br>
+        </p>
+        <input type="submit" value="Add your comment">
+    </form>
+    <br>
+        <p>
+        <form action="/question/{{ question.id }}" method="GET">
+            <input type="submit" value="Go back">
+        </form>
+        </p>
+{% endblock %}
