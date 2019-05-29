@@ -151,6 +151,7 @@ def delete_question_tag(cursor, question_id):
                    """,
                    {"id": question_id})
 
+
 @connection.connection_handler
 def add_question(cursor, data):
     cursor.execute("""
@@ -164,6 +165,7 @@ def add_question(cursor, data):
                     "message": data["message"],
                     "image": data["image"]})
 
+
 @connection.connection_handler
 def get_answer_by_id_for_edit(cursor, id):
     cursor.execute("""
@@ -173,6 +175,7 @@ def get_answer_by_id_for_edit(cursor, id):
     answer = cursor.fetchone()
     return answer
 
+
 @connection.connection_handler
 def edit_answer(cursor, data):
     cursor.execute("""
@@ -181,3 +184,14 @@ def edit_answer(cursor, data):
                    """,
                    {"id": data["id"],
                     "message": data["message"]})
+
+
+@connection.connection_handler
+def add_comment_to_question(cursor, data):
+    cursor.execute("""
+                    INSERT INTO comment (question_id, message, submission_time)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s);
+                   """,
+                   {"question_id": data["question_id"],
+                    "message": data["message"],
+                    "submission_time": data["submission_time"]})
