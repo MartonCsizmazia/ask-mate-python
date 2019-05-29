@@ -39,6 +39,13 @@
             </td>
         {% endfor %}
     </table>
+    <table>
+    {% for question_comment in question_comments %}
+        <td>
+            {{ question_comment }}
+        </td>
+    {% endfor %}
+    </table>
     <p>
     <form action="/question/{{ question['id'] }}/edit">
         <input type="submit" value="Edit question"/>
