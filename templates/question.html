@@ -39,10 +39,11 @@
             </td>
         {% endfor %}
     </table>
+    {% if question_comments != None %}
     <table>
     {% for question_comment in question_comments %}
         <tr>
-        <td></td>
+        <td>
             {{ question_comment['message'] }}
         </td><td>
             {{ question_comment['submission_time'] }}
@@ -50,6 +51,7 @@
         </tr>
     {% endfor %}
     </table>
+    {% endif %}
     <p>
     <form action="/question/{{ question['id'] }}/edit">
         <input type="submit" value="Edit question"/>
