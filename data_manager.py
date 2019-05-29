@@ -57,6 +57,27 @@ def get_answer_by_id(cursor, id):
 
 
 @connection.connection_handler
+def get_comments_by_question_id(cursor, question_id):
+    cursor.execute("""
+                   SELECT * FROM comment
+                   WHERE question_id = %(question_id)s;
+                   """,
+                   {'question_id': question_id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
+def get_comments_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                   SELECT * FROM comment WHERE answer_id = %(answer_id)s;
+                   """,
+                   {'answer_id': answer_id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
 def edit_question(cursor, data):
     cursor.execute("""
                    UPDATE question SET title = %(title)s, message = %(message)s
@@ -198,6 +219,7 @@ def edit_answer(cursor, data):
                    """,
                    {"id": data["id"],
                     "message": data["message"]})
+
 
 @connection.connection_handler
 def add_comment(cursor, data):
