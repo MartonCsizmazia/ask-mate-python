@@ -12,8 +12,11 @@ def route_question(question_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answer_by_question_id(question_id)
+    answer_ids = tuple([answer['id'] for answer in answers])
+    answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
     tags = data_manager.get_tags_by_question_id(question_id)
     question_comments = data_manager.get_comments_by_question_id(question_id)
+
 
     return render_template('question.html',
                            question=question,
@@ -23,6 +26,7 @@ def route_question(question_id):
                            answer_headers=answer_headers,
                            tags=tags,
                            question_comments=question_comments,
+                           answer_comments=answer_comments
                            )
 
 
@@ -68,7 +72,6 @@ def route_list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_all_questions()
 
-    #func = request.environ.get('werkzeug.server.shutdown')
 
     return render_template('list.html',
                            headers=headers,

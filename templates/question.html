@@ -125,13 +125,14 @@
                     {% if answer_comment.answer_id ==  answer.id %}
                         <tr>
                         <td>
-                            {{ question_comment['message'] }}
+                            {{ answer_comment['message'] }}
                         </td><td>
-                            {{ question_comment['submission_time'] }}
+                            {{ answer_comment['submission_time'] }}
                         </td>
                         </tr>
                     {% endif %}
                     {% endfor %}
+                    {%  endif %}
             {% endfor %}
             </tbody>
         </table>

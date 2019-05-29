@@ -254,3 +254,12 @@ def get_tags_by_question_id(cursor, id):
                    {'id': id})
     answer = cursor.fetchall()
     return answer
+
+@connection.connection_handler
+def get_comments_by_answer_idlist(cursor, answer_ids):
+    cursor.execute("""
+                   SELECT * FROM comment WHERE answer_id IN %(answer_ids)s;
+                   """,
+                   {'answer_ids': answer_ids})
+    comments = cursor.fetchall()
+    return comments
