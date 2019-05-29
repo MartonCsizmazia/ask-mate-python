@@ -225,13 +225,12 @@ def add_comment_to_answer(answer_id):
         new_comment = {
             "submission_time": new_submission_time,
             "answer_id": request.form.get("answer_id"),
-            "question_id": request.form.get("question_id"),
             "message": request.form.get("comment-message"),
         }
 
-        data_manager.add_comment(new_comment)
+        data_manager.add_comment_to_answer(new_comment)
 
-        return redirect('/question/' + str(new_comment['question_id']))
+        return redirect('/question/' + str(request.form.get('question_id')))
 
     else:
         return render_template('post_comment_to_answer.html',
