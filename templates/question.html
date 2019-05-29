@@ -120,6 +120,18 @@
                         </td>
                     {% endfor %}
                 </tr>
+                    {% if answer_comments != None %}
+                    {% for answer_comment in answer_comments %}
+                    {% if answer_comment.answer_id ==  answer.id %}
+                        <tr>
+                        <td>
+                            {{ question_comment['message'] }}
+                        </td><td>
+                            {{ question_comment['submission_time'] }}
+                        </td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
             {% endfor %}
             </tbody>
         </table>
