@@ -247,8 +247,10 @@ def add_comment_to_question(cursor, data):
 @connection.connection_handler
 def get_tags_by_question_id(cursor, id):
     cursor.execute("""
-                   SELECT * FROM tag WHERE id = %(id)s;
+                   SELECT tag.name FROM tag JOIN question_tag 
+                   ON question_tag.tag_id=tag.id
+                   WHERE question_tag.question_id=%(id)s;
                    """,
                    {'id': id})
-    answer = cursor.fetchone()
+    answer = cursor.fetchall()
     return answer
