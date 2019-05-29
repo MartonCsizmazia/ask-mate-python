@@ -207,7 +207,7 @@ def add_comment_to_answer(answer_id):
             "submission_time": new_submission_time,
             "answer_id": request.form.get("answer_id"),
             "question_id": request.form.get("question_id"),
-            "message": request.form.get("answer-message"),
+            "message": request.form.get("comment-message"),
         }
 
         data_manager.add_comment(new_comment)
