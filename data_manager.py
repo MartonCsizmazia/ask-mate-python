@@ -167,6 +167,20 @@ def add_question(cursor, data):
 
 
 @connection.connection_handler
+def search_question(cursor, search_phrase):
+    cursor.execute("""
+                   SELECT DISTINCT question.* 
+                   FROM question, answer
+                   WHERE question.title ILIKE %(text)s 
+                   OR question.message ILIKE %(text)s 
+                   OR (answer.message ILIKE %(text)s AND answer.question_id=question.id);
+                   """,
+                   {'text': search_phrase})
+    result = cursor.fetchall()
+    return result
+
+
+@connection.connection_handler
 def get_answer_by_id_for_edit(cursor, id):
     cursor.execute("""
                    SELECT * FROM answer WHERE id = %(id)s;
