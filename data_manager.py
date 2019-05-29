@@ -199,6 +199,17 @@ def edit_answer(cursor, data):
                    {"id": data["id"],
                     "message": data["message"]})
 
+@connection.connection_handler
+def add_comment(cursor, data):
+    cursor.execute("""
+                    INSERT INTO comment (submission_time, answer_id, question_id, message)
+                    VALUES (%(submission_time)s, %(answer_id)s, %(question_id)s, %(message)s);
+                   """,
+                   {"submission_time": data["submission_time"],
+                    "answer_id": data["answer_id"],
+                    "question_id": data["question_id"],
+                    "message": data["message"]})
+
 
 @connection.connection_handler
 def add_comment_to_question(cursor, data):

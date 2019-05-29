@@ -3,6 +3,11 @@
 {% block head %}
 {% endblock %}
 {% block content %}
+    {% for header in answer_headers %}
+            <th>
+                {{ header|replace("_", " ")|title }}
+            </th>
+    {% endfor %}
     <p>
     <h1>Share your solution!</h1>
     </p>

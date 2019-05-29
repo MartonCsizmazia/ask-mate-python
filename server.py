@@ -147,7 +147,7 @@ def add_new_answer(question_id):
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
-    answer = data_manager.get_answer_by_id_for_edit(answer_id)
+    answer = data_manager.get_answer_by_id(answer_id)
 
     if request.method == 'POST':
         my_new_data = {
@@ -193,6 +193,30 @@ def search_question():
                            question=question,
                            )
 
+
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_answer(answer_id):
+    answer_headers = ['message', 'submission_time', 'vote_number', 'image']
+    answer = data_manager.get_answer_by_id(answer_id)
+    if request.method == 'POST':
+
+        new_submission_time = util.date_now()
+        new_comment = {
+            "submission_time": new_submission_time,
+            "answer_id": request.form.get("answer_id"),
+            "question_id": request.form.get("question_id"),
+            "message": request.form.get("answer-message"),
+        }
+
+        data_manager.add_comment(new_comment)
+
+        return redirect('/question/' + str(new_comment['question_id']))
+
+    else:
+        return render_template('post_comment_to_answer.html',
+                               answer=answer,
+                               answer_headers=answer_headers
+                               )
 
 if __name__ == '__main__':
     app.run(

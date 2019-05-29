@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Post a comment{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            {% for header in answer_headers %}
+                <th>
+                    {{ header|replace("_", " ")|title }}
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for header in answer_headers %}
+                    <td>
+                        {% if header == 'image' %}
+                            <img src="{{ answer[image] }}">
+                        {% else %}
+                            {{ answer[header] }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <h1>Comment this answer!</h1>
+    <form action="/answer/{{ answer.id }}/new-comment" method=POST >
+        <input type="hidden" value="{{ answer.id }}" name="answer_id">
+        <input type="hidden" value="{{ answer.question_id }}" name="question_id">
+
+        <label for="comment-message">Message:</label><br>
+            <br>
+            <textarea id="comment-message" name="comment-message" rows="6" cols="50" required></textarea><br>
+        </p>
+        <input type="submit" value="Add your comment">
+    </form>
+    <br>
+        <p>
+        <form action="/question/{{ answer.question_id }}" method="GET">
+            <input type="submit" value="Go back">
+        </form>
+        </p>
+{% endblock %}
+

@@ -74,6 +74,9 @@
                             {% if header == 'image' %}
                                 <img src="{{ answers[image] }}">
                             {% elif header == 'user_options' %}
+                                <form action="/answer/{{ answer['id'] }}/new-comment">
+                                    <input type="submit" value="Comment this answer"/>
+                                </form>
                                 <form action="/answer/{{ answer['id'] }}/edit">
                                     <input type="submit" value="Edit answer"/>
                                 </form>
