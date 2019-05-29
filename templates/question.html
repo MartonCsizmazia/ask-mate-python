@@ -41,9 +41,13 @@
     </table>
     <table>
     {% for question_comment in question_comments %}
-        <td>
-            {{ question_comment }}
+        <tr>
+        <td></td>
+            {{ question_comment['message'] }}
+        </td><td>
+            {{ question_comment['submission_time'] }}
         </td>
+        </tr>
     {% endfor %}
     </table>
     <p>
