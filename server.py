@@ -64,6 +64,8 @@ def route_list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_all_questions()
 
+    #func = request.environ.get('werkzeug.server.shutdown')
+
     return render_template('list.html',
                            headers=headers,
                            questions=questions,
@@ -159,6 +161,20 @@ def edit_answer(answer_id):
         return redirect('/question/' + str(my_new_data['question_id']))
 
     return render_template('edit_answer.html', answer=answer)
+
+@app.route('/search', methods=['POST'])
+def search_question():
+    headers = ['title', 'submission_time', 'view_number', 'vote_number']
+
+    search_phrase = '%' + request.form.get('search_text') + '%'
+
+    question = data_manager.search_question(search_phrase)
+
+    return render_template('search_question.html',
+                           headers=headers,
+                           question=question,
+                           )
+
 
 if __name__ == '__main__':
     app.run(

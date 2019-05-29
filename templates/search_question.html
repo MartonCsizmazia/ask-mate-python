@@ -1,15 +1,9 @@
 {% extends "layout.html" %}
-{% block title %}Questions{% endblock %}
+{% block title %}Search{% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
-    <p><h1 align="center">Ask-m8 the Ultimate Question Handler</h1></p>
-    <br>
-    <form action="{{ url_for('search_question') }}" method="POST" id="search-form">
-    <textarea id="search" name="search_text" rows="1" cols="0" placeholder="Please specify what you want to search"></textarea>
-        <input type="submit" value="🔍" id="search-glass"/>
-    </form>
-    <br>
+    <p><h1 align="center">Search Result</h1></p>
     <br>
     <table>
         <thead>
@@ -20,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for question in questions %}
+        {% for question in question %}
             <tr>
                 {% for header in headers %}
                     <td>
@@ -36,13 +30,5 @@
         </tbody>
     </table>
     <br>
-    <form action="{{ url_for('route_add') }}">
-        <input type="submit" value="Ask a question"/>
-    </form>
-    {%  if type == 'limit_5'%}
-    <form action="{{ url_for('route_list') }}">
-        <input type="submit" value="Show all questions"/>
-    </form>
-    {% endif %}
 
 {% endblock %}
