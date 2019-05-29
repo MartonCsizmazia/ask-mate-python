@@ -31,6 +31,14 @@
         </tr>
         </tbody>
     </table>
+    <br>
+    <table>
+        {% for tag in tags %}
+            <td>
+                {{ tag }}
+            </td>
+        {% endfor %}
+    </table>
     <p>
     <form action="/question/{{ question['id'] }}/edit">
         <input type="submit" value="Edit question"/>
@@ -40,6 +48,9 @@
     </form>
     <form action="/question/{{ question['id'] }}/new-comment">
         <input type="submit" value="Add comment"/>
+    </form>
+    <form action="/question/{{ question['id'] }}/new-tag">
+        <input type="submit" value="Add tag">
     </form>
     <form action="/">
         <input type="submit" value="Go back to Questions"/>

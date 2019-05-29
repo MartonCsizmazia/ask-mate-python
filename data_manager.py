@@ -242,3 +242,13 @@ def add_comment_to_question(cursor, data):
                    {"question_id": data["question_id"],
                     "message": data["message"],
                     "submission_time": data["submission_time"]})
+
+
+@connection.connection_handler
+def get_tags_by_question_id(cursor, id):
+    cursor.execute("""
+                   SELECT * FROM tag WHERE id = %(id)s;
+                   """,
+                   {'id': id})
+    answer = cursor.fetchone()
+    return answer

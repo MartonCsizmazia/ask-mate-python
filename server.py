@@ -12,6 +12,7 @@ def route_question(question_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answer_by_question_id(question_id)
+    tags = data_manager.get_tags_by_question_id(question_id)
     question_comments = data_manager.get_comments_by_question_id(question_id)
 
     return render_template('question.html',
@@ -20,6 +21,7 @@ def route_question(question_id):
                            answers=answers,
                            question_headers=question_headers,
                            answer_headers=answer_headers,
+                           tags=tags
                            question_comments=question_comments
                            )
 
@@ -219,6 +221,22 @@ def add_comment_to_answer(answer_id):
                                answer=answer,
                                answer_headers=answer_headers
                                )
+
+
+@app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
+def add_tag_to_question(question_id):
+    question = data_manager.get_question_by_id(question_id)
+
+    if request.method == 'POST':
+        new_tag = {
+            "submission_time": util.date_now(),
+            "question_id": request.form.get("question_id"),
+            "message": request.form.get("comment-message")}
+        data_manager.add_tag_to_question(new_tag)
+
+        return redirect('/question/' + new_tag['question_id'])
+
+    return render_template('add_comment_to_question.html',  question=question)
 
 if __name__ == '__main__':
     app.run(
