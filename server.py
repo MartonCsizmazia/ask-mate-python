@@ -13,10 +13,12 @@ def route_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answer_by_question_id(question_id)
     answer_ids = tuple([answer['id'] for answer in answers])
-    answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
+    if len(answer_ids) > 0:
+        answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
+    else:
+        answer_comments = None
     tags = data_manager.get_tags_by_question_id(question_id)
     question_comments = data_manager.get_comments_by_question_id(question_id)
-
 
     return render_template('question.html',
                            question=question,
