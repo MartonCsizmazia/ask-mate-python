@@ -255,6 +255,23 @@ def add_tag_to_question(question_id):
 
     return render_template('add_comment_to_question.html',  question=question)
 
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    comment = data_manager.get_comment_by_id(comment_id)
+
+    if request.method == 'POST':
+        my_new_data = {
+            "id": request.form.get("answer_id"),
+            "question_id": request.form.get("question_id"),
+            "message": request.form.get("message"),
+        }
+
+        data_manager.edit_comment(my_new_data)
+
+        return redirect('/question/' + str(my_new_data['question_id']))
+
+    return render_template('edit_comment.html', comment=comment)
+
 
 if __name__ == '__main__':
     app.run(

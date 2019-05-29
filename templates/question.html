@@ -47,6 +47,10 @@
             {{ question_comment['message'] }}
         </td><td>
             {{ question_comment['submission_time'] }}
+        </td><td>
+            <form action="/comment/{{ question_comment.id }}/edit">
+                <input type="submit" value="Edit comment"/>
+            </form>
         </td>
         </tr>
     {% endfor %}
@@ -128,6 +132,10 @@
                             {{ answer_comment['message'] }}
                         </td><td>
                             {{ answer_comment['submission_time'] }}
+                        </td><td>
+                            <form action="/comment/{{ answer_comment.id }}/edit">
+                                    <input type="submit" value="Edit comment"/>
+                            </form>
                         </td>
                         </tr>
                     {% endif %}

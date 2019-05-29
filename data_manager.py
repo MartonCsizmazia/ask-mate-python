@@ -60,7 +60,8 @@ def get_answer_by_id(cursor, id):
 def get_comments_by_question_id(cursor, question_id):
     cursor.execute("""
                    SELECT * FROM comment
-                   WHERE question_id = %(question_id)s;
+                   WHERE question_id = %(question_id)s
+                   ORDER BY submission_time;
                    """,
                    {'question_id': question_id})
     comments = cursor.fetchall()
@@ -70,7 +71,7 @@ def get_comments_by_question_id(cursor, question_id):
 @connection.connection_handler
 def get_comments_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                   SELECT * FROM comment WHERE answer_id = %(answer_id)s;
+                   SELECT * FROM comment WHERE answer_id = %(answer_id)s ORDER BY submission_time;
                    """,
                    {'answer_id': answer_id})
     comments = cursor.fetchall()
@@ -202,16 +203,6 @@ def search_question(cursor, search_phrase):
 
 
 @connection.connection_handler
-def get_answer_by_id_for_edit(cursor, id):
-    cursor.execute("""
-                   SELECT * FROM answer WHERE id = %(id)s;
-                   """,
-                   {'id': id})
-    answer = cursor.fetchone()
-    return answer
-
-
-@connection.connection_handler
 def edit_answer(cursor, data):
     cursor.execute("""
                    UPDATE answer SET message = %(message)s
@@ -278,8 +269,26 @@ def get_tags_by_question_id(cursor, id):
 @connection.connection_handler
 def get_comments_by_answer_idlist(cursor, answer_ids):
     cursor.execute("""
-                   SELECT * FROM comment WHERE answer_id IN %(answer_ids)s;
+                   SELECT * FROM comment WHERE answer_id IN %(answer_ids)s ORDER BY submission_time;
                    """,
                    {'answer_ids': answer_ids})
     comments = cursor.fetchall()
     return comments
+
+@connection.connection_handler
+def get_comment_by_id(cursor, id):
+    cursor.execute("""
+                   SELECT * FROM comment WHERE id = %(id)s;
+                   """,
+                   {'id': id})
+    comment = cursor.fetchone()
+    return comment
+
+@connection.connection_handler
+def edit_comment(cursor, data):
+    cursor.execute("""
+                   UPDATE comment SET message = %(message)s
+                   WHERE id = %(id)s;
+                   """,
+                   {"id": data["id"],
+                    "message": data["message"]})
