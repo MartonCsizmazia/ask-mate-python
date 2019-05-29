@@ -21,8 +21,8 @@ def route_question(question_id):
                            answers=answers,
                            question_headers=question_headers,
                            answer_headers=answer_headers,
-                           tags=tags
-                           question_comments=question_comments
+                           tags=tags,
+                           question_comments=question_comments,
                            )
 
 
