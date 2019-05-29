@@ -245,6 +245,15 @@ def add_comment_to_question(cursor, data):
 
 
 @connection.connection_handler
+def delete_comment_by_id(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment 
+                    VALUES id = %(comment_id)s);
+                   """,
+                   {'comment_id': comment_id})
+
+
+@connection.connection_handler
 def get_tags_by_question_id(cursor, id):
     cursor.execute("""
                    SELECT tag.name FROM tag JOIN question_tag 
@@ -254,6 +263,7 @@ def get_tags_by_question_id(cursor, id):
                    {'id': id})
     answer = cursor.fetchall()
     return answer
+
 
 @connection.connection_handler
 def get_comments_by_answer_idlist(cursor, answer_ids):
