@@ -137,7 +137,7 @@ def delete_comment(comment_id):
     comment = data_manager.get_comment_by_id(comment_id)
     question_id = comment['question_id']
     if question_id is None:
-        question_id = data_manager.get_answer_by_id(comment.answer_id).question_id
+        question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
 
     data_manager.delete_comment_by_id(comment_id)
 
