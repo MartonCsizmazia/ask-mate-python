@@ -5,23 +5,16 @@
 {% block content %}
     <br>
     <br>
-    <table>
 
+    <table id="list-table">
         <tbody>
         {% for question in questions %}
-            <tr>
-                {% for header in headers %}
-                    <td>
-                        {% if header == 'title' %}
-                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a><br>
-                            {{ question['submission_time'] }}
-                        {% elif header == 'vote_number' %}
-                            {{ question[header] }} <br>votes
-                        {% elif header == 'view_number' %}
-                            {{ question[header] }} <br>views
-                        {% endif %}
-                    </td>
-                {% endfor %}
+            <tr id="list-elements">
+                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td id="list-view">{{ question['view_number'] }} <br>views</td>
+                <td id="list-title"><a id="list-link" href="/question/{{ question['id'] }}">{{ question['title'] }}</a><p id="list-time">
+                    {{ question['submission_time'] }}</p>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

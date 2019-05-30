@@ -112,3 +112,37 @@
           background-color: #86989B;
           color: white;
         }
+
+        #list-table{
+            margin-top: 50px;
+            width: 50%;
+            height: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #list-view, #list-vote, #list-title{
+            border-right: none;
+            border-left: none;
+            border-top: none;
+            text-align: center;
+        }
+
+        #list-title{
+            text-align: left;
+        }
+
+        #list-time{
+            text-align: right;
+        }
+
+        #list-link{
+            text-decoration: none;
+            color: #30799B;
+            transition: all .3s linear 0;
+        }
+
+        #list-link:hover{
+            color: blue;
+        }
+
