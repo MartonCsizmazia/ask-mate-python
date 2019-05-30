@@ -119,6 +119,7 @@ def route_add():
 def delete_answer(answer_id):
     answer = data_manager.get_answer_by_id(answer_id)
     data_manager.delete_answer_by_id(answer_id)
+    data_manager.delete_comment_by_answer_id(answer_id)
 
     return redirect('/question/' + str(answer['question_id']))
 
@@ -128,6 +129,7 @@ def delete_question(question_id):
     data_manager.delete_answer_by_question_id(question_id)
     data_manager.delete_question_tag(question_id)
     data_manager.delete_question(question_id)
+    data_manager.delete_comment_by_question_id(question_id)
 
     return redirect('/list')
 
