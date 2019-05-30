@@ -215,23 +215,25 @@ def edit_answer(cursor, data):
 @connection.connection_handler
 def add_comment_to_answer(cursor, data):
     cursor.execute("""
-                    INSERT INTO comment (submission_time, answer_id, message)
-                    VALUES (%(submission_time)s, %(answer_id)s, %(message)s);
+                    INSERT INTO comment (submission_time, answer_id, message, edited_count)
+                    VALUES (%(submission_time)s, %(answer_id)s, %(message)s, %(edited_count)s);
                    """,
                    {"submission_time": data["submission_time"],
                     "answer_id": data["answer_id"],
-                    "message": data["message"]})
+                    "message": data["message"],
+                    "edited_count": data["edited_count"]})
 
 
 @connection.connection_handler
 def add_comment_to_question(cursor, data):
     cursor.execute("""
-                    INSERT INTO comment (question_id, message, submission_time)
-                    VALUES (%(question_id)s, %(message)s, %(submission_time)s);
+                    INSERT INTO comment (question_id, message, submission_time, edited_count)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s);
                    """,
                    {"question_id": data["question_id"],
                     "message": data["message"],
-                    "submission_time": data["submission_time"]})
+                    "submission_time": data["submission_time"],
+                    "edited_count": data["edited_count"]})
 
 
 @connection.connection_handler
@@ -356,8 +358,9 @@ def get_comment_by_id(cursor, id):
 @connection.connection_handler
 def edit_comment(cursor, data):
     cursor.execute("""
-                   UPDATE comment SET message = %(message)s
+                   UPDATE comment SET message = %(message)s, edited_count = %(edited_count)s
                    WHERE id = %(id)s;
                    """,
                    {"id": data["id"],
-                    "message": data["message"]})
+                    "message": data["message"],
+                    "edited_count": data["edited_count"]})

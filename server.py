@@ -194,7 +194,9 @@ def add_comment_to_question(question_id):
         new_comment = {
             "submission_time": util.date_now(),
             "question_id": request.form.get("question_id"),
-            "message": request.form.get("comment-message")}
+            "message": request.form.get("comment-message"),
+            "edited_count": 0
+        }
         data_manager.add_comment_to_question(new_comment)
 
         return redirect('/question/' + new_comment['question_id'])
@@ -227,6 +229,7 @@ def add_comment_to_answer(answer_id):
             "submission_time": new_submission_time,
             "answer_id": request.form.get("answer_id"),
             "message": request.form.get("comment-message"),
+            "edited_count": 0
         }
 
         data_manager.add_comment_to_answer(new_comment)
@@ -284,8 +287,9 @@ def edit_comment(comment_id):
             "id": request.form.get("answer_id"),
             "question_id": request.form.get("question_id"),
             "message": request.form.get("message"),
+            "edited_count": int(request.form.get("edited_count"))+1
         }
-
+        print(my_new_data)
         data_manager.edit_comment(my_new_data)
 
         return redirect('/question/' + str(question_id))

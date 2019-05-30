@@ -7,6 +7,7 @@
     <form action="/comment/{{ comment.id }}/edit" method=POST>
         <input type="hidden" value="{{ comment.id }}" name="answer_id">
         <input type="hidden" value="{{ comment.question_id }}" name="question_id">
+        <input type="hidden" value="{{ comment.edited_count }}" name="edited_count">
 
         <label for="add-message">Message:</label><br>
         <br>

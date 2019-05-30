@@ -51,6 +51,8 @@
         </td><td>
             {{ question_comment['submission_time'] }}
         </td><td>
+            Edited: {{ question_comment['edited_count'] }} times
+        </td><td>
             <form action="/comment/{{ question_comment.id }}/edit">
                 <input type="submit" value="Edit comment"/>
             </form>
@@ -139,6 +141,9 @@
                         </td><td>
                             {{ answer_comment['submission_time'] }}
                         </td><td>
+                            Edited: {{ answer_comment['edited_count'] }} times
+                        </td><td>
+
                             <form action="/comment/{{ answer_comment.id }}/edit">
                                     <input type="submit" value="Edit comment"/>
                             </form>
