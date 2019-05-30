@@ -1,0 +1,68 @@
+     html{
+            background-color: steelblue;
+        }
+       td{
+          text-align: left;
+       }
+       h1, label{
+           color: darkblue;
+           font-family: Ayuthaya;
+       }
+       h1{
+           text-align: center;
+       }
+       label{
+           font-weight: bold;
+       }
+       h3{
+           color: darkblue;
+           font-family: Ayuthaya;
+       }
+       textarea{
+           width: 100%;
+           height: 100%;
+           padding: 5px;
+           border-radius:5px;
+           border:4px solid darkblue;
+       }
+       #search{
+           width: 20%;
+           position: relative;
+           top: 1em;
+       }
+
+       #search-form{
+           display: inline;
+
+       }
+
+
+       table{
+          border-collapse: collapse;
+           width: 100%;
+       }
+       table, th, td{
+           border: 1px solid black;
+           padding: 9px;
+       }
+       th{
+           height: 25px;
+           background-color: deepskyblue;
+           color: white;
+       }
+       img{
+           background-image: url('/static/error.png');
+           alt: "A nice image";
+           object-fit: cover;
+           width: 100px;
+           height: 80px;
+       }
+        form{
+            display: inline-block;
+        }
+        tr{
+            background-color: #f2f2f2;
+        }
+        tr:hover{
+            background-color: #ddd;
+        }

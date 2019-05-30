@@ -296,8 +296,8 @@ def get_all_tags(cursor):
 def add_new_tag_to_tags(cursor, new_tag):
     cursor.execute("""
                    INSERT INTO tag (name)
-                   VALUES (%(name)s)
-                   ON CONFLICT DO NOTHING;
+                   SELECT %(name)s 
+                   WHERE NOT EXISTS( SELECT * FROM tag WHERE name = %(name)s);
                    """,
                    {'name': new_tag})
 
