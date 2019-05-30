@@ -244,6 +244,24 @@ def delete_comment_by_id(cursor, comment_id):
 
 
 @connection.connection_handler
+def delete_comment_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM comment 
+                    WHERE question_id = %(question_id)s;
+                   """,
+                   {'question_id': question_id})
+
+
+@connection.connection_handler
+def delete_comment_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM comment 
+                    WHERE answer_id = %(answer_id)s;
+                   """,
+                   {'answer_id': answer_id})
+
+
+@connection.connection_handler
 def get_comment_by_id(cursor, comment_id):
     cursor.execute("""
                    SELECT * FROM comment WHERE id = %(comment_id)s;
