@@ -275,6 +275,9 @@ def delete_tag_from_question(question_id, tag_id):
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
 def edit_comment(comment_id):
     comment = data_manager.get_comment_by_id(comment_id)
+    question_id = comment['question_id']
+    if question_id is None:
+        question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
 
     if request.method == 'POST':
         my_new_data = {
@@ -285,13 +288,9 @@ def edit_comment(comment_id):
 
         data_manager.edit_comment(my_new_data)
 
-        question_id = comment['question_id']
-        if question_id is None:
-            question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
-
         return redirect('/question/' + str(question_id))
 
-    return render_template('edit_comment.html', comment=comment)
+    return render_template('edit_comment.html', comment=comment, question_id=str(question_id))
 
 
 if __name__ == '__main__':
