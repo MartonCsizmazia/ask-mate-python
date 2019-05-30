@@ -51,6 +51,9 @@
             <form action="/comment/{{ question_comment.id }}/edit">
                 <input type="submit" value="Edit comment"/>
             </form>
+            <form action="/comment/{{ question_comment.id }}/delete">
+                    <input type="submit" value="Delete comment"/>
+            </form>
         </td>
         </tr>
     {% endfor %}
@@ -135,6 +138,9 @@
                         </td><td>
                             <form action="/comment/{{ answer_comment.id }}/edit">
                                     <input type="submit" value="Edit comment"/>
+                            </form>
+                            <form action="/comment/{{ answer_comment.id }}/delete">
+                                    <input type="submit" value="Delete comment"/>
                             </form>
                         </td>
                         </tr>
