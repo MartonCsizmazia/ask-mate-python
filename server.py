@@ -213,11 +213,11 @@ def search_question():
 
     search_phrase = '%' + request.form.get('search_text') + '%'
 
-    question = data_manager.search_question(search_phrase)
+    questions = data_manager.search_question(search_phrase)
 
     return render_template('search_question.html',
                            headers=headers,
-                           question=question,
+                           questions=questions,
                            )
 
 
