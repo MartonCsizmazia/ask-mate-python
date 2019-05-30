@@ -141,7 +141,11 @@
                         </td><td>
                             {{ answer_comment['submission_time'] }}
                         </td><td>
-                            Edited: {{ answer_comment['edited_count'] }} times
+                            {% if answer_comment['edited_count']== 0 %}
+                                This answer has not been edited
+                            {% else %}
+                                Edited: {{ answer_comment['edited_count'] }} times
+                            {% endif %}
                         </td><td>
 
                             <form action="/comment/{{ answer_comment.id }}/edit">
