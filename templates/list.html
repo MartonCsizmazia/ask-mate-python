@@ -16,19 +16,10 @@
         <tbody>
         {% for question in questions %}
             <tr>
-                {% for header in headers %}
-                    <td>
-                        {% if header == 'title' %}
-                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a><br>
-                            {{ question['submission_time'] }}
-                        {% elif header == 'vote_number' %}
-                            {{ question[header] }} <br>votes
-                        {% elif header == 'view_number' %}
-                            {{ question[header] }} <br>views
-                        {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
+            <td>{{ question['vote_number'] }} <br>votes</td>
+            <td>{{ question['view_number'] }} <br>views</td>
+            <td><a href="/question/{{ question['id'] }}">{{ question['title'] }}</a><br>
+                    {{ question['submission_time'] }}</td>
         {% endfor %}
         </tbody>
     </table>
