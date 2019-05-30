@@ -74,7 +74,6 @@ def route_list():
     headers = ['title', 'submission_time', 'view_number', 'vote_number']
     questions = data_manager.get_all_questions()
 
-
     return render_template('list.html',
                            headers=headers,
                            questions=questions,
@@ -243,6 +242,7 @@ def add_comment_to_answer(answer_id):
 
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
 def add_tag_to_question(question_id):
+    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
     question = data_manager.get_question_by_id(question_id)
     tags = data_manager.get_all_tags()
 
@@ -261,7 +261,15 @@ def add_tag_to_question(question_id):
 
         return redirect('/question/' + str(question_id))
 
-    return render_template('add_tag_to_question.html',  question=question, tags=tags)
+    return render_template('add_tag_to_question.html',  question=question, tags=tags, question_headers=question_headers)
+
+
+@app.route('/question/<question_id>/tag/<tag_id>delete', methods=['GET'])
+def delete_tag_from_question(question_id, tag_id):
+
+    data_manager.delete_tag_from_question(tag_id)
+
+    return redirect('/question/' + str(question_id))
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])

@@ -30,15 +30,18 @@
     <form action="/question/{{ question.id }}/new-tag" method=POST >
         <input type="hidden" value="{{ question.id }}" name="question_id">
         <p>
-        <label for="tag-message">Tag:</label><br>
+        <label for="tag-message">Add your Tag to this question!</label><br>
             <br>
             <select name="selector">
+                <option name="custom">custom</option>
                 {% for tag in tags %}
                 <option name="default" value="{{ tag['name'] }}">{{ tag['name'] }}</option>
                 {% endfor %}
-                <option name="custom">custom</option>
             </select>
-            <textarea id="tag-message" name="tag_message" rows="6" cols="50" ></textarea><br>
+            <br>
+            <br>
+            <label for="custom">If custom please specify your tag:</label><br>
+            <textarea id="tag-message" name="tag_message" rows="1" cols="40"></textarea><br>
         </p>
         <input type="submit" value="Add your Tag">
     </form>

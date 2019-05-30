@@ -274,13 +274,13 @@ def get_comment_by_id(cursor, comment_id):
 @connection.connection_handler
 def get_tags_by_question_id(cursor, id):
     cursor.execute("""
-                   SELECT tag.name FROM tag JOIN question_tag 
+                   SELECT tag.* FROM tag JOIN question_tag 
                    ON question_tag.tag_id=tag.id
                    WHERE question_tag.question_id=%(id)s;
                    """,
                    {'id': id})
-    answer = cursor.fetchall()
-    return answer
+    tags = cursor.fetchall()
+    return tags
 
 
 @connection.connection_handler
@@ -296,7 +296,8 @@ def get_all_tags(cursor):
 def add_new_tag_to_tags(cursor, new_tag):
     cursor.execute("""
                    INSERT INTO tag (name)
-                   VALUES (%(name)s);
+                   VALUES (%(name)s)
+                   ON CONFLICT DO NOTHING;
                    """,
                    {'name': new_tag})
 
@@ -317,10 +318,20 @@ def get_tag_id(cursor, name):
 def add_new_tag_to_question(cursor, question_id, tag_id):
     cursor.execute("""
                    INSERT INTO question_tag (question_id, tag_id)
-                   VALUES (%(question_id)s, %(tag_id)s);
+                   VALUES (%(question_id)s, %(tag_id)s)
+                   ON CONFLICT DO NOTHING;
                    """,
                    {'question_id': question_id,
                     'tag_id': tag_id})
+
+
+@connection.connection_handler
+def delete_tag_from_question(cursor, tag_id):
+    cursor.execute("""
+                   DELETE FROM question_tag
+                   WHERE tag_id = %(tag_id)s;
+                   """,
+                   {'tag_id': tag_id})
 
 
 
