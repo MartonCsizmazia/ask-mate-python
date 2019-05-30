@@ -252,7 +252,7 @@ def add_tag_to_question(question_id):
     if request.method == 'POST':
         if request.form.get("selector") == "custom":
             question_id = request.form.get("question_id")
-            name = request.form.get("tag_message")
+            name = request.form.get("tag_message").strip().lower()
             data_manager.add_new_tag_to_tags(name)
             id = data_manager.get_tag_id(name)
             data_manager.add_new_tag_to_question(request.form.get("question_id"), id['id'])
