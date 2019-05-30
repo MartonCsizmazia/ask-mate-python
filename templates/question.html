@@ -35,7 +35,9 @@
             {{ question_comment['submission_time'] }}
         </td><td>
             {% if question_comment['edited_count']== 0 %}
-                This answer has not been edited
+                This comment has not been edited
+            {% elif question_comment['edited_count']== 1 %}
+                Edited: {{ question_comment['edited_count'] }} time
             {% else %}
                 Edited: {{ question_comment['edited_count'] }} times
             {% endif %}
@@ -116,7 +118,9 @@
                             {{ answer_comment['submission_time'] }}
                         </td><td>
                             {% if answer_comment['edited_count']== 0 %}
-                                This answer has not been edited
+                                This comment has not been edited
+                            {% elif answer_comment['edited_count']== 1 %}
+                                Edited: {{ answer_comment['edited_count'] }} time
                             {% else %}
                                 Edited: {{ answer_comment['edited_count'] }} times
                             {% endif %}
