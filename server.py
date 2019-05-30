@@ -285,7 +285,11 @@ def edit_comment(comment_id):
 
         data_manager.edit_comment(my_new_data)
 
-        return redirect('/question/' + str(my_new_data['question_id']))
+        question_id = comment['question_id']
+        if question_id is None:
+            question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
+
+        return redirect('/question/' + str(question_id))
 
     return render_template('edit_comment.html', comment=comment)
 
