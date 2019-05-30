@@ -3,32 +3,15 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <h1>
-        The problem:
-    </h1>
-    <br>
-    <table>
-        <thead>
-        <tr>
-            {% for header in question_headers %}
-                <th>
-                    {{ header|replace("_", " ")|title }}
-                </th>
-            {% endfor %}
-        </tr>
-        </thead>
+    <table id="list-table">
         <tbody>
-        <tr>
-            {% for header in question_headers %}
-                <td>
-                    {% if header == 'image' %}
-                        <img src="{{ question['image'] }}">
-                    {% else %}
-                        {{ question[header] }}
-                    {% endif %}
+            <tr id="list-elements">
+                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td id="list-view">{{ question['view_number'] }} <br>views</td>
+                <td id="list-title">{{ question['message'] }}<p id="list-time">
+                    {{ question['submission_time'] }}</p>
                 </td>
-            {% endfor %}
-        </tr>
+            </tr>
         </tbody>
     </table>
     <br>
@@ -96,46 +79,33 @@
             Try this:
         </h1>
         <br>
-        <table>
-            <thead>
-            <tr>
-                {% for header in answer_headers %}
-                    <th>
-                        {{ header|replace("_", " ")|title }}
-                    </th>
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
             {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
+            <table>
+            <tbody>
                 <tr>
-                    {% for header in answer_headers %}
-                        <td>
-                            {% if header == 'image' %}
-                                <img src="{{ answer['image'] }}">
-                            {% elif header == 'user_options' %}
-                                <form action="/answer/{{ answer['id'] }}/new-comment">
-                                    <input type="submit" value="Comment this answer"/>
-                                </form>
-                                <form action="/answer/{{ answer['id'] }}/edit">
-                                    <input type="submit" value="Edit answer"/>
-                                </form>
-                                <form action="/answer/{{ answer['id'] }}/delete">
-                                    <input type="submit" value="Delete answer"/>
-                                </form>
-                                <form action="/answer/{{ answer['id'] }}/vote-up">
-                                    <input type="submit" value="👍"/>
-                                </form>
-                                <form action="/answer/{{ answer['id'] }}/vote-down">
-                                    <input type="submit" value="👎"/>
-                                </form>
-
-                            {% else %}
-                                {{ answer[header] }}
-                            {% endif %}
-                        </td>
-                    {% endfor %}
-                </tr>
+                    <td id="list-vote">{{ answer['vote_number'] }} <br>votes</td>
+                    <td id="list-title">{{ answer['message'] }}<p id="list-time">
+                        {{ answer['submission_time'] }}</p></td>
+                    <td><img src="{{ answer['image'] }}"></td>
+                    <td>
+                        <form action="/answer/{{ answer['id'] }}/new-comment">
+                            <input type="submit" value="Comment this answer"/>
+                        </form>
+                        <form action="/answer/{{ answer['id'] }}/edit">
+                            <input type="submit" value="Edit answer"/>
+                        </form>
+                        <form action="/answer/{{ answer['id'] }}/delete">
+                            <input type="submit" value="Delete answer"/>
+                        </form>
+                        <form action="/answer/{{ answer['id'] }}/vote-up">
+                            <input type="submit" value="👍"/>
+                        </form>
+                        <form action="/answer/{{ answer['id'] }}/vote-down">
+                            <input type="submit" value="👎"/>
+                        </form>
+                    </td>
+                </tr></tbody></table>
+                <table>
                     {% if answer_comments != None %}
                     {% for answer_comment in answer_comments %}
                     {% if answer_comment.answer_id ==  answer.id %}
@@ -162,10 +132,10 @@
                         </tr>
                     {% endif %}
                     {% endfor %}
-                    {%  endif %}
+                    {% endif %}
+                </table>
             {% endfor %}
-            </tbody>
-        </table>
+
     {% endif %}
     <p>
     <form action="/question/{{ question['id'] }}/new-answer">
