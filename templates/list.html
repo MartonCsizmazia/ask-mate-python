@@ -20,10 +20,10 @@
         </tbody>
     </table>
     <br>
+    <div id="list-all-div">
     {%  if type == 'limit_5'%}
-    <form action="{{ url_for('route_list') }}">
-        <input type="submit" value="Show all questions"/>
-    </form>
+        <a href="{{ url_for('route_list') }}" type="submit" id="list-all">Show all questions</a>
     {% endif %}
+    </div>
 
 {% endblock %}
