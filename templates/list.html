@@ -12,22 +12,19 @@
     <br>
     <br>
     <table>
-        <thead>
-        <tr>
-            {% for header in headers %}
-                <th> {{ header|replace("_", " ")|title }} </th>
-            {% endfor %}
-        </tr>
-        </thead>
+
         <tbody>
         {% for question in questions %}
             <tr>
                 {% for header in headers %}
                     <td>
                         {% if header == 'title' %}
-                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a>
-                        {% else %}
-                            {{ question[header] }}
+                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a><br>
+                            {{ question['submission_time'] }}
+                        {% elif header == 'vote_number' %}
+                            {{ question[header] }} <br>votes
+                        {% elif header == 'view_number' %}
+                            {{ question[header] }} <br>views
                         {% endif %}
                     </td>
                 {% endfor %}

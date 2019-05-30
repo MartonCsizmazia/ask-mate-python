@@ -71,7 +71,7 @@ def answer_vote(answer_id, vote):
 
 @app.route('/list')
 def route_list():
-    headers = ['title', 'submission_time', 'view_number', 'vote_number']
+    headers = ['view_number', 'vote_number', 'title']
     questions = data_manager.get_all_questions()
 
     return render_template('list.html',
@@ -82,7 +82,7 @@ def route_list():
 
 @app.route("/")
 def index():
-    headers = ['title', 'submission_time', 'view_number', 'vote_number']
+    headers = ['view_number', 'vote_number', 'title']
     questions = data_manager.get_last_5_questions()
 
     return render_template('list.html',
