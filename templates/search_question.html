@@ -5,28 +5,17 @@
 {% block content %}
     <p><h1 align="center">Search Result</h1></p>
     <br>
-    <table>
-        <thead>
-        <tr>
-            {% for header in headers %}
-                <th> {{ header|replace("_", " ")|title }} </th>
-            {% endfor %}
-        </tr>
-        </thead>
+    <table id="list-table">
         <tbody>
-        {% for question in question %}
-            <tr>
-                {% for header in headers %}
-                    <td>
-                        {% if header == 'title' %}
-                            <a href="/question/{{ question['id'] }}">{{ question[header] }}</a>
-                        {% else %}
-                            {{ question[header] }}
-                        {% endif %}
-                    </td>
-                {% endfor %}
+            {% for question in questions %}
+            <tr id="list-elements">
+                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td id="list-view">{{ question['view_number'] }} <br>views</td>
+                <td id="list-title">{{ question['message'] }}<p id="list-time">
+                    {{ question['submission_time'] }}</p>
+                </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
     <br>

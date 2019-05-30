@@ -3,28 +3,15 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <table>
-        <thead>
-        <tr>
-            {% for header in question_headers %}
-                <th>
-                    {{ header|replace("_", " ")|title }}
-                </th>
-            {% endfor %}
-        </tr>
-        </thead>
+    <table id="list-table">
         <tbody>
-        <tr>
-            {% for header in question_headers %}
-                <td>
-                    {% if header == 'image' %}
-                        <img src="{{ question[image] }}">
-                    {% else %}
-                        {{ question[header] }}
-                    {% endif %}
+            <tr id="list-elements">
+                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td id="list-view">{{ question['view_number'] }} <br>views</td>
+                <td id="list-title">{{ question['message'] }}<p id="list-time">
+                    {{ question['submission_time'] }}</p>
                 </td>
-            {% endfor %}
-        </tr>
+            </tr>
         </tbody>
     </table>
     <form action="/question/{{ question.id }}/new-comment" method=POST >

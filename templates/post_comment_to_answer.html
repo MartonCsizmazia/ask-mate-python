@@ -3,27 +3,13 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <table>
-        <thead>
-        <tr>
-            {% for header in answer_headers %}
-                <th>
-                    {{ header|replace("_", " ")|title }}
-                </th>
-            {% endfor %}
-        </tr>
-        </thead>
+    <table id="list-table">
         <tbody>
-            <tr>
-                {% for header in answer_headers %}
-                    <td>
-                        {% if header == 'image' %}
-                            <img src="{{ answer[image] }}">
-                        {% else %}
-                            {{ answer[header] }}
-                        {% endif %}
-                    </td>
-                {% endfor %}
+            <tr id="list-elements">
+                <td id="list-vote">{{ answer['vote_number'] }} <br>votes</td>
+                <td id="list-title">{{ answer['message'] }}<p id="list-time">
+                    {{ answer['submission_time'] }}</p>
+                </td>
             </tr>
         </tbody>
     </table>
