@@ -143,18 +143,18 @@ def answer_vote_down(cursor, answer_id):
 def delete_answer_by_id(cursor, answer_id):
     cursor.execute("""
                    DELETE FROM answer
-                   WHERE id = %(id)s;
+                   WHERE id = %(answer_id)s;
                    """,
-                   {"id": answer_id})
+                   {"answer_id": answer_id})
 
 
 @connection.connection_handler
 def delete_answer_by_question_id(cursor, question_id):
     cursor.execute("""
                    DELETE FROM answer
-                   WHERE question_id = %(id)s;
+                   WHERE question_id = %(question_id)s;
                    """,
-                   {"id": question_id})
+                   {"question_id": question_id})
 
 
 @connection.connection_handler
