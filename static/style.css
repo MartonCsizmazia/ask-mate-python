@@ -1,6 +1,10 @@
-     html{
-            background-color: steelblue;
+       html{
+           background-color: steelblue;
+          height: 100%;
+          margin: 0;
+          padding: 0;
         }
+
        td{
           text-align: left;
        }
@@ -8,7 +12,7 @@
            color: darkblue;
            font-family: Ayuthaya;
        }
-       h1{
+       #list-head{
            text-align: center;
        }
        label{
@@ -27,13 +31,21 @@
        }
        #search{
            width: 20%;
+           height: 15px;
+           border: none;
            position: relative;
-           top: 1em;
+           top: 0.6em;
        }
 
        #search-form{
            display: inline;
+           margin-left: 25px;
+       }
 
+       body{
+           margin: 0;
+           padding: 0;
+           height: 100%;
        }
 
 
@@ -65,4 +77,38 @@
         }
         tr:hover{
             background-color: #ddd;
+        }
+
+        .topnav {
+            top: 0em;
+            overflow: hidden;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            background-color: #333;
+        }
+
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 10px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        #logo{
+            float: left;
+            height: auto;
+            width: 220px;
+        }
+
+        .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+
+        .topnav a.active {
+          background-color: #86989B;
+          color: white;
         }
