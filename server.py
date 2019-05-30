@@ -292,6 +292,7 @@ def edit_comment(comment_id):
             "message": request.form.get("message"),
             "edited_count": int(request.form.get("edited_count"))+1
         }
+
         print(my_new_data)
         data_manager.edit_comment(my_new_data)
 

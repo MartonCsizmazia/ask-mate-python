@@ -51,7 +51,11 @@
         </td><td>
             {{ question_comment['submission_time'] }}
         </td><td>
-            Edited: {{ question_comment['edited_count'] }} times
+            {% if question_comment['edited_count']== 0 %}
+                This answer has not been edited
+            {% else %}
+                Edited: {{ question_comment['edited_count'] }} times
+            {% endif %}
         </td><td>
             <form action="/comment/{{ question_comment.id }}/edit">
                 <input type="submit" value="Edit comment"/>
