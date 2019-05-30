@@ -41,6 +41,7 @@ def edit_question(question_id):
             "id": request.form.get("question_id"),
             "title": request.form.get("title"),
             "message": request.form.get("message"),
+            "image": request.form.get("image")
         }
 
         data_manager.edit_question(my_new_data)
@@ -104,7 +105,7 @@ def route_add():
             "vote_number": 0,
             "title": request.form.get("title"),
             "message": request.form.get("message"),
-            "image": ""
+            "image": request.form.get("image")
         }
 
         data_manager.add_question(my_new_data)
@@ -156,7 +157,8 @@ def add_new_answer(question_id):
             "vote_number": 0,
             "question_id": request.form.get("question_id"),
             "message": request.form.get("answer-message"),
-            "image": ""}
+            "image": request.form.get("image")
+        }
 
         data_manager.add_answer(new_answer)
 
@@ -176,6 +178,7 @@ def edit_answer(answer_id):
             "id": request.form.get("answer_id"),
             "question_id": request.form.get("question_id"),
             "message": request.form.get("message"),
+            "image": request.form.get("image")
         }
 
         data_manager.edit_answer(my_new_data)

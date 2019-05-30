@@ -22,7 +22,7 @@
             {% for header in question_headers %}
                 <td>
                     {% if header == 'image' %}
-                        <img src="{{ question[image] }}">
+                        <img src="{{ question['image'] }}">
                     {% else %}
                         {{ question[header] }}
                     {% endif %}
@@ -108,7 +108,7 @@
                     {% for header in answer_headers %}
                         <td>
                             {% if header == 'image' %}
-                                <img src="{{ answers[image] }}">
+                                <img src="{{ answer['image'] }}">
                             {% elif header == 'user_options' %}
                                 <form action="/answer/{{ answer['id'] }}/new-comment">
                                     <input type="submit" value="Comment this answer"/>

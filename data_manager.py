@@ -81,12 +81,13 @@ def get_comments_by_answer_id(cursor, answer_id):
 @connection.connection_handler
 def edit_question(cursor, data):
     cursor.execute("""
-                   UPDATE question SET title = %(title)s, message = %(message)s
+                   UPDATE question SET title = %(title)s, message = %(message)s, image = %(image)s
                    WHERE id = %(id)s;
                    """,
                    {"id": data["id"],
                     "title": data["title"],
-                    "message": data["message"]})
+                    "message": data["message"],
+                    "image": data["image"]})
 
 
 @connection.connection_handler
@@ -205,11 +206,12 @@ def search_question(cursor, search_phrase):
 @connection.connection_handler
 def edit_answer(cursor, data):
     cursor.execute("""
-                   UPDATE answer SET message = %(message)s
+                   UPDATE answer SET message = %(message)s, image = %(image)s
                    WHERE id = %(id)s;
                    """,
                    {"id": data["id"],
-                    "message": data["message"]})
+                    "message": data["message"],
+                    "image": data["image"]})
 
 
 @connection.connection_handler
