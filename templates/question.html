@@ -3,26 +3,38 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <table id="list-table">
+    <table class="question-table">
         <tbody>
-            <tr id="list-elements">
-                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
-                <td id="list-view">{{ question['view_number'] }} <br>views</td>
-                <td id="list-title">{{ question['message'] }}<p id="list-time">
+            <tr>
+                <td class="question-head" colspan="3">{{ question['title'] }}<form class="question-buttons" action="/question/{{ question['id'] }}/delete">
+                <input class="question-buttons" type="submit" value="🗑️"/>
+                </form><form class="question-buttons" action="/question/{{ question['id'] }}/edit">
+                <input class="question-buttons" type="submit" value="⚙️"/>
+            </form></td>
+            </tr>
+            <tr class="list-elements">
+                <td class="list-vote"><form class="vote-up" action="/question/{{ question['id'] }}/vote-up">
+                    <input type="submit" value="👍"/>
+                </form><br>{{ question['vote_number'] }}<br>votes<br><form class="vote-down" action="/question/{{ question['id'] }}/vote-down">
+                    <input type="submit" value="👎"/>
+                </form></td>
+                <td class="list-view">{{ question['view_number'] }} <br>views</td>
+                <td class="list-title">{{ question['message'] }}<p class="list-time">
                     {{ question['submission_time'] }}</p>
                 </td>
             </tr>
         </tbody>
     </table>
     <br>
-    <table>
-        {% for tag in tags %}
-            <td>
-                {{ tag['name'] }} <form action="/question/{{ question['id'] }}/tag/{{ tag['id'] }}delete">
-                <input type="submit" value="X"/>
+    {% for tag in tags %}
+    <table class="tag-table">
+            <td class="tag-data">
+                {{ tag['name'] }} <form class="tag-delete" action="/question/{{ question['id'] }}/tag/{{ tag['id'] }}delete">
+                <input class="tag-delete" type="submit" value="❌"/>
                 </form>
             </td>
-        {% endfor %}
+    </table>
+    {% endfor %}
     </table>
     <br>
     {% if question_comments != None %}
@@ -54,26 +66,11 @@
     </table>
     {% endif %}
     <p>
-    <form action="/question/{{ question['id'] }}/edit">
-        <input type="submit" value="Edit question"/>
-    </form>
-    <form action="/question/{{ question['id'] }}/delete">
-        <input type="submit" value="Delete question"/>
-    </form>
     <form action="/question/{{ question['id'] }}/new-comment">
         <input type="submit" value="Add comment"/>
     </form>
     <form action="/question/{{ question['id'] }}/new-tag">
         <input type="submit" value="Add tag">
-    </form>
-    <form action="/">
-        <input type="submit" value="Go back to Questions"/>
-    </form>
-    <form action="/question/{{ question['id'] }}/vote-up">
-        <input type="submit" value="👍"/>
-    </form>
-    <form action="/question/{{ question['id'] }}/vote-down">
-        <input type="submit" value="👎"/>
     </form>
     </p>
     {% if answers != [] %}

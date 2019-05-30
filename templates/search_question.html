@@ -3,15 +3,15 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <p><h1 align="center">Search Result</h1></p>
     <br>
-    <table id="list-table">
+    <table class="list-table">
         <tbody>
             {% for question in questions %}
-            <tr id="list-elements">
-                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
-                <td id="list-view">{{ question['view_number'] }} <br>views</td>
-                <td id="list-title">{{ question['message'] }}<p id="list-time">
+            <tr class="list-elements">
+                <td class="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td class="list-view">{{ question['view_number'] }} <br>views</td>
+                <td class="list-title"><a class="list-link" href="/question/{{ question['id'] }}">{{ question['title'] }}</a>
+                    <p class="list-time">
                     {{ question['submission_time'] }}</p>
                 </td>
             </tr>
@@ -19,8 +19,5 @@
         </tbody>
     </table>
     <br>
-    <form action="/">
-        <input type="submit" value="Go back to Questions"/>
-    </form>
 
 {% endblock %}

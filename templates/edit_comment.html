@@ -3,22 +3,19 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <h1>Edit this answer!</h1>
+    <div class="add-form">
     <form action="/comment/{{ comment.id }}/edit" method=POST>
         <input type="hidden" value="{{ comment.id }}" name="answer_id">
         <input type="hidden" value="{{ comment.question_id }}" name="question_id">
         <input type="hidden" value="{{ comment.edited_count }}" name="edited_count">
 
-        <label for="add-message">Message:</label><br>
+        <label for="add-message" class="comment-label">Comment message:</label><br>
         <br>
         <textarea id="add-message" name="message" rows="6" cols="40" required>{{ comment["message"] }}</textarea><br>
         <br>
-
-        <button type="submit">Done</button>
+        <div class="format-button-div">
+            <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
-
-    <p></p>
-    <form action="/question/{{ question_id }}" method="GET">
-        <input type="submit" value="Go back">
-    </form>
+    </div>
 {% endblock %}

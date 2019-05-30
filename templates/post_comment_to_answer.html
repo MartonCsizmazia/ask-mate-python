@@ -3,32 +3,33 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <table id="list-table">
+    <div class="div-table">
+    <table class="comment-table">
         <tbody>
-            <tr id="list-elements">
-                <td id="list-vote">{{ answer['vote_number'] }} <br>votes</td>
-                <td id="list-title">{{ answer['message'] }}<p id="list-time">
+            <tr class="comment-elements">
+                <td class="comment-vote">{{ answer['vote_number'] }} <br>votes</td>
+                <td class="comment-title">{{ answer['message'] }}<p class="comment-time">
                     {{ answer['submission_time'] }}</p>
                 </td>
             </tr>
         </tbody>
     </table>
-    <h1>Comment this answer!</h1>
+    </div>
+    <br>
+    <div class="comment-form">
     <form action="/answer/{{ answer.id }}/new-comment" method=POST >
         <input type="hidden" value="{{ answer.id }}" name="answer_id">
         <input type="hidden" value="{{ answer.question_id }}" name="question_id">
 
-        <label for="comment-message">Message:</label><br>
+        <label for="comment-message" class="comment-label">Your comment:</label><br>
             <br>
-            <textarea id="comment-message" name="comment-message" rows="6" cols="50" required></textarea><br>
+            <textarea class="comment-message" name="comment-message" rows="6" cols="50" required></textarea><br>
         </p>
-        <input type="submit" value="Add your comment">
+        <div class="format-button-div">
+        <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
-    <br>
-        <p>
-        <form action="/question/{{ answer.question_id }}" method="GET">
-            <input type="submit" value="Go back">
-        </form>
-        </p>
+    </div>
+
 {% endblock %}
 

@@ -3,32 +3,28 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <p>
-    <h1>Ask a question!</h1>
-    </p>
+    <div class="add-form">
     <form action="/add-question" method=POST >
         <p>
-        <label for="question-title">Question Title:</label><br>
+        <label for="question-title" class="comment-label">Question Title:</label><br>
             <br>
-            <input type="text" id="question-title" name="title"><br>
+            <input type="text" class="question-title" name="title"><br>
         </p>
         <p>
-        <label for="add-message">Message:</label><br>
+        <label for="add-message" class="comment-label">Message:</label><br>
             <br>
 
         <textarea id="add-message" name="message" rows="6" cols="50" required></textarea><br>
         </p>
         <p>
-        <label for="add-image">Place here the URL, if you want to add image:</label><br>
+        <label for="add-image" class="comment-label">Place here the URL, if you want to add an image:</label><br>
             <br>
         <textarea id="add-image" name="image" rows="1" cols="50" ></textarea><br>
         </p>
-        <input type="submit" value="Add your new question">
+        <div class="format-button-div">
+            <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
+    </div>
     <br>
-        <p>
-        <form action="/" method="GET">
-            <input type="submit" value="Go back">
-        </form>
-        </p>
 {% endblock %}

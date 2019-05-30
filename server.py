@@ -75,6 +75,8 @@ def route_list():
     headers = ['view_number', 'vote_number', 'title']
     questions = data_manager.get_all_questions()
 
+    func = request.environ.get('werkzeug.server.shutdown')
+
     return render_template('list.html',
                            headers=headers,
                            questions=questions,

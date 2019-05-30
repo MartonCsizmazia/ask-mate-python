@@ -6,13 +6,13 @@
     <br>
     <br>
 
-    <table id="list-table">
+    <table class="list-table">
         <tbody>
         {% for question in questions %}
             <tr id="list-elements">
-                <td id="list-vote">{{ question['vote_number'] }} <br>votes</td>
-                <td id="list-view">{{ question['view_number'] }} <br>views</td>
-                <td id="list-title"><a id="list-link" href="/question/{{ question['id'] }}">{{ question['title'] }}</a><p id="list-time">
+                <td class="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td class="list-view">{{ question['view_number'] }} <br>views</td>
+                <td class="list-title"><a class="list-link" href="/question/{{ question['id'] }}">{{ question['title'] }}</a><p class="list-time">
                     {{ question['submission_time'] }}</p>
                 </td>
             </tr>
@@ -20,9 +20,9 @@
         </tbody>
     </table>
     <br>
-    <div id="list-all-div">
+    <div class="list-all-div">
     {%  if type == 'limit_5'%}
-        <a href="{{ url_for('route_list') }}" type="submit" id="list-all">Show all questions</a>
+        <a href="{{ url_for('route_list') }}" type="submit" class="list-link">Show all questions</a>
     {% endif %}
     </div>
 

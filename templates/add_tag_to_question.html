@@ -3,52 +3,43 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <table>
-        <thead>
-        <tr>
-            {% for header in question_headers %}
-                <th>
-                    {{ header|replace("_", " ")|title }}
-                </th>
-            {% endfor %}
-        </tr>
-        </thead>
+    <div class="div-table">
+    <table class="comment-table">
         <tbody>
-        <tr>
-            {% for header in question_headers %}
-                <td>
-                    {% if header == 'image' %}
-                        <img src="{{ question[image] }}">
-                    {% else %}
-                        {{ question[header] }}
-                    {% endif %}
+            <tr class="comment-elements">
+                <td class="comment-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td class="comment-view">{{ question['view_number'] }} <br>views</td>
+                <td class="comment-title">{{ question['message'] }}<p class="comment-time">
+                    {{ question['submission_time'] }}</p>
                 </td>
-            {% endfor %}
-        </tr>
+            </tr>
         </tbody>
     </table>
+    </div>
+    <div class="comment-form">
     <form action="/question/{{ question.id }}/new-tag" method=POST >
         <input type="hidden" value="{{ question.id }}" name="question_id">
         <p>
-        <label for="tag-message">Add your Tag to this question!</label><br>
+        <label for="tag-message" class="comment-label">Add your Tag to this question!</label><br>
             <br>
-            <select name="selector">
-                <option name="custom">custom</option>
+            <div class="comment-select">
+            <select name="selector" class="comment-option">
+                <option name="custom" class="comment-option">custom</option>
                 {% for tag in tags %}
-                <option name="default" value="{{ tag['name'] }}">{{ tag['name'] }}</option>
+                <option name="default" value="{{ tag['name'] }}" class="comment-option">{{ tag['name'] }} </option>
                 {% endfor %}
             </select>
+            </div>
             <br>
             <br>
-            <label for="custom">If custom please specify your tag:</label><br>
+            <label for="custom" class="comment-label">If custom please specify your tag:</label><br>
+            <br>
             <textarea id="tag-message" name="tag_message" rows="1" cols="40"></textarea><br>
         </p>
-        <input type="submit" value="Add your Tag">
+        <div class="format-button-div">
+            <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
+    </div>
     <br>
-        <p>
-        <form action="/question/{{ question.id }}" method="GET">
-            <input type="submit" value="Go back">
-        </form>
-        </p>
 {% endblock %}

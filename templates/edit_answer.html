@@ -3,25 +3,23 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-    <h1>Edit this answer!</h1>
+    <div class="add-form">
     <form action="/answer/{{ answer.id }}/edit" method=POST>
         <input type="hidden" value="{{ answer.id }}" name="answer_id">
         <input type="hidden" value="{{ answer.question_id }}" name="question_id">
 
-        <label for="add-message">Message:</label><br>
+        <label for="add-message" class="comment-label">Answer message:</label><br>
         <br>
         <textarea id="add-message" name="message" rows="6" cols="40" required>{{ answer["message"] }}</textarea><br>
         <br>
-        <label for="add-image">Place here new URL, if you want to replace image:</label><br>
+        <label for="add-image" class="comment-label">Place here new URL, if you want to replace image:</label><br>
             <br>
-        <textarea id="add-image" name="image" rows="1" cols="50" required>{{ answer["image"] }}</textarea>
+        <textarea id="add-image" name="image" rows="1" cols="50">{{ answer["image"] }}</textarea>
         <br>
-
-        <button type="submit">Done</button>
+        <br>
+        <div class="format-button-div">
+            <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
-
-    <p></p>
-    <form action="/question/{{ answer.question_id }}" method="GET">
-        <input type="submit" value="Go back">
-    </form>
+    </div>
 {% endblock %}

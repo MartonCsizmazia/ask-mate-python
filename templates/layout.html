@@ -11,14 +11,13 @@
         <img id="logo" src="{{ url_for('static', filename='logo.png') }}">
         <a class="active" href="/">Home</a>
         <form action="{{ url_for('search_question') }}" method="POST" id="search-form">
-             <textarea id="search" name="search_text" rows="1" cols="150" placeholder="Please specify what you want to search"></textarea>
-             <input type="submit" value="🔍" id="search-glass"/>
+             <input id="search" name="search_text" rows="1" cols="150" placeholder="Please specify what you want to search">
+                <input type="submit" value="🔍" id="search-glass"/>
         </form>
         {% if type %}
         <a href="{{ url_for('route_add') }}" type="submit">Ask a question</a>
         {% endif %}
-
-</div>
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
   </body>
 </html>
