@@ -322,3 +322,18 @@ def edit_comment(cursor, data):
                    {"id": data["id"],
                     "message": data["message"],
                     "edited_count": data["edited_count"]})
+
+
+def get_question(question_id):
+    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
+    answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
+    question = get_question_by_id(question_id)
+    answers = get_answer_by_question_id(question_id)
+    answer_ids = tuple([answer['id'] for answer in answers])
+    if len(answer_ids) > 0:
+        answer_comments = get_comments_by_answer_idlist(answer_ids)
+    else:
+        answer_comments = None
+    tags = get_tags_by_question_id(question_id)
+    question_comments = get_comments_by_question_id(question_id)
+    return answer_comments, answer_headers, answers, question, question_comments, question_headers, tags

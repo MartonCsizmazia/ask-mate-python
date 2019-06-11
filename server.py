@@ -8,28 +8,9 @@ app = Flask(__name__)
 
 @app.route('/question/<question_id>')
 def route_question(question_id):
-    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
-    answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
-    question = data_manager.get_question_by_id(question_id)
-    answers = data_manager.get_answer_by_question_id(question_id)
-    answer_ids = tuple([answer['id'] for answer in answers])
-    if len(answer_ids) > 0:
-        answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
-    else:
-        answer_comments = None
-    tags = data_manager.get_tags_by_question_id(question_id)
-    question_comments = data_manager.get_comments_by_question_id(question_id)
+    question = data_manager.get_question(question_id)
 
-    return render_template('question.html',
-                           question=question,
-                           question_title='Question',
-                           answers=answers,
-                           question_headers=question_headers,
-                           answer_headers=answer_headers,
-                           tags=tags,
-                           question_comments=question_comments,
-                           answer_comments=answer_comments
-                           )
+    return render_template('question.html', question=question)
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -38,7 +19,7 @@ def edit_question(question_id):
 
     if request.method == 'POST':
         my_new_data = {
-            "id": request.form.get("question_id"),
+            "id": request.form.get("question_id", 0),
             "title": request.form.get("title"),
             "message": request.form.get("message"),
             "image": request.form.get("image")
@@ -94,27 +75,28 @@ def index():
                            type='limit_5')
 
 
-@app.route('/add-question', methods=['GET', 'POST'])
+@app.route('/add-question', methods=['POST'])
+def route_add2():
+    new_submission_time = util.date_now()
+    my_new_data = {
+
+        "submission_time": new_submission_time,
+        "view_number": 0,
+        "vote_number": 0,
+        "title": request.form.get("title"),
+        "message": request.form.get("message"),
+        "image": request.form.get("image")
+    }
+
+    data_manager.add_question(my_new_data)
+    return redirect('/')
+
+@app.route('/add-question', methods=['GET'])
 def route_add():
+
+
     questions = data_manager.get_all_questions()
-
-    if request.method == 'POST':
-        new_submission_time = util.date_now()
-        my_new_data = {
-
-            "submission_time": new_submission_time,
-            "view_number": 0,
-            "vote_number": 0,
-            "title": request.form.get("title"),
-            "message": request.form.get("message"),
-            "image": request.form.get("image")
-        }
-
-        data_manager.add_question(my_new_data)
-        return redirect('/')
-
-    else:
-        return render_template('add.html', questions=questions)
+    return render_template('add.html', questions=questions)
 
 
 @app.route('/answer/<answer_id>/delete')
@@ -291,7 +273,6 @@ def edit_comment(comment_id):
             "edited_count": int(request.form.get("edited_count"))+1
         }
 
-        print(my_new_data)
         data_manager.edit_comment(my_new_data)
 
         return redirect('/question/' + str(question_id))
