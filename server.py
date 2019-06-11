@@ -120,22 +120,14 @@ def route_add():
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
     answer = data_manager.get_answer_by_id(answer_id)
-    data_manager.delete_comment_by_answer_id(answer_id)
-    data_manager.delete_answer_by_id(answer_id)
+    data_manager.delete_from_table_by_id(answer_id, "answer")
 
     return redirect('/question/' + str(answer['question_id']))
 
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
-    answers = data_manager.get_answer_by_question_id(question_id)
-    if answers:
-        for answer in answers:
-            data_manager.delete_comment_by_answer_id(answer['id'])
-    data_manager.delete_comment_by_question_id(question_id)
-    data_manager.delete_question_tag(question_id)
-    data_manager.delete_answer_by_question_id(question_id)
-    data_manager.delete_question(question_id)
+    data_manager.delete_from_table_by_id(question_id, "question")
 
     return redirect('/list')
 
@@ -147,7 +139,7 @@ def delete_comment(comment_id):
     if question_id is None:
         question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
 
-    data_manager.delete_comment_by_id(comment_id)
+    data_manager.delete_from_table_by_id(comment_id, "comment")
 
     return redirect('/question/' + str(question_id))
 

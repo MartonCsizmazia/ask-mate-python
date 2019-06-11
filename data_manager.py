@@ -1,4 +1,5 @@
 import connection
+from psycopg2 import sql
 
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -140,33 +141,6 @@ def answer_vote_down(cursor, answer_id):
 
 
 @connection.connection_handler
-def delete_answer_by_id(cursor, answer_id):
-    cursor.execute("""
-                   DELETE FROM answer
-                   WHERE id = %(answer_id)s;
-                   """,
-                   {"answer_id": answer_id})
-
-
-@connection.connection_handler
-def delete_answer_by_question_id(cursor, question_id):
-    cursor.execute("""
-                   DELETE FROM answer
-                   WHERE question_id = %(question_id)s;
-                   """,
-                   {"question_id": question_id})
-
-
-@connection.connection_handler
-def delete_question(cursor, id):
-    cursor.execute("""
-                   DELETE FROM question
-                   WHERE id = %(id)s;
-                   """,
-                   {"id": id})
-
-
-@connection.connection_handler
 def delete_question_tag(cursor, question_id):
     cursor.execute("""
                    DELETE FROM question_tag
@@ -239,30 +213,12 @@ def add_comment_to_question(cursor, data):
 
 
 @connection.connection_handler
-def delete_comment_by_id(cursor, comment_id):
-    cursor.execute("""
-                    DELETE FROM comment 
-                    WHERE id = %(comment_id)s;
-                   """,
-                   {'comment_id': comment_id})
-
-
-@connection.connection_handler
-def delete_comment_by_question_id(cursor, question_id):
-    cursor.execute("""
-                    DELETE FROM comment 
-                    WHERE question_id = %(question_id)s;
-                   """,
-                   {'question_id': question_id})
-
-
-@connection.connection_handler
-def delete_comment_by_answer_id(cursor, answer_id):
-    cursor.execute("""
-                    DELETE FROM comment 
-                    WHERE answer_id = %(answer_id)s;
-                   """,
-                   {'answer_id': answer_id})
+def delete_from_table_by_id(cursor, id, input_table):
+    cursor.execute(
+        sql.SQL("""
+                DELETE FROM {table}
+                WHERE id = %(id)s;""").format(table=sql.Identifier(input_table)),
+                {'id': id})
 
 
 @connection.connection_handler
@@ -338,7 +294,6 @@ def delete_tag_from_question(cursor, tag_id):
                    {'tag_id': tag_id})
 
 
-
 @connection.connection_handler
 def get_comments_by_answer_idlist(cursor, answer_ids):
     cursor.execute("""
@@ -347,6 +302,7 @@ def get_comments_by_answer_idlist(cursor, answer_ids):
                    {'answer_ids': answer_ids})
     comments = cursor.fetchall()
     return comments
+
 
 @connection.connection_handler
 def get_comment_by_id(cursor, id):
