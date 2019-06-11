@@ -302,5 +302,4 @@ def edit_comment(cursor, data):
                    WHERE id = %(id)s;
                    """,
                    {"id": data["id"],
-                    "message": data["message"],
-                    "edited_count": data["edited_count"]})
+                    "message": data["message"]})
