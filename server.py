@@ -15,7 +15,7 @@ def route_question(question_id):
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
-    question = data_manager.get_question_by_id(question_id)
+    question = data_manager.get_table_by_id(question_id, "question")
 
     if request.method == 'POST':
         my_new_data = {
@@ -47,7 +47,7 @@ def answer_vote(answer_id, vote):
         data_manager.answer_vote_up(answer_id)
     else:
         data_manager.answer_vote_down(answer_id)
-    changed_answer = data_manager.get_answer_by_id(answer_id)
+    changed_answer = data_manager.get_table_by_id(answer_id, "answer")
     return redirect('/question/' + str(changed_answer['question_id']))
 
 
@@ -101,7 +101,7 @@ def route_add():
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
-    answer = data_manager.get_answer_by_id(answer_id)
+    answer = data_manager.get_table_by_id(answer_id, "answer")
     data_manager.delete_from_table_by_id(answer_id, "answer")
 
     return redirect('/question/' + str(answer['question_id']))
@@ -116,7 +116,7 @@ def delete_question(question_id):
 
 @app.route('/comment/<comment_id>/delete')
 def delete_comment(comment_id):
-    comment = data_manager.get_comment_by_id(comment_id)
+    comment = data_manager.get_table_by_id(comment_id, "comment")
     question_id = comment['question_id']
     if question_id is None:
         question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
@@ -128,7 +128,7 @@ def delete_comment(comment_id):
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_new_answer(question_id):
-    question = data_manager.get_question_by_id(question_id)
+    question = data_manager.get_table_by_id(question_id, "question")
     if request.method == 'POST':
 
         new_submission_time = util.date_now()
@@ -151,7 +151,7 @@ def add_new_answer(question_id):
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
-    answer = data_manager.get_answer_by_id(answer_id)
+    answer = data_manager.get_table_by_id(answer_id, "answer")
 
     if request.method == 'POST':
         my_new_data = {
@@ -170,7 +170,7 @@ def edit_answer(answer_id):
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_question(question_id):
-    question = data_manager.get_question_by_id(question_id)
+    question = data_manager.get_table_by_id(question_id, "question")
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
 
     if request.method == 'POST':
@@ -204,7 +204,7 @@ def search_question():
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_answer(answer_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image']
-    answer = data_manager.get_answer_by_id(answer_id)
+    answer = data_manager.get_table_by_id(answer_id, "answer")
     if request.method == 'POST':
 
         new_submission_time = util.date_now()
@@ -229,7 +229,7 @@ def add_comment_to_answer(answer_id):
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
 def add_tag_to_question(question_id):
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
-    question = data_manager.get_question_by_id(question_id)
+    question = data_manager.get_table_by_id(question_id, "question")
     tags = data_manager.get_all_tags()
 
     if request.method == 'POST':
@@ -260,7 +260,7 @@ def delete_tag_from_question(question_id, tag_id):
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
 def edit_comment(comment_id):
-    comment = data_manager.get_comment_by_id(comment_id)
+    comment = data_manager.get_table_by_id(comment_id, "comment")
     question_id = comment['question_id']
     if question_id is None:
         question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
@@ -270,7 +270,6 @@ def edit_comment(comment_id):
             "id": request.form.get("answer_id"),
             "question_id": request.form.get("question_id"),
             "message": request.form.get("message"),
-            "edited_count": int(request.form.get("edited_count"))+1
         }
 
         data_manager.edit_comment(my_new_data)

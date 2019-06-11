@@ -27,14 +27,15 @@ def get_last_5_questions(cursor):
 
 
 @connection.connection_handler
-def get_question_by_id(cursor, id):
-    cursor.execute("""
-                   SELECT * FROM question WHERE id = %(id)s;
-                   """,
-                   {'id': id})
+def get_table_by_id(cursor, id, input_table):
+    cursor.execute(
+            sql.SQL("""
+                   SELECT * FROM {table} WHERE id = %(id)s;
+                   """).format(table=sql.Identifier(input_table)),
+                   {'id': id}
+                   )
     question = cursor.fetchone()
     return question
-
 
 @connection.connection_handler
 def get_answer_by_question_id(cursor, question_id):
@@ -222,16 +223,6 @@ def delete_from_table_by_id(cursor, id, input_table):
 
 
 @connection.connection_handler
-def get_comment_by_id(cursor, comment_id):
-    cursor.execute("""
-                   SELECT * FROM comment WHERE id = %(comment_id)s;
-                   """,
-                   {'comment_id': comment_id})
-    comment = cursor.fetchone()
-    return comment
-
-
-@connection.connection_handler
 def get_tags_by_question_id(cursor, id):
     cursor.execute("""
                    SELECT tag.* FROM tag JOIN question_tag 
@@ -305,23 +296,13 @@ def get_comments_by_answer_idlist(cursor, answer_ids):
 
 
 @connection.connection_handler
-def get_comment_by_id(cursor, id):
-    cursor.execute("""
-                   SELECT * FROM comment WHERE id = %(id)s;
-                   """,
-                   {'id': id})
-    comment = cursor.fetchone()
-    return comment
-
-@connection.connection_handler
 def edit_comment(cursor, data):
     cursor.execute("""
-                   UPDATE comment SET message = %(message)s, edited_count = %(edited_count)s
+                   UPDATE comment SET message = %(message)s, edited_count = edited_count+1 
                    WHERE id = %(id)s;
                    """,
                    {"id": data["id"],
-                    "message": data["message"],
-                    "edited_count": data["edited_count"]})
+                    "message": data["message"]})
 
 
 def get_question(question_id):
