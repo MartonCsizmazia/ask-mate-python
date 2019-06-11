@@ -290,7 +290,6 @@ def edit_comment(comment_id):
             "message": request.form.get("message"),
         }
 
-        print(my_new_data)
         data_manager.edit_comment(my_new_data)
 
         return redirect('/question/' + str(question_id))
