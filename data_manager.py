@@ -104,6 +104,16 @@ def add_answer(cursor, data):
                     "message": data["message"],
                     "image": data["image"]})
 
+@connection.connection_handler
+def add_new_user(cursor, data):
+    cursor.execute("""
+                        INSERT INTO users (username, creation_date, password)
+                        VALUES (%(username)s, %(creation_date)s,  %(password)s);
+                       """,
+                   {"username": data["username"],
+                    "creation_date": data["creation_date"],
+                    "password": data["password"]})
+
 
 @connection.connection_handler
 def question_vote_up(cursor, question_id):
@@ -303,18 +313,3 @@ def edit_comment(cursor, data):
                    """,
                    {"id": data["id"],
                     "message": data["message"]})
-
-
-def get_question(question_id):
-    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
-    answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
-    question = get_question_by_id(question_id)
-    answers = get_answer_by_question_id(question_id)
-    answer_ids = tuple([answer['id'] for answer in answers])
-    if len(answer_ids) > 0:
-        answer_comments = get_comments_by_answer_idlist(answer_ids)
-    else:
-        answer_comments = None
-    tags = get_tags_by_question_id(question_id)
-    question_comments = get_comments_by_question_id(question_id)
-    return answer_comments, answer_headers, answers, question, question_comments, question_headers, tags

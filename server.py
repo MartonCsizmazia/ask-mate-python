@@ -8,9 +8,27 @@ app = Flask(__name__)
 
 @app.route('/question/<question_id>')
 def route_question(question_id):
-    question = data_manager.get_question(question_id)
-
-    return render_template('question.html', question=question)
+    question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
+    answer_headers = ['message', 'submission_time', 'vote_number', 'image', 'user_options']
+    question = data_manager.get_table_by_id(question_id, "question")
+    answers = data_manager.get_answer_by_question_id(question_id)
+    answer_ids = tuple([answer['id'] for answer in answers])
+    if len(answer_ids) > 0:
+        answer_comments = data_manager.get_comments_by_answer_idlist(answer_ids)
+    else:
+        answer_comments = None
+    tags = data_manager.get_tags_by_question_id(question_id)
+    question_comments = data_manager.get_comments_by_question_id(question_id)
+    return render_template('question.html',
+                           question=question,
+                           question_title='Question',
+                           answers=answers,
+                           question_headers=question_headers,
+                           answer_headers=answer_headers,
+                           tags=tags,
+                           question_comments=question_comments,
+                           answer_comments=answer_comments
+                           )
 
 
 @app.route('/registration', methods=['GET', 'POST'])
