@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
     <div class="add-form">
+    {{ 'edit' if id else 'add' }} question
     <form action="/question/{{ question.id }}/edit" method=POST>
         <input type="hidden" value="{{ question.id }}" name="question_id">
 
