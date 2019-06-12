@@ -9,15 +9,15 @@
     <table class="list-table">
         <tbody>
             <tr>
-                <td> id</td>
-                <td> username</td>
-                <td> creation date</td>
+                <td class="users-table-head"> ID</td>
+                <td class="users-table-head"> Username</td>
+                <td class="users-table-head"> Creation date</td>
             </tr>
         {% for user in users %}
             <tr>
-                <td> {{ user['user_id'] }} </td>
-                <td> {{ user['username'] }} </td>
-                <td> {{ user['creation_date'] }}</td>
+                <td class="users-table"> {{ user['user_id'] }} </td>
+                <td class="users-table"> {{ user['username'] }} </td>
+                <td class="users-table"> {{ user['creation_date'] }}</td>
 
             </tr>
         {% endfor %}

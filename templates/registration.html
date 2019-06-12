@@ -6,17 +6,19 @@
     <div class="registration-form">
     <form action="{{ action_route }}" method=POST >
         <p>
-        <label for="username" class="username">Username:</label><br>
+        <label for="username" class="username-label">Username:</label><br>
             <br>
             <input type="text" class="username" name="username" required value="{{ username }}">
-            <div class="error-message">{% if username %}This username already exists{% endif %}</div><br>
+            <div class="error-message">{% if username %} *This username already exists! {% endif %}</div><br>
         </p>
         <p>
-        <label for="password" class="password">Password:</label><br>
+        <label for="password" class="username-label">Password:</label><br>
             <br>
         <input type="password" class="password" name="password" required><br>
         </p>
-        <div class="error-message">{% if login == 'failed' %} Invalid username or password {% endif %}</div>
+        <div class="error-message">{% if login == 'failed' %} *Invalid username or password! {% endif %}</div>
+        <br>
+        <br>
         <div class="registration-button-div">
             <input class="registration-button" type="submit" value="Submit">
         </div>
