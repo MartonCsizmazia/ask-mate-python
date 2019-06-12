@@ -104,6 +104,16 @@ def add_answer(cursor, data):
                     "message": data["message"],
                     "image": data["image"]})
 
+@connection.connection_handler
+def add_new_user(cursor, data):
+    cursor.execute("""
+                        INSERT INTO users (user_name, creation_date, password)
+                        VALUES (%(submission_time)s, %(user_name)s, %(password)s);
+                       """,
+                   {"creation_date": data["creation_date"],
+                    "user_name": data["user_name"],
+                    "password": data["password"]})
+
 
 @connection.connection_handler
 def question_vote_up(cursor, question_id):
