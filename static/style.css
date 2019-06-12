@@ -146,6 +146,16 @@
             margin-right: auto;
         }
 
+        .comment-table{
+            margin-top: 5px;
+            width: 45%;
+            height: 60px;
+            margin-left: auto;
+            margin-right: auto;
+            border-width: thin;
+            border-color: white;
+        }
+
         .tag-table{
             width: 120px;
             height: 40px;
@@ -156,6 +166,20 @@
             display: inline-block;
             border: none;
             position: relative;
+        }
+
+        .add-tag{
+            position: absolute;
+            margin-left: 27%;
+            margin-top: 0.8%;
+        }
+
+        .add-comment{
+            text-align: center;
+        }
+
+        #comment-table, #comment-add{
+            width: 80%;
         }
 
         .tag-data{
@@ -184,16 +208,31 @@
             float: top;
         }
 
-        .list-view, .list-vote, .list-title, .users-table, .users-table-head{
+        .list-view, .list-vote, .list-title, .users-table, .users-table-head, .comment-element{
             border-right: none;
             border-left: none;
             border-top: none;
             text-align: center;
         }
 
+        .users-table{
+            border-bottom: none;
+        }
+
         .users-table-head{
             color: #177199;
             font-style: italic;
+        }
+
+        #answer-table{
+            width: 55%;
+        }
+
+        .comment-element{
+            font-size: small;
+            font-style: italic;
+            background-color: #f2f2f2;
+            border-color: white;
         }
 
 
@@ -223,6 +262,11 @@
             text-decoration: none;
             color: #177199;
             transition: all .3s linear 0;
+        }
+
+        .list-elements{
+            text-align: center;
+            border: none;
         }
 
         .list-all:hover, .comment-button:hover{
