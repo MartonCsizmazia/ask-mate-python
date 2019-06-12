@@ -40,7 +40,10 @@ def registration():
             'creation_date': util.date_now()
         }
 
-        data_manager.add_new_user(new_data)
+        try:
+            data_manager.add_new_user(new_data)
+        except:
+            return render_template('registration.html', username=request.form.get('username'))
 
         return redirect('/')
     return render_template('registration.html')
