@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
-{% block title %}Sign up{% endblock %}
+{% block title %}{% if action_route == '/registration' %} Sign up {% else %} Login {% endif %} {% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
     <div class="registration-form">
-    <form action="/registration" method=POST >
+    <form action="{{ action_route }}" method=POST >
         <p>
         <label for="username" class="username">Username:</label><br>
             <br>
@@ -16,8 +16,9 @@
             <br>
         <input type="password" class="password" name="password" required><br>
         </p>
+        <div class="error-message">{% if login == 'failed' %} Invalid username or password {% endif %}</div>
         <div class="registration-button-div">
-            <input class="registration-button" type="submit" value="Sign up">
+            <input class="registration-button" type="submit" value="Submit">
         </div>
     </form>
     </div>

@@ -5,6 +5,8 @@ import util
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/question/<question_id>')
 def route_question(question_id):
@@ -43,10 +45,11 @@ def registration():
         try:
             data_manager.add_new_user(new_data)
         except:
-            return render_template('registration.html', username=request.form.get('username'))
+            return render_template('registration.html', username=request.form.get('username'),
+                                   action_route='/registration')
 
         return redirect('/')
-    return render_template('registration.html')
+    return render_template('registration.html', action_route='/registration')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -59,8 +62,8 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', login='failed')
-    return render_template('login.html')
+            return render_template('registration.html', login='failed', action_route='/login')
+    return render_template('registration.html', action_route='/login')
 
 
 @app.route('/logout')
