@@ -313,3 +313,12 @@ def edit_comment(cursor, data):
                    """,
                    {"id": data["id"],
                     "message": data["message"]})
+
+
+@connection.connection_handler
+def list_users(cursor):
+    cursor.execute("""
+                   SELECT * FROM users 
+                   """)
+    users = cursor.fetchall()
+    return users
