@@ -130,7 +130,7 @@ INSERT INTO question_tag VALUES (2, 3);
 DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
   user_id serial NOT NULL PRIMARY KEY,
-  username text NOT NULL,
+  username text NOT NULL UNIQUE,
   creation_date timestamp without time zone,
   password text NOT NULL
 );
