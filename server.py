@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 import data_manager
 import util
@@ -47,6 +47,26 @@ def registration():
 
         return redirect('/')
     return render_template('registration.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed_password = data_manager.get_hashed_password_for_user(username)
+        if util.verify_password(password, hashed_password):
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', login='failed')
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])

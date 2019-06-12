@@ -1,6 +1,8 @@
 import os
 import psycopg2
 import psycopg2.extras
+from functools import wraps
+from flask import request, redirect, url_for, session
 
 
 def get_connection_string():
@@ -43,3 +45,12 @@ def connection_handler(function):
         return ret_value
 
     return wrapper
+
+
+def login_required(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        if session['username'] is None:
+            return redirect(url_for('login', next=request.url))
+        return function(*args, **kwargs)
+    return decorated_function
