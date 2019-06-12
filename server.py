@@ -137,7 +137,6 @@ def route_add2():
 @app.route('/add-question', methods=['GET'])
 def route_add():
 
-
     questions = data_manager.get_all_questions()
     return render_template('add.html', questions=questions)
 
