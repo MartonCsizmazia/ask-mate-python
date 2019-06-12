@@ -32,6 +32,21 @@ def route_question(question_id):
                            )
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        new_data = {
+            'username': request.form.get('username'),
+            'password': util.hash_password(request.form.get('password')),
+            'creation_date': util.date_now()
+        }
+
+        data_manager.add_new_user(new_data)
+
+        return redirect('/')
+    return render_template('registration.html')
+
+
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
