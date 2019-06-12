@@ -96,6 +96,16 @@ def route_list():
                            questions=questions,
                            type='list_all')
 
+@app.route('/list_users')
+def list_users():
+    users = data_manager.list_users()
+
+    #func = request.environ.get('werkzeug.server.shutdown')
+
+    return render_template('list_users.html',
+                           users=users
+                           )
+
 
 @app.route("/")
 def index():
