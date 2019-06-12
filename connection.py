@@ -50,7 +50,7 @@ def connection_handler(function):
 def login_required(function):
     @wraps(function)
     def decorated_function(*args, **kwargs):
-        if session['username'] is None:
-            return redirect(url_for('login', next=request.url))
-        return function(*args, **kwargs)
+        if 'username' in session :
+            return function(*args, **kwargs)
+        return redirect(url_for('login'))
     return decorated_function

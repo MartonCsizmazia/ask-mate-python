@@ -16,9 +16,14 @@
         </form>
         {% if type %}
         <a href="{{ url_for('route_add') }}" type="submit">Ask a question</a>
+            <a href="{{ url_for('list_users') }}" type="submit">List users</a>
+            {% if session['username'] %}
+                <a href="{{ url_for('index') }}" type="submit">{{ session['username'] }}</a>
+                <a href="{{ url_for('logout') }}" type="submit">Log out</a>
+            {% else %}
             <a href="{{ url_for('registration') }}" type="submit">Sign up</a>
             <a href="{{ url_for('login') }}" type="submit">Login</a>
-        <a href="{{ url_for('list_users') }}" type="submit">List users</a>
+            {% endif %}
 
         {% endif %}
     </div>

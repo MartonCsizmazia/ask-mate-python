@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 
 import data_manager
 import util
+import connection
 
 app = Flask(__name__)
 
@@ -73,6 +74,7 @@ def logout():
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+@connection.login_required
 def edit_question(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
 
@@ -145,6 +147,7 @@ def index():
 
 
 @app.route('/add-question', methods=['POST'])
+@connection.login_required
 def route_add2():
     new_submission_time = util.date_now()
     my_new_data = {
@@ -160,14 +163,16 @@ def route_add2():
     data_manager.add_question(my_new_data)
     return redirect('/')
 
-@app.route('/add-question', methods=['GET'])
-def route_add():
 
+@app.route('/add-question', methods=['GET'])
+@connection.login_required
+def route_add():
     questions = data_manager.get_all_questions()
     return render_template('add.html', questions=questions)
 
 
 @app.route('/answer/<answer_id>/delete')
+@connection.login_required
 def delete_answer(answer_id):
     answer = data_manager.get_table_by_id(answer_id, "answer")
     data_manager.delete_from_table_by_id(answer_id, "answer")
@@ -176,6 +181,7 @@ def delete_answer(answer_id):
 
 
 @app.route('/question/<question_id>/delete')
+@connection.login_required
 def delete_question(question_id):
     data_manager.delete_from_table_by_id(question_id, "question")
 
@@ -183,6 +189,7 @@ def delete_question(question_id):
 
 
 @app.route('/comment/<comment_id>/delete')
+@connection.login_required
 def delete_comment(comment_id):
     comment = data_manager.get_table_by_id(comment_id, "comment")
     question_id = comment['question_id']
@@ -195,6 +202,7 @@ def delete_comment(comment_id):
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+@connection.login_required
 def add_new_answer(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
     if request.method == 'POST':
@@ -218,6 +226,7 @@ def add_new_answer(question_id):
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+@connection.login_required
 def edit_answer(answer_id):
     answer = data_manager.get_table_by_id(answer_id, "answer")
 
@@ -237,6 +246,7 @@ def edit_answer(answer_id):
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+@connection.login_required
 def add_comment_to_question(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
@@ -270,6 +280,7 @@ def search_question():
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+@connection.login_required
 def add_comment_to_answer(answer_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image']
     answer = data_manager.get_table_by_id(answer_id, "answer")
@@ -319,6 +330,7 @@ def add_tag_to_question(question_id):
 
 
 @app.route('/question/<question_id>/tag/<tag_id>delete', methods=['GET'])
+@connection.login_required
 def delete_tag_from_question(question_id, tag_id):
 
     data_manager.delete_tag_from_question(tag_id)
@@ -327,6 +339,7 @@ def delete_tag_from_question(question_id, tag_id):
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+@connection.login_required
 def edit_comment(comment_id):
     comment = data_manager.get_table_by_id(comment_id, "comment")
     question_id = comment['question_id']
