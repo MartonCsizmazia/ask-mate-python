@@ -322,3 +322,14 @@ def list_users(cursor):
                    """)
     users = cursor.fetchall()
     return users
+
+
+@connection.connection_handler
+def get_hashed_password_for_user(cursor, username):
+    cursor.execute("""
+                   SELECT password FROM users
+                   WHERE username = %(username)s 
+                   """,
+                   {'username': username})
+    result = cursor.fetchone()
+    return result['password']
