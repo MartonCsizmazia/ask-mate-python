@@ -333,3 +333,15 @@ def list_tags(cursor):
                    """)
     tags = cursor.fetchall()
     return tags
+
+
+@connection.connection_handler
+def get_comments_by_user_id(cursor, user_id):
+    cursor.execute("""
+                   SELECT * 
+                   FROM comment LEFT JOIN answer on comment.answer_id = answer.id
+                   WHERE comment.user_id = %(user_id)s
+                   """,
+                   {'user_id': user_id})
+    result = cursor.fetchall()
+    return result
