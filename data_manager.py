@@ -95,14 +95,16 @@ def edit_question(cursor, data):
 @connection.connection_handler
 def add_answer(cursor, data):
     cursor.execute("""
-                    INSERT INTO answer (submission_time, vote_number, question_id, message, image )
-                    VALUES (%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s );
+                    INSERT INTO answer (submission_time, vote_number, question_id, message, image, user_id )
+                    VALUES (%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s, %(user_id)s);
                    """,
                    {"submission_time": data["submission_time"],
                     "vote_number": data["vote_number"],
                     "question_id": data["question_id"],
                     "message": data["message"],
-                    "image": data["image"]})
+                    "image": data["image"],
+                    "user_id": data["user_id"]})
+
 
 @connection.connection_handler
 def add_new_user(cursor, data):

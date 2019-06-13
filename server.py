@@ -208,13 +208,13 @@ def add_new_answer(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
     if request.method == 'POST':
 
-        new_submission_time = util.date_now()
         new_answer = {
-            "submission_time": new_submission_time,
+            "submission_time": util.date_now(),
             "vote_number": 0,
             "question_id": request.form.get("question_id"),
             "message": request.form.get("answer-message"),
-            "image": request.form.get("image")
+            "image": request.form.get("image"),
+            "user_id": data_manager.get_user_id_by_username(session['username'])
         }
 
         data_manager.add_answer(new_answer)
