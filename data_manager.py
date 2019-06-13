@@ -1,5 +1,7 @@
 import connection
+import util
 from psycopg2 import sql
+from flask import session
 
 
 @connection.connection_handler
@@ -82,7 +84,7 @@ def edit_question(cursor, data):
                    UPDATE question SET title = %(title)s, message = %(message)s, image = %(image)s
                    WHERE id = %(id)s;
                    """,
-                   {"id": data["id"],
+                   {"id": data["question_id"],
                     "title": data["title"],
                     "message": data["message"],
                     "image": data["image"]})
@@ -109,8 +111,8 @@ def add_new_user(cursor, data):
                         VALUES (%(username)s, %(creation_date)s,  %(password)s);
                        """,
                    {"username": data["username"],
-                    "creation_date": data["creation_date"],
-                    "password": data["password"]})
+                    "creation_date": util.date_now(),
+                    "password": util.hash_password(data["password"])})
 
 
 @connection.connection_handler
@@ -139,13 +141,13 @@ def add_question(cursor, data):
                     INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id )
                     VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s, %(user_id)s );
                    """,
-                   {"submission_time": data["submission_time"],
-                    "view_number": data["view_number"],
-                    "vote_number": data["vote_number"],
+                   {"submission_time": util.date_now(),
+                    "view_number": 0,
+                    "vote_number": 0,
                     "title": data["title"],
                     "message": data["message"],
                     "image": data["image"],
-                    "user_id": data["user_id"]})
+                    "user_id": get_user_id_by_username(session["username"])})
 
 
 @connection.connection_handler

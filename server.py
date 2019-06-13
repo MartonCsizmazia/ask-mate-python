@@ -37,18 +37,12 @@ def route_question(question_id):
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':
-        new_data = {
-            'username': request.form.get('username'),
-            'password': util.hash_password(request.form.get('password')),
-            'creation_date': util.date_now()
-        }
-
+        new_data = request.form.to_dict()
         try:
             data_manager.add_new_user(new_data)
         except:
             return render_template('registration.html', username=request.form.get('username'),
                                    action_route='/registration')
-
         return redirect('/')
     return render_template('registration.html', action_route='/registration')
 
@@ -89,16 +83,11 @@ def edit_question(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
 
     if request.method == 'POST':
-        my_new_data = {
-            "id": request.form.get("question_id", 0),
-            "title": request.form.get("title"),
-            "message": request.form.get("message"),
-            "image": request.form.get("image")
-        }
+        my_new_data = request.form.to_dict()
 
         data_manager.edit_question(my_new_data)
 
-        return redirect('/question/' + str(my_new_data['id']))
+        return redirect('/question/' + str(my_new_data['question_id']))
 
     return render_template('edit_question.html', question=question, )
 
@@ -127,20 +116,19 @@ def route_list():
     headers = ['view_number', 'vote_number', 'title']
     questions = data_manager.get_all_questions()
 
-    #func = request.environ.get('werkzeug.server.shutdown')
-
     return render_template('list.html',
                            headers=headers,
                            questions=questions,
                            type='list_all')
+
 
 @app.route('/list_users')
 def list_users():
     users = data_manager.list_users()
 
     return render_template('list_users.html',
-                           users=users
-                           )
+                           users=users)
+
 
 @app.route('/tags')
 def tags():
@@ -165,17 +153,7 @@ def index():
 @app.route('/add-question', methods=['POST'])
 @connection.login_required
 def route_add2():
-    new_submission_time = util.date_now()
-    my_new_data = {
-
-        "submission_time": new_submission_time,
-        "view_number": 0,
-        "vote_number": 0,
-        "title": request.form.get("title"),
-        "message": request.form.get("message"),
-        "image": request.form.get("image"),
-        "user_id": data_manager.get_user_id_by_username(session['username'])
-    }
+    my_new_data = request.form.to_dict()
 
     data_manager.add_question(my_new_data)
     return redirect('/')
@@ -319,8 +297,7 @@ def add_comment_to_answer(answer_id):
     else:
         return render_template('post_comment_to_answer.html',
                                answer=answer,
-                               answer_headers=answer_headers
-                               )
+                               answer_headers=answer_headers)
 
 
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
@@ -354,8 +331,6 @@ def delete_tag_from_question(question_id, tag_id):
     data_manager.delete_tag_from_question(tag_id)
 
     return redirect('/question/' + str(question_id))
-
-
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
