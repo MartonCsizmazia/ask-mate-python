@@ -5,138 +5,161 @@
 {% block content %}
     <table class="question-table">
         <tbody>
-            <tr>
-                <td class="question-head" colspan="3">{{ question['title'] }}<form class="question-buttons" action="/question/{{ question['id'] }}/delete">
-                <input class="question-buttons" type="submit" value="🗑️"/>
-                </form><form class="question-buttons" action="/question/{{ question['id'] }}/edit">
-                <input class="question-buttons" type="submit" value="⚙️"/>
-            </form></td>
-            </tr>
-            <tr class="list-elements">
-                <td class="list-vote"><form class="vote-up" action="/question/{{ question['id'] }}/vote-up">
+        <tr>
+            <td class="question-head" colspan="3">{{ question['title'] }}
+                <form class="question-buttons" action="/question/{{ question['id'] }}/delete">
+                    <input class="question-buttons" type="submit" value="🗑️"/>
+                </form>
+                <form class="question-buttons" action="/question/{{ question['id'] }}/edit">
+                    <input class="question-buttons" type="submit" value="⚙️"/>
+                </form>
+                <form class="question-buttons"
+                      action="{{ url_for('add_comment_to_question', question_id=question.id) }}">
+                    <input class="question-buttons" type="submit" value="Comment️"/>
+                </form>
+                <form class="question-buttons action" action="/question/{{ question['id'] }}/new-answer">
+                    <input type="submit" value="Answer"/>
+                </form>
+            </td>
+        </tr>
+        <tr class="list-elements">
+            <td class="list-vote">
+                <form class="vote-up" action="/question/{{ question['id'] }}/vote-up">
                     <input type="submit" value="👍"/>
-                </form><br>{{ question['vote_number'] }}<br>votes<br><form class="vote-down" action="/question/{{ question['id'] }}/vote-down">
+                </form>
+                <br>{{ question['vote_number'] }}<br>votes<br>
+                <form class="vote-down" action="/question/{{ question['id'] }}/vote-down">
                     <input type="submit" value="👎"/>
-                </form></td>
-                <td class="list-view">{{ question['view_number'] }} <br>views</td>
-                <td class="list-title">{{ question['message'] }}<p class="list-time">
-                    {{ question['submission_time'] }}</p>
-                </td>
-            </tr>
+                </form>
+            </td>
+            <td class="list-view">{{ question['view_number'] }} <br>views</td>
+            <td class="list-title">{{ question['message'] }}<p class="list-time">
+                {{ question['submission_time'] }}</p>
+            </td>
+        </tr>
         </tbody>
     </table>
     <br>
     <div class="add-tag">
-    <a href="{{ url_for('add_tag_to_question', question_id=question.id) }}" type="submit" class="list-link">Add tag</a>
+        <a href="{{ url_for('add_tag_to_question', question_id=question.id) }}" type="submit" class="list-link">Add
+            tag</a>
     </div>
     {% for tag in tags %}
-    <table class="tag-table">
+        <table class="tag-table">
             <td class="tag-data">
-                {{ tag['name'] }} <form class="tag-delete" action="/question/{{ question['id'] }}/tag/{{ tag['id'] }}delete">
-                <input class="tag-delete" type="submit" value="❌"/>
+                {{ tag['name'] }}
+                <form class="tag-delete" action="/question/{{ question['id'] }}/tag/{{ tag['id'] }}delete">
+                    <input class="tag-delete" type="submit" value="❌"/>
                 </form>
             </td>
-    </table>
+        </table>
     {% endfor %}
     </table>
     <br>
     {% if question_comments != None %}
-    <table class="comment-table">
-    {% for question_comment in question_comments %}
-        <tr>
-        <td class="comment-element">
-            {% if question_comment['edited_count']== 0 %}
-                This comment has not been edited
-            {% elif question_comment['edited_count']== 1 %}
-                Edited: {{ question_comment['edited_count'] }} time
-            {% else %}
-                Edited: {{ question_comment['edited_count'] }} times
-            {% endif %}
-        </td><td class="comment-element">
-            {{ question_comment['message'] }}
-        </td><td class="comment-element">
-            {{ question_comment['submission_time'] }}
-        </td><td class="comment-element">
-            <form action="/comment/{{ question_comment.id }}/edit">
-                <input type="submit" value="⚙️"/>
-            </form>
-            <form action="/comment/{{ question_comment.id }}/delete">
-                    <input type="submit" value="🗑️" onclick="return confirm('Are you sure you want to delete?');"/>
-            </form>
-        </td>
-        </tr>
-    {% endfor %}
-    </table>
+        <table class="comment-table">
+            {% for question_comment in question_comments %}
+                <tr>
+                    <td class="comment-element">
+                        {% if question_comment['edited_count']== 0 %}
+                            This comment has not been edited
+                        {% elif question_comment['edited_count']== 1 %}
+                            Edited: {{ question_comment['edited_count'] }} time
+                        {% else %}
+                            Edited: {{ question_comment['edited_count'] }} times
+                        {% endif %}
+                    </td>
+                    <td class="comment-element">
+                        {{ question_comment['message'] }}
+                    </td>
+                    <td class="comment-element">
+                        {{ question_comment['submission_time'] }}
+                    </td>
+                    <td class="comment-element">
+                        <form action="/comment/{{ question_comment.id }}/edit">
+                            <input type="submit" value="⚙️"/>
+                        </form>
+                        <form action="/comment/{{ question_comment.id }}/delete">
+                            <input type="submit" value="🗑️"
+                                   onclick="return confirm('Are you sure you want to delete?');"/>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     {% endif %}
     <p>
-    <div class="add-comment">
-    <a href="{{ url_for('add_comment_to_question', question_id=question.id) }}" type="submit" class="list-link">Add comment</a>
-    </div>
     </p>
     {% if answers != [] %}
         <br>
-            {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
+        {% for answer in answers | sort(reverse=True, attribute="submission_time") %}
             <table class="question-table" id="answer-table">
-            <tbody>
+                <tbody>
                 <tr>
                     <td class="list-elements">
                         <form action="/answer/{{ answer['id'] }}/vote-up">
                             <input type="submit" value="👍"/>
-                        </form><br>{{ answer['vote_number'] }} <br>votes<br><form action="/answer/{{ answer['id'] }}/vote-down">
+                        </form>
+                        <br>{{ answer['vote_number'] }} <br>votes<br>
+                        <form action="/answer/{{ answer['id'] }}/vote-down">
                             <input type="submit" value="👎"/>
-                        </form></td>
+                        </form>
+                    </td>
                     <td class="list-elements">{{ answer['message'] }}<p id="list-time">
                         {{ answer['submission_time'] }}</p></td>
                     <td class="list-elements">
-                        <form action="/answer/{{ answer['id'] }}/new-comment">
-                            <input type="submit" value="Comment this answer"/>
-                        </form>
-                        <form action="/answer/{{ answer['id'] }}/edit">
-                            <input type="submit" value="⚙️"/>
-                        </form>
-                        <form action="/answer/{{ answer['id'] }}/delete">
-                            <input type="submit" value="🗑️"/>
-                        </form>
-
+                        <div class="answer-buttons">
+                            <form action="/answer/{{ answer['id'] }}/new-comment">
+                                <input type="submit" value="Comment" class="answer-button"/>
+                            </form>
+                            <form action="/answer/{{ answer['id'] }}/edit">
+                                <input type="submit" value="⚙️" class="answer-button"/>
+                            </form>
+                            <form action="/answer/{{ answer['id'] }}/delete">
+                                <input type="submit" value="🗑️" class="answer-button"/>
+                            </form>
+                        </div>
                     </td>
-                </tr></tbody></table>
-                <table>
-                    {% if answer_comments != None %}
+                </tr>
+                </tbody>
+            </table>
+            {% if answer_comments != None %}
+                <table class="comment-table">
                     {% for answer_comment in answer_comments %}
-                    {% if answer_comment.answer_id ==  answer.id %}
-                        <tr>
-                        <td>
-                            {{ answer_comment['message'] }}
-                        </td><td>
-                            {{ answer_comment['submission_time'] }}
-                        </td><td>
-                            {% if answer_comment['edited_count']== 0 %}
-                                This comment has not been edited
-                            {% elif answer_comment['edited_count']== 1 %}
-                                Edited: {{ answer_comment['edited_count'] }} time
-                            {% else %}
-                                Edited: {{ answer_comment['edited_count'] }} times
-                            {% endif %}
-                        </td><td>
-
-                            <form action="/comment/{{ answer_comment.id }}/edit">
-                                    <input type="submit" value="Edit comment"/>
-                            </form>
-                            <form action="/comment/{{ answer_comment.id }}/delete">
-                                    <input type="submit" value="Delete comment" onclick="return confirm('Are you sure you want to delete?');"/>
-                            </form>
-                        </td>
-                        </tr>
-                    {% endif %}
+                        {% if answer_comment.answer_id ==  answer.id %}
+                            <tr>
+                                <td class="comment-element">
+                                    {% if answer_comment['edited_count']== 0 %}
+                                        This comment has not been edited
+                                    {% elif answer_comment['edited_count']== 1 %}
+                                        Edited: {{ answer_comment['edited_count'] }} time
+                                    {% else %}
+                                        Edited: {{ answer_comment['edited_count'] }} times
+                                    {% endif %}
+                                </td>
+                                <td class="comment-element">
+                                    {{ answer_comment['message'] }}
+                                </td>
+                                <td class="comment-element">
+                                    {{ answer_comment['submission_time'] }}
+                                </td>
+                                <td class="comment-element">
+                                    <form action="/comment/{{ answer_comment.id }}/edit">
+                                        <input type="submit" value="⚙"/>
+                                    </form>
+                                    <br>
+                                    <form action="/comment/{{ answer_comment.id }}/delete">
+                                        <input type="submit" value="🗑️"
+                                               onclick="return confirm('Are you sure you want to delete?');"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
-                    {% endif %}
                 </table>
-            {% endfor %}
+            {% endif %}
+
+        {% endfor %}
 
     {% endif %}
-    <p>
-    <form action="/question/{{ question['id'] }}/new-answer">
-        <input type="submit" value="Post an answer"/>
-    </form>
-    </p>
 {% endblock %}

@@ -17,7 +17,7 @@
         {% if type %}
             <a href="{{ url_for('route_add') }}" type="submit">Ask a question</a>
         {% endif %}
-        <a href="{{ url_for('list_users') }}" type="submit">List users</a>
+        <a href="{{ url_for('list_users') }}" type="submit">Users</a>
         <a href="{{ url_for('tags') }}" type="submit">Tags</a>
             {% if session['username'] %}
                 <a href="{{ url_for('user_page', username=session['username']) }}" type="submit" class="username-header">{{ session['username'] }}</a>

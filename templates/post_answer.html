@@ -8,27 +8,21 @@
                 {{ header|replace("_", " ")|title }}
             </th>
     {% endfor %}
-    <p>
-    <h1>Share your solution!</h1>
-    </p>
+    <div class="add-form">
     <form action="/question/{{ question.id }}/new-answer" method=POST >
         <input type="hidden" value="{{ question.id }}" name="question_id">
         <p>
-        <label for="answer-message">Message:</label><br>
+        <label for="answer-message" class="comment-label">Solution:</label><br>
             <br>
             <textarea id="answer-message" name="answer-message" rows="6" cols="50" required></textarea><br>
         </p>
         <p>
-        <label for="add-image">Place here the URL, if you want to add image:</label><br>
+        <label for="add-image" class="comment-label">Place here the URL, if you want to add an image:</label><br>
             <br>
         <textarea id="add-image" name="image" rows="1" cols="50" ></textarea><br>
-        </p>
-        <input type="submit" value="Post your answer">
+        <div class="format-button-div">
+            <input class="format-button" type="submit" value="Submit">
+        </div>
     </form>
-    <br>
-        <p>
-        <form action="/question/{{ question.id }}" method="GET">
-            <input type="submit" value="Go back">
-        </form>
-        </p>
+    </div>
 {% endblock %}

@@ -52,7 +52,10 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        hashed_password = data_manager.get_hashed_password_for_user(username)
+        try:
+            hashed_password = data_manager.get_hashed_password_for_user(username)
+        except TypeError:
+            return render_template('registration.html', login='failed', action_route='/login')
         if util.verify_password(password, hashed_password):
             session['username'] = username
             return redirect(url_for('index'))
@@ -68,6 +71,7 @@ def logout():
 
 
 @app.route('/user/<username>')
+@connection.login_required
 def user_page(username):
     user_id = data_manager.get_user_id_by_username(username)
     questions = data_manager.get_data_by_user_id(user_id, 'question')

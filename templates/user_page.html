@@ -5,6 +5,7 @@
 {% block content %}
     <br>
     <br>
+    <h3>My questions</h3>
     <table class="list-table">
         {% for question in questions %}
             <tr>
@@ -17,17 +18,19 @@
         {% endfor %}
     </table>
     <br>
+    <h3>My answers</h3>
     <table class="list-table">
         {% for answer in answers %}
             <tr>
-                <td class="list-vote">{{ answer['vote_number'] }} <br>votes</td>
+                <td class="list-elements">{{ answer['vote_number'] }} <br>votes</td>
                 <td class="list-elements"><a class="list-link" href="/question/{{ answer['question_id'] }}">{{ answer['message'] }}</a><p id="list-time">
                         {{ answer['submission_time'] }}</p></td>
             </tr>
         {% endfor %}
     </table>
     <br>
-    <table class="list-table">
+    <h3>My comments</h3>
+    <table class="list-table" id="comment-user-table">
         {% for comment in comments %}
             <tr>
                 <td class="comment-element">

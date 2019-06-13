@@ -4,9 +4,9 @@
 {% endblock %}
 {% block content %}
     <div class="div-table">
-    <table class="comment-table">
+    <table class="comment-table" id="answer-comment-table">
         <tbody>
-            <tr class="comment-elements">
+            <tr class="comment-elements" id="answer-comment">
                 <td class="comment-vote">{{ answer['vote_number'] }} <br>votes</td>
                 <td class="comment-title">{{ answer['message'] }}<p class="comment-time">
                     {{ answer['submission_time'] }}</p>
