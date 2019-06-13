@@ -257,7 +257,8 @@ def add_comment_to_question(question_id):
             "submission_time": util.date_now(),
             "question_id": request.form.get("question_id"),
             "message": request.form.get("comment-message"),
-            "edited_count": 0
+            "edited_count": 0,
+            "user_id": data_manager.get_user_id_by_username(session['username'])
         }
         data_manager.add_comment_to_question(new_comment)
 
@@ -287,12 +288,12 @@ def add_comment_to_answer(answer_id):
     answer = data_manager.get_table_by_id(answer_id, "answer")
     if request.method == 'POST':
 
-        new_submission_time = util.date_now()
         new_comment = {
-            "submission_time": new_submission_time,
+            "submission_time": util.date_now(),
             "answer_id": request.form.get("answer_id"),
             "message": request.form.get("comment-message"),
-            "edited_count": 0
+            "edited_count": 0,
+            "user_id": data_manager.get_user_id_by_username(session['username'])
         }
 
         data_manager.add_comment_to_answer(new_comment)

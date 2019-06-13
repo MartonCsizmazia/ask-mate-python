@@ -205,25 +205,27 @@ def edit_answer(cursor, data):
 @connection.connection_handler
 def add_comment_to_answer(cursor, data):
     cursor.execute("""
-                    INSERT INTO comment (submission_time, answer_id, message, edited_count)
-                    VALUES (%(submission_time)s, %(answer_id)s, %(message)s, %(edited_count)s);
+                    INSERT INTO comment (submission_time, answer_id, message, edited_count, user_id)
+                    VALUES (%(submission_time)s, %(answer_id)s, %(message)s, %(edited_count)s, %(user_id)s);
                    """,
                    {"submission_time": data["submission_time"],
                     "answer_id": data["answer_id"],
                     "message": data["message"],
-                    "edited_count": data["edited_count"]})
+                    "edited_count": data["edited_count"],
+                    "user_id": data["user_id"]})
 
 
 @connection.connection_handler
 def add_comment_to_question(cursor, data):
     cursor.execute("""
-                    INSERT INTO comment (question_id, message, submission_time, edited_count)
-                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s);
+                    INSERT INTO comment (question_id, message, submission_time, edited_count, user_id)
+                    VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s, %(user_id)s);
                    """,
                    {"question_id": data["question_id"],
                     "message": data["message"],
                     "submission_time": data["submission_time"],
-                    "edited_count": data["edited_count"]})
+                    "edited_count": data["edited_count"],
+                    "user_id": data["user_id"]})
 
 
 @connection.connection_handler
