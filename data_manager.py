@@ -322,11 +322,12 @@ def get_user_id_by_username(cursor, username):
     result = cursor.fetchone()
     return result['user_id']
 
+
 @connection.connection_handler
 def list_tags(cursor):
     cursor.execute("""
                    SELECT DISTINCT name, count(question_id) AS number FROM tag
-                   LEFT JOIN question_tag ON (tag_id=id) 
+                   JOIN question_tag ON (tag_id=id) 
                    group by name
                    ORDER BY number DESC
                    """)
