@@ -96,12 +96,12 @@ def add_answer(cursor, data):
                     INSERT INTO answer (submission_time, vote_number, question_id, message, image, user_id )
                     VALUES (%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s, %(user_id)s);
                    """,
-                   {"submission_time": data["submission_time"],
-                    "vote_number": data["vote_number"],
+                   {"submission_time": util.date_now(),
+                    "vote_number": 0,
                     "question_id": data["question_id"],
-                    "message": data["message"],
+                    "message": data["answer-message"],
                     "image": data["image"],
-                    "user_id": data["user_id"]})
+                    "user_id": get_user_id_by_username(session['username'])})
 
 
 @connection.connection_handler
@@ -170,7 +170,7 @@ def edit_answer(cursor, data):
                    UPDATE answer SET message = %(message)s, image = %(image)s
                    WHERE id = %(id)s;
                    """,
-                   {"id": data["id"],
+                   {"id": data["answer_id"],
                     "message": data["message"],
                     "image": data["image"]})
 
@@ -181,11 +181,11 @@ def add_comment_to_answer(cursor, data):
                     INSERT INTO comment (submission_time, answer_id, message, edited_count, user_id)
                     VALUES (%(submission_time)s, %(answer_id)s, %(message)s, %(edited_count)s, %(user_id)s);
                    """,
-                   {"submission_time": data["submission_time"],
+                   {"submission_time": util.date_now(),
                     "answer_id": data["answer_id"],
-                    "message": data["message"],
-                    "edited_count": data["edited_count"],
-                    "user_id": data["user_id"]})
+                    "message": data["comment-message"],
+                    "edited_count": 0,
+                    "user_id": get_user_id_by_username(session['username'])})
 
 
 @connection.connection_handler
@@ -195,10 +195,10 @@ def add_comment_to_question(cursor, data):
                     VALUES (%(question_id)s, %(message)s, %(submission_time)s, %(edited_count)s, %(user_id)s);
                    """,
                    {"question_id": data["question_id"],
-                    "message": data["message"],
-                    "submission_time": data["submission_time"],
-                    "edited_count": data["edited_count"],
-                    "user_id": data["user_id"]})
+                    "message": data["comment-message"],
+                    "submission_time": util.date_now(),
+                    "edited_count": 0,
+                    "user_id": get_user_id_by_username(session['username'])})
 
 
 @connection.connection_handler
@@ -289,7 +289,7 @@ def edit_comment(cursor, data):
                    UPDATE comment SET message = %(message)s, edited_count = edited_count+1 
                    WHERE id = %(id)s;
                    """,
-                   {"id": data["id"],
+                   {"id": data["answer_id"],
                     "message": data["message"]})
 
 

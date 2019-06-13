@@ -201,16 +201,7 @@ def delete_comment(comment_id):
 def add_new_answer(question_id):
     question = data_manager.get_table_by_id(question_id, "question")
     if request.method == 'POST':
-
-        new_answer = {
-            "submission_time": util.date_now(),
-            "vote_number": 0,
-            "question_id": request.form.get("question_id"),
-            "message": request.form.get("answer-message"),
-            "image": request.form.get("image"),
-            "user_id": data_manager.get_user_id_by_username(session['username'])
-        }
-
+        new_answer = request.form.to_dict()
         data_manager.add_answer(new_answer)
 
         return redirect('/question/' + new_answer['question_id'])
@@ -226,13 +217,7 @@ def edit_answer(answer_id):
     answer = data_manager.get_table_by_id(answer_id, "answer")
 
     if request.method == 'POST':
-        my_new_data = {
-            "id": request.form.get("answer_id"),
-            "question_id": request.form.get("question_id"),
-            "message": request.form.get("message"),
-            "image": request.form.get("image")
-        }
-
+        my_new_data = request.form.to_dict()
         data_manager.edit_answer(my_new_data)
 
         return redirect('/question/' + str(my_new_data['question_id']))
@@ -247,13 +232,7 @@ def add_comment_to_question(question_id):
     question_headers = ['title', 'message', 'submission_time', 'view_number', 'vote_number', 'image']
 
     if request.method == 'POST':
-        new_comment = {
-            "submission_time": util.date_now(),
-            "question_id": request.form.get("question_id"),
-            "message": request.form.get("comment-message"),
-            "edited_count": 0,
-            "user_id": data_manager.get_user_id_by_username(session['username'])
-        }
+        new_comment = request.form.to_dict()
         data_manager.add_comment_to_question(new_comment)
 
         return redirect('/question/' + new_comment['question_id'])
@@ -281,23 +260,13 @@ def add_comment_to_answer(answer_id):
     answer_headers = ['message', 'submission_time', 'vote_number', 'image']
     answer = data_manager.get_table_by_id(answer_id, "answer")
     if request.method == 'POST':
-
-        new_comment = {
-            "submission_time": util.date_now(),
-            "answer_id": request.form.get("answer_id"),
-            "message": request.form.get("comment-message"),
-            "edited_count": 0,
-            "user_id": data_manager.get_user_id_by_username(session['username'])
-        }
-
+        new_comment = request.form.to_dict()
         data_manager.add_comment_to_answer(new_comment)
 
         return redirect('/question/' + str(request.form.get('question_id')))
-
-    else:
-        return render_template('post_comment_to_answer.html',
-                               answer=answer,
-                               answer_headers=answer_headers)
+    return render_template('post_comment_to_answer.html',
+                           answer=answer,
+                           answer_headers=answer_headers)
 
 
 @app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
@@ -320,7 +289,6 @@ def add_tag_to_question(question_id):
             data_manager.add_new_tag_to_question(request.form.get("question_id"), id['id'])
 
         return redirect('/question/' + str(question_id))
-
     return render_template('add_tag_to_question.html',  question=question, tags=tags, question_headers=question_headers)
 
 
@@ -342,12 +310,7 @@ def edit_comment(comment_id):
         question_id = data_manager.get_answer_by_id(comment['answer_id'])['question_id']
 
     if request.method == 'POST':
-        my_new_data = {
-            "id": request.form.get("answer_id"),
-            "question_id": request.form.get("question_id"),
-            "message": request.form.get("message"),
-        }
-
+        my_new_data = request.form.to_dict()
         data_manager.edit_comment(my_new_data)
 
         return redirect('/question/' + str(question_id))
