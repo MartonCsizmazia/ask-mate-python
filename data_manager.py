@@ -2,10 +2,6 @@ import connection
 from psycopg2 import sql
 
 
-QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
-
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute("""
@@ -36,6 +32,7 @@ def get_table_by_id(cursor, id, input_table):
                    )
     question = cursor.fetchone()
     return question
+
 
 @connection.connection_handler
 def get_answer_by_question_id(cursor, question_id):
