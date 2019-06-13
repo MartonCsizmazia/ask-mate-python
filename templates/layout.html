@@ -20,7 +20,7 @@
         <a href="{{ url_for('list_users') }}" type="submit">List users</a>
         <a href="{{ url_for('tags') }}" type="submit">Tags</a>
             {% if session['username'] %}
-                <a href="{{ url_for('index') }}" type="submit" class="username-header">{{ session['username'] }}</a>
+                <a href="{{ url_for('user_page', username=session['username']) }}" type="submit" class="username-header">{{ session['username'] }}</a>
                 <a href="{{ url_for('logout') }}" type="submit">Log out</a>
             {% else %}
                <a href="{{ url_for('registration') }}" type="submit">Sign up</a>

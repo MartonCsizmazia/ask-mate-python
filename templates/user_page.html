@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}{{ session['username'] }}'s page{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <table class="list-table">
+        {% for question in questions %}
+            <tr>
+                <td class="list-vote">{{ question['vote_number'] }} <br>votes</td>
+                <td class="list-view">{{ question['view_number'] }} <br>views</td>
+                <td class="list-title"><a class="list-link" href="/question/{{ question['id'] }}">{{ question['title'] }}</a><p class="list-time">
+                    {{ question['submission_time'] }}</p>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <table class="list-table">
+        {% for answer in answers %}
+            <tr>
+                <td class="list-vote">{{ answer['vote_number'] }} <br>votes</td>
+                <td class="list-elements"><a class="list-link" href="/question/{{ answer['question_id'] }}">{{ answer['message'] }}</a><p id="list-time">
+                        {{ answer['submission_time'] }}</p></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <table class="list-table">
+        {% for comment in comments %}
+            <tr>
+                <td class="comment-element">
+            {% if comment['edited_count']== 0 %}
+                This comment has not been edited
+            {% elif comment['edited_count']== 1 %}
+                Edited: {{ comment['edited_count'] }} time
+            {% else %}
+                Edited: {{ comment['edited_count'] }} times
+            {% endif %}
+        </td><td class="comment-element">
+                <a class="list-link" href="/question/{% if comment.question_id %}{{ comment['question_id'] }}
+                {% else %} {{ comment['new_q_id'] }} {% endif %}">
+                    {{ comment.message }}</a>
+        </td><td class="comment-element">
+            {{ comment['submission_time'] }}
+        </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

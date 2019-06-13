@@ -73,6 +73,16 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/user/<username>')
+def user_page(username):
+    user_id = data_manager.get_user_id_by_username(username)
+    questions = data_manager.get_data_by_user_id(user_id, 'question')
+    answers = data_manager.get_data_by_user_id(user_id, 'answer')
+    comments = data_manager.get_comments_by_user_id(user_id)
+
+    return render_template('user_page.html', questions=questions, answers=answers, comments=comments)
+
+
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 @connection.login_required
 def edit_question(question_id):

@@ -33,7 +33,6 @@ def get_table_by_id(cursor, id, input_table):
     question = cursor.fetchone()
     return question
 
-
 @connection.connection_handler
 def get_answer_by_question_id(cursor, question_id):
     cursor.execute("""
@@ -345,3 +344,19 @@ def get_comments_by_user_id(cursor, user_id):
                    {'user_id': user_id})
     result = cursor.fetchall()
     return result
+
+
+@connection.connection_handler
+def get_data_by_user_id(cursor, user_id, input_table):
+    cursor.execute(
+           sql.SQL("""
+                   SELECT * FROM {table}
+                   WHERE user_id = %(user_id)s 
+                   """).format(table=sql.Identifier(input_table)),
+                   {'user_id': user_id})
+    result = cursor.fetchall()
+    return result
+
+
+
+
