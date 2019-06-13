@@ -39,7 +39,7 @@
                 Edited: {{ comment['edited_count'] }} times
             {% endif %}
         </td><td class="comment-element">
-                <a class="list-link" href="/question/{% if comment.question_id %}{{ comment['question_id'] }}
+                <a class="list-link" href="/question/{% if comment.question_id is not none %}{{ comment['question_id'] }}
                 {% else %} {{ comment['new_q_id'] }} {% endif %}">
                     {{ comment.message }}</a>
         </td><td class="comment-element">
