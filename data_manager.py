@@ -163,15 +163,16 @@ def delete_question_tag(cursor, question_id):
 @connection.connection_handler
 def add_question(cursor, data):
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image )
-                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s );
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id )
+                    VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s, %(user_id)s );
                    """,
                    {"submission_time": data["submission_time"],
                     "view_number": data["view_number"],
                     "vote_number": data["vote_number"],
                     "title": data["title"],
                     "message": data["message"],
-                    "image": data["image"]})
+                    "image": data["image"],
+                    "user_id": data["user_id"]})
 
 
 @connection.connection_handler
@@ -333,3 +334,14 @@ def get_hashed_password_for_user(cursor, username):
                    {'username': username})
     result = cursor.fetchone()
     return result['password']
+
+
+@connection.connection_handler
+def get_user_id_by_username(cursor, username):
+    cursor.execute("""
+                   SELECT user_id FROM users
+                   WHERE username = %(username)s 
+                   """,
+                   {'username': username})
+    result = cursor.fetchone()
+    return result['user_id']

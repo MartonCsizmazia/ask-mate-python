@@ -157,7 +157,8 @@ def route_add2():
         "vote_number": 0,
         "title": request.form.get("title"),
         "message": request.form.get("message"),
-        "image": request.form.get("image")
+        "image": request.form.get("image"),
+        "user_id": data_manager.get_user_id_by_username(session['username'])
     }
 
     data_manager.add_question(my_new_data)
