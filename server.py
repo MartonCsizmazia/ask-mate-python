@@ -128,10 +128,16 @@ def route_list():
 def list_users():
     users = data_manager.list_users()
 
-    #func = request.environ.get('werkzeug.server.shutdown')
-
     return render_template('list_users.html',
                            users=users
+                           )
+
+@app.route('/tags')
+def tags():
+    tags = data_manager.list_tags()
+
+    return render_template('list_tags.html',
+                           tags=tags
                            )
 
 
@@ -338,6 +344,8 @@ def delete_tag_from_question(question_id, tag_id):
     data_manager.delete_tag_from_question(tag_id)
 
     return redirect('/question/' + str(question_id))
+
+
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])

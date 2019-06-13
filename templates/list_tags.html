@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}List users{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+
+    <table class="list-table">
+        <tbody>
+            <tr>
+                <td class="users-table-head">Tag</td>
+                <td class="users-table-head">Number of usage</td>
+
+            </tr>
+        {% for tag in tags %}
+            <tr>
+                <td class="users-table"> {{ tag['name'] }} </td>
+                <td class="users-table"> {{ tag['number'] }} </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
