@@ -118,39 +118,14 @@ def add_new_user(cursor, data):
 
 
 @connection.connection_handler
-def question_vote_up(cursor, question_id):
-    cursor.execute("""
-                   UPDATE question SET vote_number = vote_number + 1
+def vote(cursor, table_name, vote_value, id):
+    cursor.execute(
+            sql.SQL("""
+                   UPDATE {table} SET vote_number = vote_number + %(vote_value)s
                    WHERE id = %(id)s;
-                   """,
-                   {"id": question_id})
-
-
-@connection.connection_handler
-def question_vote_down(cursor, question_id):
-    cursor.execute("""
-                   UPDATE question SET vote_number = vote_number - 1
-                   WHERE id = %(id)s;
-                   """,
-                   {"id": question_id})
-
-
-@connection.connection_handler
-def answer_vote_up(cursor, answer_id):
-    cursor.execute("""
-                   UPDATE answer SET vote_number = vote_number + 1
-                   WHERE id = %(id)s;
-                   """,
-                   {"id": answer_id})
-
-
-@connection.connection_handler
-def answer_vote_down(cursor, answer_id):
-    cursor.execute("""
-                   UPDATE answer SET vote_number = vote_number - 1
-                   WHERE id = %(id)s;
-                   """,
-                   {"id": answer_id})
+                   """).format(table=sql.Identifier(table_name)),
+                   {"id": id,
+                    "vote_value": vote_value})
 
 
 @connection.connection_handler

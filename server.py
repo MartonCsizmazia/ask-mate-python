@@ -96,18 +96,18 @@ def edit_question(question_id):
 @app.route('/question/<question_id>/vote-<vote>')
 def question_vote(question_id, vote):
     if vote == 'up':
-        data_manager.question_vote_up(question_id)
+        data_manager.vote('question', 1, question_id)
     else:
-        data_manager.question_vote_down(question_id)
+        data_manager.vote('question', -1, question_id)
     return redirect('/question/' + question_id)
 
 
 @app.route('/answer/<answer_id>/vote-<vote>')
 def answer_vote(answer_id, vote):
     if vote == 'up':
-        data_manager.answer_vote_up(answer_id)
+        data_manager.vote('answer', 1, answer_id)
     else:
-        data_manager.answer_vote_down(answer_id)
+        data_manager.vote('answer', -1, answer_id)
     changed_answer = data_manager.get_table_by_id(answer_id, "answer")
     return redirect('/question/' + str(changed_answer['question_id']))
 
