@@ -338,9 +338,9 @@ def list_tags(cursor):
 @connection.connection_handler
 def get_comments_by_user_id(cursor, user_id):
     cursor.execute("""
-                   SELECT * 
-                   FROM comment LEFT JOIN answer on comment.answer_id = answer.id
-                   WHERE comment.user_id = %(user_id)s
+                   SELECT c.question_id, answer_id, c.message, c.submission_time, c.edited_count, a.question_id as new_q_id
+                   FROM comment c LEFT JOIN answer a on c.answer_id = a.id
+                   WHERE c.user_id = %(user_id)s
                    """,
                    {'user_id': user_id})
     result = cursor.fetchall()
