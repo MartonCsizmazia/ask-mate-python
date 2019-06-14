@@ -35,6 +35,7 @@ def get_table_by_id(cursor, id, input_table):
     question = cursor.fetchone()
     return question
 
+
 @connection.connection_handler
 def get_answer_by_question_id(cursor, question_id):
     cursor.execute("""

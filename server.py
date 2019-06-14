@@ -52,11 +52,8 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        try:
-            hashed_password = data_manager.get_hashed_password_for_user(username)
-        except TypeError:
-            return render_template('registration.html', login='failed', action_route='/login')
-        if util.verify_password(password, hashed_password):
+
+        if util.verify_password(password, username):
             session['username'] = username
             return redirect(url_for('index'))
         else:
